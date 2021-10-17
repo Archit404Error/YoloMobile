@@ -12,6 +12,14 @@ export default class extends React.Component {
             latitude: 0,
             longitude: 0,
         },
+        eventCreationDetails: {
+            title: '',
+            description: '',
+            image: '',
+            location: '',
+            tags: '',
+            other: '',
+        },
     }
 
     setCreds = (userData) => {
@@ -29,6 +37,15 @@ export default class extends React.Component {
         this.setState(this.state);
     }
 
+    setEvent = (title, description, image, location, tags, other) => {
+        this.state.eventCreationDetails.title = title;
+        this.state.eventCreationDetails.description = description;
+        this.state.eventCreationDetails.image = image;
+        this.state.eventCreationDetails.location = location;
+        this.state.eventCreationDetails.tags = tags;
+        this.state.eventCreationDetails.other = other;
+    }
+
     render() {
         return (
             <Context.Provider
@@ -40,8 +57,10 @@ export default class extends React.Component {
                     events: this.state.eventIds,
                     latitude: this.state.location.latitude,
                     longitude: this.state.location.longitude,
+                    eventDetails: this.state.eventCreationDetails,
                     setCredentials: this.setCreds,
-                    setLocation: this.setLoc
+                    setLocation: this.setLoc,
+                    setEventCreation: this.setEvent
                 }}
             >
                 { this.props.children }

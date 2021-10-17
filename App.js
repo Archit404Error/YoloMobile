@@ -1,4 +1,5 @@
 import React from 'react';
+import * as firebase from "firebase";
 import { TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -20,6 +21,8 @@ import RegisterScreen from './CoreScreens/register';
 import ProfileScreen from './CoreScreens/profile';
 import NotifScreen from './CoreScreens/notifications';
 import GlobalState from './Context/globalState';
+
+import firebaseInit from './Context/firebaseInit';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -162,6 +165,9 @@ function Authentication() {
 }
 
 export default function App() {
+
+  if (!firebase.apps.length) { firebase.initializeApp(firebaseInit.firebaseConfig) }
+  
   return (
     <GlobalState>
       <NavigationContainer>

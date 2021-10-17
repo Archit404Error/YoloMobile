@@ -1,8 +1,12 @@
 import React from "react";
 import { View, Text } from "react-native";
+import Context from '../Context/context';
 import { styles } from "../styles";
 
 export default class extends React.Component {
+
+    static contextType = Context;
+
     state = {
         image: "",
         title: "Loading...",
@@ -15,11 +19,11 @@ export default class extends React.Component {
 
     componentDidMount() {
         // Need to figure out how to upload local image to DB
-        const url = "http://eventcore.herokuapp.com/addEvent?" + this.props.route.params.img + "&" +
-        this.props.route.params.title + "&" + this.props.route.params.desc + "&" +
-        this.props.route.params.loc + "&" + this.props.route.params.other;
+        const url = "http://eventcore.herokuapp.com/addEvent?" + this.context.eventDetails.image + "&" +
+        this.context.eventDetails.title + "&" + this.context.eventDetails.description + "&" +
+        this.context.eventDetails.location + "&" + this.context.eventDetails.other;
         fetch(url)
-        .then(() => { this.state.image = this.props.route.params.img; })
+        .then(() => { this.state.image = this.context.eventDetails.other; })
     }
 
     render() {
