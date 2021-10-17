@@ -7,10 +7,13 @@ async function sendMessage(message, chatId, sender) {
     fetch(`http://eventcore.herokuapp.com/sendMessage?${message}&${sender}&${chatId}`)
 }
 
-function showSend(message, chatId, sender) {
+function showSend(message, chatId, sender, messageFunc) {
     if (message.length >= 1) {
         return (
-            <TouchableOpacity onPress =  {sendMessage(message, chatId, sender)}>
+            <TouchableOpacity onPress =  {() => {
+                sendMessage(message, chatId, sender);
+                messageFunc("");
+            }}>
                 <Ionicons name = { "send-sharp" } size = {25} style = {{ marginTop: 15 }} />
             </TouchableOpacity>
         )
@@ -27,10 +30,13 @@ export default ({ chatId, sender }) => {
                 placeholder = {"Send Message..."} 
                 returnKeyType = {"send"} 
                 onChangeText = {text => setMessage(text)}
-                onSubmitEditing = {console.log("SUBMIT?!")}
+                onSubmitEditing = {() => {
+                    sendMessage(message, chatId, sender);
+                    setMessage("");
+                }}
                 value = {message}
             />
-        { showSend(message, chatId, sender) }
+        { showSend(message, chatId, sender, setMessage) }
         </View>
     )
 }

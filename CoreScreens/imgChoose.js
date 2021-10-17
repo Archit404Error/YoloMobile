@@ -33,11 +33,9 @@ export default () => {
     if (!result.cancelled) {
       setImgHt(windowHeight / 1.5);
       setImage(result.uri);
-      /*
       uploadImage()
       .then(() => Alert.alert("success!"))
       .catch((error) => Alert.alert(error)) 
-      */
     }
   };
 
