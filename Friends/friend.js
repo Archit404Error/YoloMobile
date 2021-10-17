@@ -13,10 +13,13 @@ export default class extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state.id = this.props.id;
-        fetch('http://eventcore.herokuapp.com/getUser?' + this.state.id)
+    }
+
+    componentDidMount() {
+        fetch('http://eventcore.herokuapp.com/getUser?' + this.props.id)
         .then(res => {return res.json()})
         .then(resJson => {
+            this.state.id = this.props.id;
             this.state.name = resJson[3];
             this.setState(this.state);
         });
@@ -33,9 +36,13 @@ export default class extends React.Component {
                 borderBottomWidth: 1
             }}>
                 <Image source = {{ uri: this.state.profPic }} style = {{ width: 40, height: 40, borderRadius: 50 }} />
-                <Text style = {{ color: 'black', marginTop: 5, marginLeft: 10, marginRight: 10, fontSize: 20 }}>
-                    {this.state.name}
-                </Text>
+                <TouchableOpacity onPress = {() => {
+                    this.props.navigation.navigate("View Profile", {id: this.state.id})
+                }}>
+                    <Text style = {{ color: 'black', marginTop: 5, marginLeft: 10, marginRight: 10, fontSize: 20 }}>
+                        {this.state.name}
+                    </Text>
+                </TouchableOpacity>
                 <TouchableOpacity style = {{ marginTop: 5 }}>
                     <Ionicons name = {iconName} size = {25} />
                 </TouchableOpacity>

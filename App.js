@@ -18,7 +18,8 @@ import SubmitScreen from './Events/submitEvent';
 import MessageScreen from './Chats/chat';
 import LoginScreen from './CoreScreens/login';
 import RegisterScreen from './CoreScreens/register';
-import ProfileScreen from './CoreScreens/profile';
+import ProfileScreen from './Profiles/userProfile';
+import FriendProfileScreen from './Profiles/friendProfile';
 import NotifScreen from './CoreScreens/notifications';
 import GlobalState from './Context/globalState';
 
@@ -75,6 +76,21 @@ function updateStack() {
         component = { NotifScreen }
       />
     </TopTab.Navigator>
+  )
+}
+
+function FriendStack() {
+  return (
+    <Stack.Navigator screenOptions = {{ headerShown: false }}>
+      <Stack.Screen 
+        name = "Friend List" 
+        component = { FriendScreen }
+      />
+      <Stack.Screen 
+        name = "View Profile"
+        component = { FriendProfileScreen }
+      />
+    </Stack.Navigator>
   )
 }
 
@@ -142,7 +158,7 @@ function MainTab() {
     })}
     >
       <Tab.Screen name = "Events" component = {HomeStack} options = {{ headerShown: false }} />
-      <Tab.Screen name = "Friends" component = {FriendScreen} />
+      <Tab.Screen name = "Friends" component = {FriendStack} />
       <Tab.Screen name = "Create"
         options = {{
           headerShown: false

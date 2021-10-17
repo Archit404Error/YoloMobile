@@ -28,7 +28,7 @@ export default class extends React.Component {
                 { 
                     this.state.friends.map((id, index) => {
                         return (
-                            <Friend key = {index} id = {id} />
+                            <Friend key = {index} id = {id} navigation = {this.props.navigation} />
                         );
                     })
                 }
