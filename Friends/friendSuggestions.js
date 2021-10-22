@@ -1,11 +1,12 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, SafeAreaView, ScrollView, View } from "react-native";
 
 import Friend from './friend';
+import Story from './story';
 
 export default class extends React.Component {
     state = {
-        friends: [1, 1, 1]
+        friends: [1, 2, 3]
     }
 
     constructor(props) {
@@ -25,6 +26,17 @@ export default class extends React.Component {
     render() {
         return (
             <View style = {{flex: 1}}>
+                <SafeAreaView>
+                    <ScrollView horizontal = {true}>
+                        {
+                            this.state.friends.map((id, index) => {
+                                return (
+                                    <Story key = {index} id = {id} />
+                                )
+                            })
+                        }
+                    </ScrollView>
+                </SafeAreaView>
                 { 
                     this.state.friends.map((id, index) => {
                         return (

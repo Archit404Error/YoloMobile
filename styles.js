@@ -216,6 +216,22 @@ export const styles = StyleSheet.create({
         height: windowWidth / 3,
         alignSelf: 'center'
     },
+    storyImg: {
+        borderRadius: 500,
+        width: windowWidth / 6,
+        height: windowWidth / 6,
+        marginRight: 10,
+        borderColor: '#c9c9c9',
+        borderWidth: 2,
+    },
+    storyImgNew: {
+        borderRadius: 500,
+        width: windowWidth / 6,
+        height: windowWidth / 6,
+        marginRight: 10,
+        borderColor: '#2d6ff4',
+        borderWidth: 2,
+    },
     profTitle: {
         fontSize: 30,
         fontWeight: 'bold',
