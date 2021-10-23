@@ -2,7 +2,7 @@ import React from "react";
 import { Text, SafeAreaView, ScrollView, View } from "react-native";
 
 import Friend from './friend';
-import Story from './story';
+import Story from './storyPreview';
 
 export default class extends React.Component {
     state = {
@@ -14,6 +14,7 @@ export default class extends React.Component {
     }
 
     componentDidMount() {
+        /*
         const url = "http://tobeinserted";
         fetch(url)
         .then(res => res.json())
@@ -21,6 +22,7 @@ export default class extends React.Component {
             this.state.friends = resJson["suggestions"];
             this.setState(this.state);
         })
+        */
     }
 
     render() {
