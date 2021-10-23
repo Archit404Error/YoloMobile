@@ -8,6 +8,7 @@ npm-debug.*
 *.orig.*
 web-build/
 node_modules/
+package-lock.json
 
 # macOS
 .DS_Store
