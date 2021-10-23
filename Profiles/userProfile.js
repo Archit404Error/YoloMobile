@@ -11,7 +11,7 @@ export default class extends React.Component {
         id : -1,
         name: 'Sample Name',
         profPic: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
-        friends: [1],
+        friends: [],
         events: [],
     }
 
@@ -23,6 +23,7 @@ export default class extends React.Component {
         this.state.id = this.context.id;
         this.state.name = this.context.fullName;
         this.state.events = this.context.events.split(", ");
+        this.state.friends = [1, 2, 3];
         this.setState(this.state);
     }
 

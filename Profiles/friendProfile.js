@@ -8,8 +8,8 @@ export default class extends React.Component {
         id: -1,
         name: 'Sample Username',
         profPic: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
-        friends: [],
-        events: [],
+        friends: [1, 2, 3],
+        events: [1, 2, 3],
     }
 
     constructor(props) {
@@ -23,10 +23,9 @@ export default class extends React.Component {
         .then(resJson => {
             this.state.id = resJson[0];
             this.state.name = resJson[3];
-            this.state.friends = resJson[7];
-            this.state.events = resJson[6];
+            this.state.friends = resJson[7].split(", ");
+            this.state.events = resJson[6].split(", ");
             this.setState(this.state);
-            console.log("here")
         })
     }
 

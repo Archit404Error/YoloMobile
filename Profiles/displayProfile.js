@@ -6,20 +6,37 @@ import Event from "../Events/event"
 
 export default class extends React.Component {
 
+    state = {
+        id: -1,
+        name: 'Sample User',
+        events: [],
+        friends: [],
+        profPic: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
+        interval: 0,
+    }
+
 
     constructor(props) {
         super(props);
-        this.state = {
-            id: this.props.id,
-            name: this.props.name,
-            events: this.props.events,
-            friends: this.props.friends,
-            profPic: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
-        }
+    }
+
+    componentDidMount() {
+        const update = () => {
+            if (this.state.id != -1) {
+                clearInterval(this.state.interval)
+                return
+            }
+            this.state.id = this.props.id;
+            this.state.name = this.props.name;
+            this.state.events = this.props.events;
+            this.state.friends = this.props.friends;
+            this.setState(this.state);
+        };
+        this.state.interval = setInterval(update, 100);
+        this.setState(this.state);
     }
 
     render() {
-        console.log(this.state)
         return (
             <SafeAreaView>
                 <ScrollView style = {styles.container}>

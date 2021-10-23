@@ -136,7 +136,7 @@ function MainTab() {
   return (
     <Tab.Navigator 
     screenOptions={({ route }) => ({
-      tabBarIcon: ({ focused, color, size }) => {
+      tabBarIcon: ({ focused, color }) => {
         let iconName;
 
         if (route.name === 'Events') {
@@ -151,21 +151,17 @@ function MainTab() {
           iconName = focused ? 'person-circle' : 'person-circle-outline';
         }
 
-        return <Ionicons name = {iconName} size = {size} color = {color} />;
+        return <Ionicons name = {iconName} size = {30} color = {color} />;
       },
       activeTintColor: '#2d6ff4',
       inactiveTintColor: 'gray',
     })}
     >
-      <Tab.Screen name = "Events" component = {HomeStack} options = {{ headerShown: false }} />
-      <Tab.Screen name = "Friends" component = {FriendStack} />
-      <Tab.Screen name = "Create"
-        options = {{
-          headerShown: false
-        }}
-        component = {AddStack} />
-      <Tab.Screen name = "Chats" component = {ChatStack} options = {{ headerShown: false }} />
-      <Tab.Screen name = "Profile" component = {ProfileScreen} />
+      <Tab.Screen name = "Events" component = {HomeStack} options = {{ headerShown: false, tabBarShowLabel: false }} />
+      <Tab.Screen name = "Friends" component = {FriendStack} options = {{ tabBarShowLabel: false }} />
+      <Tab.Screen name = "Create" options = {{ headerShown: false, tabBarShowLabel: false }} component = {AddStack} />
+      <Tab.Screen name = "Chats" component = {ChatStack} options = {{ headerShown: false, tabBarShowLabel: false }} />
+      <Tab.Screen name = "Profile" component = {ProfileScreen} options = {{ tabBarShowLabel: false }} />
     </Tab.Navigator>
   );
 }
