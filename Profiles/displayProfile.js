@@ -50,7 +50,7 @@ export default class extends React.Component {
                     {
                         this.state.events.map((eventId) => {
                             return (
-                                <Event id = {eventId} />
+                                <Event key = {eventId} id = {eventId} />
                             )
                         })
                     }
