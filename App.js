@@ -178,7 +178,9 @@ function Authentication() {
 
 export default function App() {
 
-  if (!firebase.apps.length) { firebase.initializeApp(firebaseInit.firebaseConfig) }
+  if (!firebase.apps.length) { 
+    firebase.initializeApp(firebaseInit.firebaseConfig) 
+  }
   
   return (
     <GlobalState>
