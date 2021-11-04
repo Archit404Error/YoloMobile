@@ -20,6 +20,7 @@ export default class extends React.Component {
             tags: '',
             other: '',
         },
+        friendIds: [],
     }
 
     setCreds = (userData) => {
@@ -46,6 +47,25 @@ export default class extends React.Component {
         this.state.eventCreationDetails.other = other;
     }
 
+    getFriendIds = () => {
+        if (this.state.friendIds.length != 0) return this.state.friendIds;
+        fetch(`http://eventcore.herokuapp.com/getUser?${this.state.id}`)
+        .then(res => res.json())
+        .then(resJson => {
+            this.state.friendIds = resJson[7].split(", ");
+            this.setState(this.state);
+        })
+        return this.state.friendIds;
+    }
+
+    friendRequest = (userId, addingFriend) => {
+        fetch(`http://eventcore.herokuapp.com/friendRequest?${userId}&${addingFriend}&${this.state.id}`)
+        .then(res => res.json())
+        .then(resJson => {
+            // eventually do something with this res here
+        });
+    }
+
     render() {
         return (
             <Context.Provider
@@ -60,7 +80,9 @@ export default class extends React.Component {
                     eventDetails: this.state.eventCreationDetails,
                     setCredentials: this.setCreds,
                     setLocation: this.setLoc,
-                    setEventCreation: this.setEvent
+                    setEventCreation: this.setEvent,
+                    getFriends: this.getFriendIds,
+                    sendFriendReq: this.friendRequest
                 }}
             >
                 { this.props.children }

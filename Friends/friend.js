@@ -1,9 +1,13 @@
 import React from "react";
 import { Text, View, TouchableOpacity, Image } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { styles } from "../styles";
+import Context from "../Context/context";
 
 export default class extends React.Component {
+
+    static contextType = Context;
+
     state = {
         id : -1,
         name : "Loading...",
@@ -25,8 +29,14 @@ export default class extends React.Component {
         });
     }
 
+    setFriended(friendedState) {
+        this.state.friended = friendedState;
+        this.setState(this.state);
+        this.context.sendFriendReq(this.state.id, friendedState);
+    }
+
     render() {
-        const iconName = this.state.friended ? 'chatbox-ellipses-outline' : 'person-add-outline';
+        const iconName = this.state.friended ? 'user-check' : 'user-plus';
         return (
             <View style = {{
                 flexDirection: 'row', 
@@ -43,8 +53,8 @@ export default class extends React.Component {
                         {this.state.name}
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style = {{ marginTop: 5 }}>
-                    <Ionicons name = {iconName} size = {25} />
+                <TouchableOpacity style = {{ marginTop: 5 }} onPress = {() => this.setFriended(!this.state.friended)}>
+                    <Feather name = {iconName} size = {25} />
                 </TouchableOpacity>
             </View>
         );

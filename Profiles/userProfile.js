@@ -23,7 +23,7 @@ export default class extends React.Component {
         this.state.id = this.context.id;
         this.state.name = this.context.fullName;
         this.state.events = this.context.events.split(", ");
-        this.state.friends = [1, 2, 3];
+        this.state.friends = this.context.getFriends();
         this.setState(this.state);
     }
 
