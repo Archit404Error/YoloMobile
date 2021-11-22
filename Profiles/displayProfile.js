@@ -32,8 +32,12 @@ export default class extends React.Component {
             this.state.friends = this.props.friends;
             this.setState(this.state);
         };
-        this.state.interval = setInterval(update, 100);
+        this.state.interval = setInterval(() => update(), 100);
         this.setState(this.state);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.interval);
     }
 
     render() {

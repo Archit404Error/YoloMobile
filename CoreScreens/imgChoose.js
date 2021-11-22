@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Text, Image, View, Platform, TouchableOpacity, Alert } from 'react-native';
 import { Dimensions } from 'react-native';
+import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import * as firebase from 'firebase';
+import uuid from 'uuid';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -12,12 +14,8 @@ export default () => {
 
   useEffect(() => {
     (async () => {
-      if (Platform.OS !== 'web') {
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== 'granted') {
-          console.log('Need permission');
-        }
-      }
+      await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      await Permissions.askAsync(Permissions.CAMERA);
     })();
   }, []);
 
@@ -33,18 +31,34 @@ export default () => {
     if (!result.cancelled) {
       setImgHt(windowHeight / 1.5);
       setImage(result.uri);
-      uploadImage()
-      .then(() => Alert.alert("success!"))
-      .catch((error) => Alert.alert(error)) 
+      uploadImageAsync(result.uri);
     }
   };
 
-  const uploadImage = async () => {
-    const res = await fetch(image);
-    const blob = await res.blob();
-
-    var ref = firebase.storage().ref().child("images/test" + image);
-    return ref.put(blob);
+  const uploadImageAsync = async (uri) => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function(e) {
+        console.log(e);
+        reject(new TypeError('Network request failed'));
+      };
+      xhr.responseType = 'blob';
+      xhr.open('GET', uri, true);
+      xhr.send(null);
+    });
+  
+    const ref = firebase
+      .storage()
+      .ref()
+      .child(uuid.v4());
+    const snapshot = await ref.put(blob);
+  
+    blob.close();
+  
+    return await snapshot.ref.getDownloadURL();
   }
 
   return (

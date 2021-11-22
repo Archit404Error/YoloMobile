@@ -28,7 +28,7 @@ export default class extends React.Component {
                 this.setState(this.state);
             })
         }
-        this.state.interval = setInterval(checkVisible, 10);
+        this.state.interval = setInterval(() => checkVisible(), 10);
         this.setState(this.state);
     }
 

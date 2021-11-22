@@ -36,7 +36,7 @@ export default class extends React.Component {
             })
         }
 
-        this.state.handler = setInterval(updateChats, 100);
+        this.state.handler = setInterval(() => updateChats(), 100);
         this.setState(this.state);
     }
 
@@ -80,7 +80,6 @@ export default class extends React.Component {
                                 )
                             })
                         }
-                        <View style = {{marginBottom: 30}}></View>
                     </ScrollView>
                 </SafeAreaView>
                 <KeyboardAvoidingView keyboardVerticalOffset = {70} behavior = {'padding'}>

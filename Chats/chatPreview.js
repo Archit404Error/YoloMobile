@@ -44,7 +44,7 @@ export default class extends React.Component {
         }
         
         updateSelf();
-        this.state.handler = setInterval(updateSelf, 100);
+        this.state.handler = setInterval(() => updateSelf(), 100);
         this.setState(this.state);
     }
 

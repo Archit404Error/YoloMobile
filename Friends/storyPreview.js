@@ -31,7 +31,7 @@ export default class extends React.Component {
                 this.setState(this.state);
             }
         }
-        this.state.storyInterval = setInterval(openStory, 10);
+        this.state.storyInterval = setInterval(() => openStory(), 10);
         this.setState(this.state);
     }
 

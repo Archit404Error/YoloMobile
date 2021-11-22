@@ -49,8 +49,8 @@ export default class extends React.Component{
                         style = {{ fontSize: 15 }}
                     />
                     {
-                        this.state.dispIds.map(id => {
-                            return <ChatPreview navigation = {this.props.navigation} id = {id} display = {this.state.filtered}/>
+                        this.state.dispIds.map((id, index) => {
+                            return <ChatPreview key = {index} navigation = {this.props.navigation} id = {id} display = {this.state.filtered}/>
                         })
                     }
                 </ScrollView>
