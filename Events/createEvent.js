@@ -64,7 +64,7 @@ export default ({ navigation }) => {
                         <TouchableOpacity 
                             style = {{ backgroundColor: 'white', width: '100%', alignItems: 'center', marginTop: 10, padding: 10 }} 
                             onPress={() => { 
-                                context.setEventCreation(title, description, "https://www.russorizio.com/wp-content/uploads/2016/07/ef3-placeholder-image.jpg", location, tags, other);
+                                context.createEventText(title, description, location, tags, other);
                                 navigation.navigate("Preview Event")
                             }}
                         >

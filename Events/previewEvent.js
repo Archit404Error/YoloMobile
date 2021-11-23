@@ -2,6 +2,34 @@ import React from 'react';
 import { SafeAreaView, ScrollView, View, Text, Image, Button } from 'react-native';
 import Context from '../Context/context';
 import { styles } from '../styles';
+import * as firebase from 'firebase';
+import uuid from 'uuid';
+
+const uploadImageAsync = async (uri) => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function(e) {
+        console.log(e);
+        reject(new TypeError('Network request failed'));
+      };
+      xhr.responseType = 'blob';
+      xhr.open('GET', uri, true);
+      xhr.send(null);
+    });
+  
+    const ref = firebase
+      .storage()
+      .ref()
+      .child(uuid.v4());
+    const snapshot = await ref.put(blob);
+  
+    blob.close();
+  
+    return await snapshot.ref.getDownloadURL();
+}
 
 export default ({ navigation }) => {
     return (
@@ -27,7 +55,8 @@ export default ({ navigation }) => {
                         <Button title = {"Add Event!"} 
                             onPress = {
                                 () => { 
-                                    navigation.navigate("Submit Event")
+                                    uploadImageAsync(context.eventDetails.image)
+                                    .then(() => navigation.navigate("Submit Event"));
                                 }
                             } 
                         />

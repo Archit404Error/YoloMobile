@@ -38,13 +38,18 @@ export default class extends React.Component {
         this.setState(this.state);
     }
 
-    setEvent = (title, description, image, location, tags, other) => {
+    setEventImage = (imageUrl) => {
+        this.state.eventCreationDetails.image = imageUrl;
+        this.setState(this.state);
+    }
+
+    setEventText = (title, description, location, tags, other) => {
         this.state.eventCreationDetails.title = title;
         this.state.eventCreationDetails.description = description;
-        this.state.eventCreationDetails.image = image;
         this.state.eventCreationDetails.location = location;
         this.state.eventCreationDetails.tags = tags;
         this.state.eventCreationDetails.other = other;
+        this.setState(this.state);
     }
 
     getFriendIds = () => {
@@ -80,7 +85,8 @@ export default class extends React.Component {
                     eventDetails: this.state.eventCreationDetails,
                     setCredentials: this.setCreds,
                     setLocation: this.setLoc,
-                    setEventCreation: this.setEvent,
+                    createEventText: this.setEventText,
+                    createEventImage: this.setEventImage,
                     getFriends: this.getFriendIds,
                     sendFriendReq: this.friendRequest
                 }}
