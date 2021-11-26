@@ -31,6 +31,18 @@ const uploadImageAsync = async (uri) => {
     return await snapshot.ref.getDownloadURL();
 }
 
+const submitEventAsync = async (eventDetails) => {
+    const res = await fetch("http://eventcore.herokuapp.com/addEvent", {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(eventDetails)
+    });
+    console.log(res);
+}
+
 export default ({ navigation }) => {
     return (
         <Context.Consumer>
@@ -56,6 +68,12 @@ export default ({ navigation }) => {
                             onPress = {
                                 () => { 
                                     uploadImageAsync(context.eventDetails.image)
+                                    .then(
+                                        (resUrl) => {
+                                            context.createEventImage(resUrl)
+                                            submitEventAsync(context.eventDetails) 
+                                        }
+                                    )
                                     .then(() => navigation.navigate("Submit Event"));
                                 }
                             } 
