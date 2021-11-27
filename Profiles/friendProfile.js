@@ -25,6 +25,7 @@ export default class extends React.Component {
             this.state.name = resJson[3];
             this.state.friends = resJson[7].split(", ");
             this.state.events = resJson[6].split(", ");
+            this.state.profPic = resJson[9];
             this.setState(this.state);
         })
     }
@@ -36,6 +37,7 @@ export default class extends React.Component {
                 name = {this.state.name}
                 friends = {this.state.friends}
                 events = {this.state.events}
+                profilePic = {this.state.profPic}
             />
         );
     }

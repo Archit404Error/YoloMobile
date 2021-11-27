@@ -27,7 +27,6 @@ export default ({ navigation }) => {
     }, []);
 
     useEffect(() => {
-        console.log(loc);
         (() => {
             if (loading) navigation.navigate("App");
         })();
@@ -37,7 +36,7 @@ export default ({ navigation }) => {
         (() => {
             if (JSON.stringify(loc) != "{}") navigation.navigate("App");
         })();
-    }, [loading])
+    }, [loading]);
     
     return (
         <>
@@ -58,7 +57,8 @@ export default ({ navigation }) => {
                     />
                     <Button 
                         title = { "Login / Register" } 
-                        buttonStyle = {{ backgroundColor: 'black', borderRadius: 0, width: 300 }} 
+                        buttonStyle = {{ backgroundColor: 'black', borderRadius: 0, width: 300 }}
+                        disabled = {loading} 
                         onPress = {() => {
                             fetch(`http://eventcore.herokuapp.com/auth?${userName}&${password}`)
                             .then(res => res.json())
@@ -73,10 +73,10 @@ export default ({ navigation }) => {
                         }}
                     />
                 </View>
+                { loading && 
+                    <ActivityIndicator size = "large" style = {{ marginTop: 10 }} />
+                }
             </View>
-            { loading &&
-                <ActivityIndicator size = "large" />
-            }
         </>
     );
 }

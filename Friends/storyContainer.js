@@ -1,15 +1,17 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { Text, View, Modal, TouchableOpacity } from "react-native";
-
-import { windowWidth } from '../styles';
+import context from "../Context/context";
+import Context from "../Context/context";
 
 export default class extends React.Component {
+
+    static contextType = Context;
+
     state = {
-        userName: '',
+        id: -1,
         visible: false,
-        timeOpen: 0,
-        interval: -1,
+        closing: false,
     }
 
     constructor(props) {
@@ -17,23 +19,18 @@ export default class extends React.Component {
     }
 
     componentDidMount() {
-        const checkVisible = () => {
-            this.state.visible = this.props.visible;
-            this.state.timeOpen = this.props.time;
-            this.setState(this.state);
-            fetch('http://eventcore.herokuapp.com/getUser?' + this.props.id)
-            .then(res => res.json())
-            .then(resJson => {
-                this.state.userName = resJson[3];
-                this.setState(this.state);
-            })
-        }
-        this.state.interval = setInterval(() => checkVisible(), 10);
+        this.state.id = this.props.id;
+        this.state.visible = this.props.visible;
         this.setState(this.state);
     }
 
-    componentWillUnmount() {
-        clearInterval(this.state.interval);
+    static getDerivedStateFromProps(props, state) {
+        if (state.closing) {
+            state.closing = false;
+            return state;
+        }
+        state.visible = props.visible;
+        return state;
     }
     
     render() {
@@ -44,17 +41,11 @@ export default class extends React.Component {
                 visible={this.state.visible}
             >
                 <StatusBar hidden />
-                <View style = {{
-                        marginTop: 20,
-                        borderBottomWidth: 2,
-                        borderBottomColor: 'black',
-                        width: windowWidth * (this.state.timeOpen / 500)
-                }}></View>
                 <View style = {{ alignItems: 'center' }}>
-                    <Text style = {{ marginTop: 30, color: 'black' }}>{this.state.userName}</Text>
-                    <Text style = {{ marginTop: 30, color: 'black' }}>Test</Text>
+                    <Text style = {{ marginTop: 30, color: 'black' }}>{this.context.name}</Text>
                     <TouchableOpacity onPress = {() => {
                         this.state.visible = false;
+                        this.state.closing = true;
                         this.setState(this.state);
                     }}>
                         <Text style = {{ color: 'black' }}>Close</Text>

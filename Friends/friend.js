@@ -25,6 +25,7 @@ export default class extends React.Component {
         .then(resJson => {
             this.state.id = this.props.id;
             this.state.name = resJson[3];
+            this.state.profPic = resJson[9];
             this.setState(this.state);
         });
     }
