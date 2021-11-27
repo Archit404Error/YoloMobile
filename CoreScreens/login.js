@@ -57,7 +57,7 @@ export default ({ navigation }) => {
                     />
                     <Button 
                         title = { "Login / Register" } 
-                        buttonStyle = {{ backgroundColor: 'black', borderRadius: 0, width: 300 }}
+                        buttonStyle = {styles.confirmButton}
                         disabled = {loading} 
                         onPress = {() => {
                             fetch(`http://eventcore.herokuapp.com/auth?${userName}&${password}`)

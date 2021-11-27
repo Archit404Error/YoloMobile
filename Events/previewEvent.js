@@ -54,9 +54,9 @@ export default ({ navigation }) => {
                         <Text style = {styles.addressText}>{context.eventDetails.location}</Text>
                         <View style = {{ flex: 1, flexDirection: 'row', marginLeft: 10, }}>
                         {
-                            context.eventDetails.tags.split("|").map((tag) => {
+                            context.eventDetails.tags.split("|").map((tag, index) => {
                                 return (
-                                    <View style = {styles.tag}>
+                                    <View key = {index} style = {styles.tag}>
                                         <Text>{tag}</Text>
                                     </View>
                                 )

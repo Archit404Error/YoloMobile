@@ -1,8 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { Text, View, Modal, TouchableOpacity } from "react-native";
-import context from "../Context/context";
 import Context from "../Context/context";
+import { EvilIcons } from "@expo/vector-icons"
 
 export default class extends React.Component {
 
@@ -36,19 +36,18 @@ export default class extends React.Component {
     render() {
         return (
             <Modal
-                animationType="fade"
+                animationType="slide"
                 transparent={false}
                 visible={this.state.visible}
             >
                 <StatusBar hidden />
-                <View style = {{ alignItems: 'center' }}>
-                    <Text style = {{ marginTop: 30, color: 'black' }}>{this.context.name}</Text>
+                <View style = {{ alignItems: 'flex-end', marginRight: 10, marginTop: 10 }}>
                     <TouchableOpacity onPress = {() => {
                         this.state.visible = false;
                         this.state.closing = true;
                         this.setState(this.state);
                     }}>
-                        <Text style = {{ color: 'black' }}>Close</Text>
+                        <EvilIcons name="close" size={30} color="black" />
                     </TouchableOpacity>
                 </View>
             </Modal>

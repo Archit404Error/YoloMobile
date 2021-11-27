@@ -192,6 +192,11 @@ export const styles = StyleSheet.create({
         borderBottomColor: '#f2f2f2',
         borderBottomWidth: 1,
     },
+    confirmButton: {
+        backgroundColor: 'black', 
+        borderRadius: 0, 
+        width: 300,
+    },
     tag: {
         paddingLeft: 5,
         paddingRight: 5,

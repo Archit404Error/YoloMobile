@@ -100,6 +100,11 @@ function AddStack() {
       <Stack.Screen 
         name = "Create Event"
         component = { CreateScreen }
+        options = {{ 
+          headerLeft: () => {
+            return <></>
+          }, 
+        }}
       />
       <Stack.Screen 
         name = "Preview Event"
@@ -123,6 +128,11 @@ function ChatStack() {
       <Stack.Screen 
         name = "Chat List"
         component = {ChatScreen}
+        options = {{ 
+          headerLeft: () => {
+            return <></>
+          }, 
+        }}
       />
       <Stack.Screen 
         name = "Messages"
@@ -168,7 +178,9 @@ function MainTab() {
 
 function Authentication() {
   return (
-    <Stack.Navigator screenOptions = {{ headerShown: false, headerBackTitleVisible: false }}>
+    <Stack.Navigator 
+      screenOptions = {{ headerShown: false, headerBackTitleVisible: false, gestureEnabled: false }}
+    >
       <Stack.Screen name = "Login" component = {LoginScreen} />
       <Stack.Screen name = "Register" component = {RegisterScreen} />
       <Stack.Screen name = "App" component = {MainTab} />
