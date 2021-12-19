@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
         backgroundColor: "white",
         borderRadius: 0,
         width: windowWidth,
-        height: windowHeight,
+        minHeight: windowHeight,
         justifyContent: 'center',
     },
     messageContainer: {
@@ -48,6 +48,12 @@ export const styles = StyleSheet.create({
 
         elevation: 5,
     },
+    rsvpNoBlock: {
+        width: windowWidth / 2, 
+        alignItems: 'center',
+        backgroundColor: 'red',
+        padding: 10,
+    },
     rsvpYesContainer: {
         position: 'absolute',
         top: 350,
@@ -61,6 +67,12 @@ export const styles = StyleSheet.create({
         shadowRadius: 3.84,
 
         elevation: 5,
+    },
+    rsvpYesBlock: {
+        width: windowWidth / 2, 
+        alignItems: 'center',
+        backgroundColor: 'green',
+        padding: 10,
     },
     infoContainer: {
         position: 'absolute',

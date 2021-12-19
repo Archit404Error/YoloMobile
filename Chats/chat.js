@@ -26,24 +26,18 @@ export default class extends React.Component {
         this.state.messages = this.props.route.params["messages"];
         this.state.members = this.props.route.params["members"];
         this.state.name = this.context.fullName;
-
-        const updateChats = () => {
-            fetch(`http://eventcore.herokuapp.com/getChats?${this.state.id}`)
-            .then(res => res.json())
-            .then(resJson => {
-                this.state.messages = resJson[2];
-                this.setState(this.state);
-            })
-        }
-
-        this.state.handler = setInterval(() => updateChats(), 100);
         this.setState(this.state);
     }
 
-    componentWillUnmount() {
-        clearInterval(this.state.handler);
+    static getDerivedStateFromProps(props, state) {
+        console.log(state.name)
+        state.id = props.route.params["id"];
+        state.messages = props.route.params["messages"];
+        state.members = props.route.params["members"];
+        console.log(state);
+        return state;
     }
-
+    
     render() {
         return (
             <View style = {styles.messageContainer}>

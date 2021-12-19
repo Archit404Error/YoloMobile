@@ -18,7 +18,7 @@ export default class extends React.Component {
     }
 
     componentDidMount() {
-        this.state.id = this.props["id"];
+        this.state.id = this.props.id;
         this.setState(this.state);
 
         const updateSelf = () => {
@@ -59,7 +59,7 @@ export default class extends React.Component {
         return (
             <TouchableOpacity 
                 onPress = {() => {
-                    this.props["navigation"].navigate("Messages", { 
+                    this.props.navigation.navigate("Messages", { 
                         id: this.state.id,
                         title: this.state.title,
                         messages: this.state.allMessages,

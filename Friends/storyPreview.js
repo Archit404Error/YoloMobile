@@ -10,6 +10,7 @@ export default class extends React.Component {
         profPic: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
         visible: false,
         viewed: false,
+        forUpload: false,
         id: -1,
     }
 
@@ -19,6 +20,7 @@ export default class extends React.Component {
 
     componentDidMount() {
         this.state.id = this.props.id;
+        if (this.props.forUpload) this.state.forUpload = true;
         fetch(`http://eventcore.herokuapp.com/getUser?${this.state.id}`)
         .then(res => res.json())
         .then(resJson => {
@@ -32,7 +34,7 @@ export default class extends React.Component {
         return (
             <>
                 <TouchableOpacity onPress = {() => {
-                    this.state.visible = true;
+                    this.state.visible = true && !this.state.forUpload;
                     this.setState(this.state);
                 }}>
                     <Image 

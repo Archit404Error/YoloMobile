@@ -25,7 +25,6 @@ export default class extends React.Component {
         this.state.events = this.context.events.split(", ");
         this.state.friends = this.context.friends;
         this.state.profPic = this.context.profilePic;
-        console.log("Setting state to: " + this.state.profPic)
         this.setState(this.state);
     }
 

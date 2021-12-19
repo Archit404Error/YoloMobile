@@ -3,6 +3,7 @@ import { Text, SafeAreaView, ScrollView, View } from "react-native";
 
 import Friend from './friend';
 import Story from './storyPreview';
+import UploadStory from "./uploadStory";
 
 export default class extends React.Component {
     state = {
@@ -30,6 +31,7 @@ export default class extends React.Component {
             <View style = {{flex: 1}}>
                 <SafeAreaView>
                     <ScrollView horizontal = {true}>
+                        <UploadStory />
                         {
                             this.state.friends.map((id, index) => {
                                 return (

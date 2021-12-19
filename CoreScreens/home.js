@@ -32,7 +32,12 @@ export default class extends React.Component{
   render() {
       return (
           <SafeAreaView>
-            <ScrollView vertical = {true} decelerationRate = {0} snapToInterval = {windowHeight / 1.5 + 125} snapToAlignment = {"center"}>
+            <ScrollView 
+              vertical = {true} 
+              decelerationRate = {0} 
+              snapToInterval = {windowHeight / 1.5 + 125} 
+              snapToAlignment = {"center"}
+            >
               {
                 this.state.ids.map((id) => {
                   return <Event key = {id} id = {id} navigation = {this.props.navigation} />
