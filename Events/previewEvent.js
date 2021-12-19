@@ -5,7 +5,7 @@ import { styles } from '../styles';
 import * as firebase from 'firebase';
 import uuid from 'uuid';
 
-const uploadImageAsync = async (uri) => {
+export const uploadImageAsync = async (uri) => {
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = function() {

@@ -254,4 +254,16 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         alignSelf: 'center'
     },
+    postStoryContainer: {
+        borderRadius: 10,
+        backgroundColor: 'white',
+        padding: 15,
+        position: 'absolute',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        bottom: 10,
+        right: 10,
+        zIndex: 999
+    },
 })

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Story from './storyPreview';
 import Context from "../Context/context";
+import { styles, windowWidth, windowHeight } from "../styles";
+import { uploadImageAsync } from "../Events/previewEvent";
 
-import { TouchableOpacity, Modal, Image } from "react-native";
+import { TouchableOpacity, Modal, Image, View, Text } from "react-native";
 import { Badge } from "react-native-elements";
+import { EvilIcons, Ionicons } from "@expo/vector-icons"
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 
@@ -42,7 +45,8 @@ export default () => {
                     <Badge
                         status="warning"
                         value="+"
-                        containerStyle={{ position: 'absolute', top: 40, right: 10 }}
+                        containerStyle={{ position: 'absolute', top: 0, left: 0 }}
+                        badgeStyle= { styles.storyImg }
                     />
                 </TouchableOpacity>
                 <Modal
@@ -50,7 +54,34 @@ export default () => {
                     transparent={false}
                     visible={modalVisible}
                 >
-                    <Image source = {{ uri: image }} />
+                    <EvilIcons 
+                        name="close" 
+                        size={30} 
+                        color="black" 
+                        style = {{ 
+                            position: 'absolute', 
+                            top: 15, 
+                            shadowColor: "#000",
+                            shadowOffset: {
+                                width: 10,
+                                height: 10,
+                            },
+                            shadowOpacity: 1.0,
+                            shadowRadius: 15,
+                            zIndex: 999 
+                        }}
+                        onPress = {() => setModalVisible(false)}
+                    />
+                    <Image source = {{ uri: image }} style = {{ height: windowHeight, width: windowWidth }} />
+                    <TouchableOpacity onPress = {() => {
+                        uploadImageAsync(image);
+                        setModalVisible(false);
+                    }}>
+                        <View style = {styles.postStoryContainer}>
+                            <Text style = {{ fontSize: 15 }}>Post Story</Text>
+                            <Ionicons name = { "send-sharp" } size = {20} style = {{ marginLeft: 10 }} />
+                        </View>
+                    </TouchableOpacity>
                 </Modal>
             </>
         }
