@@ -1,12 +1,14 @@
 import React from 'react';
 import Event from '../Events/event';
 import { SafeAreaView, ScrollView } from 'react-native';
-import { styles } from '../styles';
 import { StatusBar } from 'expo-status-bar';
 import { Dimensions } from 'react-native';
+import Context from '../Context/context';
 
 const windowHeight = Dimensions.get('window').height;
 export default class extends React.Component{
+  static contextType = Context;
+
   state = {
     ids : []
   }
@@ -16,17 +18,7 @@ export default class extends React.Component{
   }
 
   componentDidMount() {
-    const url = "http://eventcore.herokuapp.com/queryId";
-    fetch(url)
-    .then(res => res.json())
-    .then(resJson => {
-      var currids = [];
-      for(let i = 1; i <= resJson; i++) {
-        currids.push(i);
-      }
-      this.state.ids = currids;
-      this.setState(this.state);
-    })
+    this.setState({ ids : this.context.events })
   }
 
   render() {

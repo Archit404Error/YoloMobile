@@ -1,14 +1,16 @@
 import React from "react";
-import { Platform, View, ScrollView, SafeAreaView } from "react-native";
+import { Platform, ScrollView, SafeAreaView } from "react-native";
 import { SearchBar } from "react-native-elements";
 
 import ChatPreview from './chatPreview';
+import Context from "../Context/context";
 import { styles } from "../styles";
 
 export default class extends React.Component{
+    static contextType = Context;
+
     state = {
-        chatIds: [],
-        dispIds: [],
+        chatData: [],
         filtered: "",
     }
 
@@ -17,16 +19,10 @@ export default class extends React.Component{
     }
 
     componentDidMount() {
-        const url = "http://eventcore.herokuapp.com/queryId";
-        fetch(url)
+        fetch(`http://yolo-backend.herokuapp.com/userChats/${this.context.id}`)
         .then(res => res.json())
         .then(resJson => {
-            var currids = [];
-            for(let i = 1; i <= resJson; i++) {
-                currids.push(i);
-            }
-            this.state.chatIds = currids;
-            this.state.dispIds = currids;
+            this.state.chatData = resJson;
             this.setState(this.state);
         })
     }
@@ -49,8 +45,13 @@ export default class extends React.Component{
                         style = {{ fontSize: 15 }}
                     />
                     {
-                        this.state.dispIds.map((id, index) => {
-                            return <ChatPreview key = {index} navigation = {this.props.navigation} id = {id} display = {this.state.filtered}/>
+                        this.state.chatData.map((json, index) => {
+                            return <ChatPreview 
+                                        key = {index} 
+                                        navigation = {this.props.navigation} 
+                                        id = {json._id} 
+                                        display = {this.state.filtered}
+                                    />
                         })
                     }
                 </ScrollView>

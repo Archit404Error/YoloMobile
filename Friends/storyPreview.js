@@ -21,10 +21,10 @@ export default class extends React.Component {
     componentDidMount() {
         this.state.id = this.props.id;
         if (this.props.forUpload) this.state.forUpload = true;
-        fetch(`http://eventcore.herokuapp.com/getUser?${this.state.id}`)
+        fetch(`http://yolo-backend.herokuapp.com/user/${this.state.id}`)
         .then(res => res.json())
         .then(resJson => {
-            this.state.profPic = resJson[9]; 
+            this.state.profPic = resJson.profilePic; 
             this.setState(this.state)
         })
         this.setState(this.state);

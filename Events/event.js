@@ -3,6 +3,7 @@ import { Text, View, SafeAreaView, Image, TouchableOpacity } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import Context from "../Context/context";
 import { styles } from "../styles";
+import { scheduleEvent } from "./calendarNotif";
 
 export default class extends React.Component {
 
@@ -15,6 +16,7 @@ export default class extends React.Component {
         description: "default description",
         location: "6969 Test Drive",
         tags: [],
+        attendees: [],
         distance: 0,
         visible: true,
     }
@@ -24,37 +26,43 @@ export default class extends React.Component {
     }
 
     componentDidMount() {
-        this.state.id = this.props["id"];
-        this.setState(this.state);
-
-        var url = 'http://eventcore.herokuapp.com/query';
-        fetch(url)
+        this.state.id = this.props.id;
+        fetch(`http://yolo-backend.herokuapp.com/event/${this.props.id}`)
         .then(response => response.json())
-        .then((resList) => {
-            resList = resList[this.state.id - 1];
-            this.state.image = resList[1];
-            this.state.title = resList[2];
-            this.state.description = resList[3];
-            this.state.location = resList[4];
-            this.state.tags = resList[5].split(", ");
-            this.setState(this.state);
-            const locUrl = `http://eventcore.herokuapp.com/distance?${this.context.latitude}&${this.context.longitude}&${this.state.id}`;
-            fetch(locUrl)
+        .then(res => {
+            this.state.image = res.image;
+            this.state.title = res.title;
+            this.state.description = res.description;
+            this.state.location = res.location;
+            this.state.attendees = res.attendees;
+            this.state.tags = res.tags.split(", ");
+            const locUrl = 
+                `http://router.project-osrm.org/route/v1/car/${this.context.longitude},${this.context.latitude};${res.longitude},${res.latitude}`;
+            fetch (locUrl)
             .then(res => res.json())
-            .then(resJson => {
-                this.state.distance = resJson.distance;
+            .then(resJson => resJson.routes[0].legs[0].distance)
+            .then(dist => 0.0006 * dist)
+            .then(miles => {
+                this.state.distance = miles;
                 this.setState(this.state);
             })
-
         })
-
     }
 
     visibilityMutated(action) {
         this.state.visible = false;
         this.setState(this.state);
-        const url = "http://eventcore.herokuapp.com/Archit+Mehta&" + action + "&Pending&" + this.state.id;
-        // fetch(url);
+        fetch("http://yolo-backend.herokuapp.com/eventRSVP", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user: this.context.id,
+                event: this.state.id,
+                action: action
+            })
+        })
     }
 
     render() {
@@ -93,12 +101,13 @@ export default class extends React.Component {
                                 description: this.state.description,
                                 tags: this.state.tags,
                                 location: this.state.location,
+                                attendees: this.state.attendees
                             })
                         }
                     }>
                         <Text style = {styles.subText}>{this.state.description.substr(0, 75) + "...(Read More)"}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.rsvpNoContainer} onPress = { () => { this.visibilityMutated("Rejected") } }>
+                    <TouchableOpacity style={styles.rsvpNoContainer} onPress = { () => { this.visibilityMutated("rejected") } }>
                         <View style = {styles.iconBg}>
                             <AntDesign name="closecircle" size={45} color="red" />
                         </View>
@@ -112,6 +121,7 @@ export default class extends React.Component {
                                 description: this.state.description,
                                 tags: this.state.tags,
                                 location: this.state.location,
+                                attendees: this.state.attendees
                             }) 
                         } 
                     }>
@@ -119,7 +129,12 @@ export default class extends React.Component {
                             <AntDesign name="infocirlce" size={45} color="black" />
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.rsvpYesContainer} onPress = { () => { this.visibilityMutated("Accepted") } }>
+                    <TouchableOpacity style={styles.rsvpYesContainer} onPress = { 
+                        () => { 
+                            scheduleEvent('D52B918A-9B75-414E-82AF-0AF94768A385', Date.now(), new Date('2021-12-21T20:24:00'), this.state.title)
+                            this.visibilityMutated("accepted") 
+                        } 
+                    }>
                         <View style = {styles.iconBg}>
                             <AntDesign name="checkcircle" size={45} color="green" />
                         </View>

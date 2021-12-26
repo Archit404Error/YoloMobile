@@ -22,9 +22,9 @@ export default class extends React.Component {
     }
 
     componentDidMount() {
-        this.state.id = this.props.route.params["id"];
-        this.state.messages = this.props.route.params["messages"];
-        this.state.members = this.props.route.params["members"];
+        this.state.id = this.props.route.params.id;
+        this.state.messages = this.props.route.params.messages;
+        this.state.members = this.props.route.params.members;
         this.state.name = this.context.fullName;
         this.setState(this.state);
     }
@@ -47,9 +47,11 @@ export default class extends React.Component {
                         onContentSizeChange={() => this.scrollView.scrollToEnd({animated: true})}
                         style = {styles.messageScrollView}>
                         {
-                            this.state.messages.split("\n").map((message, index) => {
-                                let messageArr = message.split(/:(.+)/);
-                                const sender = messageArr[0];
+                            this.state.messages.map(async (messageArr, index) => {
+                                const senderId = messageArr[0];
+                                let sender = await fetch(`http://yolo-backend.herokuapp.com/${senderId}`);
+                                sender = await sender.json();
+                                sender = await sender.name;
                                 const msg = messageArr[1];
                                 return(
                                     <View key = {message + " " + index} style = { styles.chatMessageContainer }>
@@ -77,7 +79,7 @@ export default class extends React.Component {
                     </ScrollView>
                 </SafeAreaView>
                 <KeyboardAvoidingView keyboardVerticalOffset = {70} behavior = {'padding'}>
-                    <SendMessage chatId = {this.state.id} sender = {this.state.name} />
+                    <SendMessage chatId = {this.state.id} sender = {this.context.id} />
                 </KeyboardAvoidingView>
             </View>
         )

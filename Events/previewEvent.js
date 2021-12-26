@@ -32,7 +32,7 @@ export const uploadImageAsync = async (uri) => {
 }
 
 const submitEventAsync = async (eventDetails) => {
-    const res = await fetch("http://eventcore.herokuapp.com/addEvent", {
+    const res = await fetch("http://yolo-backend.herokuapp.com/create", {
         method: "POST",
         headers: {
             "Accept": "application/json",

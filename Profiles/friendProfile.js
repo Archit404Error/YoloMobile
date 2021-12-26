@@ -17,15 +17,15 @@ export default class extends React.Component {
     }
 
     componentDidMount() {
-        const url = `http://eventcore.herokuapp.com/getUser?${this.props.route.params.id}`;
+        const url = `http://yolo-backend.herokuapp.com/user/${this.props.route.params.id}`;
         fetch(url)
         .then(res => res.json())
         .then(resJson => {
-            this.state.id = resJson[0];
-            this.state.name = resJson[3];
-            this.state.friends = resJson[7].split(", ");
-            this.state.events = resJson[6].split(", ");
-            this.state.profPic = resJson[9];
+            this.state.id = this.props.route.params.id;
+            this.state.name = resJson.name;
+            this.state.friends = resJson.friends;
+            this.state.events = resJson.acceptedEvents;
+            this.state.profPic = resJson.profilePic;
             this.setState(this.state);
         })
     }

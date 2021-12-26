@@ -21,7 +21,7 @@ export default ({ navigation }) => {
             return;
           }
           let location = await Location.getCurrentPositionAsync({});
-          context.setLocation(location["coords"]["latitude"], location["coords"]["longitude"]);
+          context.setLocation(location.coords.latitude, location.coords.longitude);
           setLoc(location);
         })();
     }, []);
@@ -60,11 +60,20 @@ export default ({ navigation }) => {
                         buttonStyle = {styles.confirmButton}
                         disabled = {loading} 
                         onPress = {() => {
-                            fetch(`http://eventcore.herokuapp.com/auth?${userName}&${password}`)
+                            fetch(`http://yolo-backend.herokuapp.com/auth?`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    username: userName,
+                                    password: password
+                                })
+                            })
                             .then(res => res.json())
                             .then(resJson => {
-                                if (resJson["success"]) {
-                                    context.setCredentials(resJson["user_data"]);
+                                if (JSON.stringify(resJson) != "") {
+                                    context.setCredentials(resJson);
                                     setLoading(true);
                                 } else {
                                     navigation.navigate("Register");

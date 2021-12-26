@@ -14,7 +14,7 @@ export default class extends React.Component {
         desc : "Loading...",
         time : "1:30 - 2:00 pm",
         loc : "Loading...",
-        people : [1, 2, 3]
+        people : []
     };
 
     constructor(props) {
@@ -27,6 +27,7 @@ export default class extends React.Component {
         this.state.image = this.props.image;
         this.state.desc = this.props.description;
         this.state.loc = this.props.location;
+        this.state.people = this.props.attendees;
         this.setState(this.state);
     }
 

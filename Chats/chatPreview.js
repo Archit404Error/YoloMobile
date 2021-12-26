@@ -22,24 +22,20 @@ export default class extends React.Component {
         this.setState(this.state);
 
         const updateSelf = () => {
-            const url = "http://eventcore.herokuapp.com/getChats?" + this.state.id;
-            fetch(url)
+            fetch(`http://yolo-backend.herokuapp.com/chats/${this.state.id}`)
             .then(response => response.json())
-            .then((resList) => {
-                this.state.title = resList[1];
-                this.state.allMessages = resList[2];
-                this.state.recentMsg = this.state.allMessages.split('\n');
-                this.state.recentMsg = this.state.recentMsg[this.state.recentMsg.length - 1];
-                this.state.members = resList[3];
+            .then(res => {
+                this.state.title = res.title;
+                this.state.allMessages = res.messages;
+                this.state.recentMsg = res.messages[res.messages.length - 1][1];
+                this.state.members = res.members;
                 this.setState(this.state);
-            })
-            const imgUrl = "http://eventcore.herokuapp.com/query";
-            fetch(imgUrl)
-            .then(response => response.json())
-            .then((resList) => {
-                resList = resList[this.state.id - 1]
-                this.state.image = resList[1];
-                this.setState(this.state);
+                fetch(`http://yolo-backend.herokuapp.com/events/${res.event}`)
+                .then(resp => resp.json())
+                .then(resJson => {
+                    this.state.image = resJson.image;
+                    this.setState(this.state);
+                })
             })
         }
         

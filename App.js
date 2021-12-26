@@ -1,5 +1,6 @@
 import React from 'react';
 import * as firebase from "firebase";
+import FlashMessage from 'react-native-flash-message';
 import { TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -198,6 +199,7 @@ export default function App() {
     <GlobalState>
       <NavigationContainer>
         <Authentication />
+        <FlashMessage position = "bottom"/>
       </NavigationContainer>
     </GlobalState>
   );

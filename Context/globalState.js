@@ -24,14 +24,14 @@ export default class extends React.Component {
         profile: "",
     }
 
-    setCreds = (userData) => {
-        this.state.id = userData[0];
-        this.state.username = userData[1];
-        this.state.password = userData[2];
-        this.state.name = userData[3];
-        this.state.eventIds = userData[6];
-        this.state.friendIds = userData[7].split(", ");
-        this.state.profile = userData[9];
+    setCreds = (data) => {
+        this.state.id = data._id;
+        this.state.username = data.username;
+        this.state.password = data.password;
+        this.state.name = data.name;
+        this.state.eventIds = data.pendingEvents;
+        this.state.friendIds = data.friends;
+        this.state.profile = data.profilePic;
         this.setState(this.state);
     }
 
@@ -55,12 +55,17 @@ export default class extends React.Component {
         this.setState(this.state);
     }
 
-    friendRequest = (userId, addingFriend) => {
-        fetch(`http://eventcore.herokuapp.com/friendRequest?${userId}&${addingFriend}&${this.state.id}`)
-        .then(res => res.json())
-        .then(resJson => {
-            // eventually do something with this res here
-        });
+    friendRequest = (friendId) => {
+        fetch("http://yolo-backend.herokuapp.com/friendReq", {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify({
+                sender: this.state.id,
+                receiver: friendId
+            })
+        })
     }
 
     render() {

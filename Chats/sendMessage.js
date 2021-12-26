@@ -4,7 +4,17 @@ import { Ionicons } from '@expo/vector-icons';
 import { styles } from "../styles";
 
 async function sendMessage(message, chatId, sender) {
-    fetch(`http://eventcore.herokuapp.com/sendMessage?${message}&${sender}&${chatId}`)
+    fetch(`http://yolo-backend.herokuapp.com/sendMessage`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            sender: sender,
+            chat: chatId,
+            message: message,
+        })
+    })
 }
 
 function showSend(message, chatId, sender, messageFunc) {

@@ -20,12 +20,12 @@ export default class extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://eventcore.herokuapp.com/getUser?' + this.props.id)
+        this.state.id = this.props.id;
+        fetch(`http://yolo-backend.herokuapp.com/user/${this.props.id}`)
         .then(res => {return res.json()})
         .then(resJson => {
-            this.state.id = this.props.id;
-            this.state.name = resJson[3];
-            this.state.profPic = resJson[9];
+            this.state.name = resJson.name;
+            this.state.profPic = resJson.profilePic;
             this.setState(this.state);
         });
     }
@@ -33,7 +33,7 @@ export default class extends React.Component {
     setFriended(friendedState) {
         this.state.friended = friendedState;
         this.setState(this.state);
-        this.context.sendFriendReq(this.state.id, friendedState);
+        this.context.sendFriendReq(this.state.id);
     }
 
     render() {
