@@ -40,7 +40,6 @@ const submitEventAsync = async (eventDetails) => {
         },
         body: JSON.stringify(eventDetails)
     });
-    console.log(res);
 }
 
 export default ({ navigation }) => {

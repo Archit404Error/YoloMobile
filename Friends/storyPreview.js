@@ -22,11 +22,11 @@ export default class extends React.Component {
         this.state.id = this.props.id;
         if (this.props.forUpload) this.state.forUpload = true;
         fetch(`http://yolo-backend.herokuapp.com/user/${this.state.id}`)
-        .then(res => res.json())
-        .then(resJson => {
-            this.state.profPic = resJson.profilePic; 
-            this.setState(this.state)
-        })
+            .then(res => res.json())
+            .then(resJson => {
+                this.state.profPic = resJson.profilePic; 
+                this.setState(this.state)
+            })
         this.setState(this.state);
     }
 

@@ -10,8 +10,8 @@ export default class extends React.Component {
 
     state = {
         id: -1,
-        messages: "Loading...\n",
-        members: "Loading...",
+        messages: [],
+        members: {},
         name: "",
         handler: -1,
         lastSender: "",
@@ -24,18 +24,19 @@ export default class extends React.Component {
     componentDidMount() {
         this.state.id = this.props.route.params.id;
         this.state.messages = this.props.route.params.messages;
-        this.state.members = this.props.route.params.members;
         this.state.name = this.context.fullName;
         this.setState(this.state);
-    }
-
-    static getDerivedStateFromProps(props, state) {
-        console.log(state.name)
-        state.id = props.route.params["id"];
-        state.messages = props.route.params["messages"];
-        state.members = props.route.params["members"];
-        console.log(state);
-        return state;
+        fetch(`http://yolo-backend.herokuapp.com/chatUsers/${this.state.id}`)
+            .then(resp => resp.json())
+            .then(res => {
+                res.memberDetails.forEach(member => {
+                    this.state.members[member._id] = {
+                        name: member.name, 
+                        pic: member.profilePic
+                    }
+                });
+                this.setState(this.state);
+            })
     }
     
     render() {
@@ -47,14 +48,14 @@ export default class extends React.Component {
                         onContentSizeChange={() => this.scrollView.scrollToEnd({animated: true})}
                         style = {styles.messageScrollView}>
                         {
-                            this.state.messages.map(async (messageArr, index) => {
-                                const senderId = messageArr[0];
-                                let sender = await fetch(`http://yolo-backend.herokuapp.com/${senderId}`);
-                                sender = await sender.json();
-                                sender = await sender.name;
+                            this.state.messages.map((messageArr, index) => {
+                                let sender = '';
+                                try {
+                                    sender = this.state.members[messageArr[0]].name;
+                                } catch (err) {}
                                 const msg = messageArr[1];
                                 return(
-                                    <View key = {message + " " + index} style = { styles.chatMessageContainer }>
+                                    <View key = {msg + " " + index} style = { styles.chatMessageContainer }>
                                         {   
                                             (() => {
                                                 if (this.state.lastSender != sender) {

@@ -8,8 +8,8 @@ export default class extends React.Component {
         id: -1,
         name: 'Sample Username',
         profPic: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
-        friends: [1, 2, 3],
-        events: [1, 2, 3],
+        friends: [],
+        events: [],
     }
 
     constructor(props) {
@@ -19,15 +19,15 @@ export default class extends React.Component {
     componentDidMount() {
         const url = `http://yolo-backend.herokuapp.com/user/${this.props.route.params.id}`;
         fetch(url)
-        .then(res => res.json())
-        .then(resJson => {
-            this.state.id = this.props.route.params.id;
-            this.state.name = resJson.name;
-            this.state.friends = resJson.friends;
-            this.state.events = resJson.acceptedEvents;
-            this.state.profPic = resJson.profilePic;
-            this.setState(this.state);
-        })
+            .then(res => res.json())
+            .then(resJson => {
+                this.state.id = this.props.route.params.id;
+                this.state.name = resJson.name;
+                this.state.friends = resJson.friends;
+                this.state.events = resJson.acceptedEvents;
+                this.state.profPic = resJson.profilePic;
+                this.setState(this.state);
+            })
     }
 
     render() {

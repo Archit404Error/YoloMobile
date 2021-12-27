@@ -22,7 +22,7 @@ export default class extends React.Component {
     componentDidMount() {
         this.state.id = this.context.id;
         this.state.name = this.context.fullName;
-        this.state.events = this.context.events.split(", ");
+        this.state.events = this.context.events;
         this.state.friends = this.context.friends;
         this.state.profPic = this.context.profilePic;
         this.setState(this.state);

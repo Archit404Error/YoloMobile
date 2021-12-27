@@ -20,11 +20,11 @@ export default class extends React.Component{
 
     componentDidMount() {
         fetch(`http://yolo-backend.herokuapp.com/userChats/${this.context.id}`)
-        .then(res => res.json())
-        .then(resJson => {
-            this.state.chatData = resJson;
-            this.setState(this.state);
-        })
+            .then(res => res.json())
+            .then(resJson => {
+                this.state.chatData = resJson;
+                this.setState(this.state);
+            })
     }
 
     render() {

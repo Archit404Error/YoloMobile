@@ -4,11 +4,11 @@ import * as Calendar from 'expo-calendar';
 export const scheduleEvent = async (calendar, start, end, title) => {
     const { status } = await Calendar.requestCalendarPermissionsAsync();
     if (status === 'granted') {
-      const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT);
-      console.log('Here are all your calendars:');
-      console.log({ calendars });
+        const calendars = await Calendar.getCalendarsAsync(Calendar.EntityTypes.EVENT);
+        console.log('Here are all your calendars:');
+        console.log({ calendars });
     }
-    await Calendar.createEventAsync(calendar, 
+    await Calendar.createEventAsync(calendar,
         {
             startDate: start,
             endDate: end,

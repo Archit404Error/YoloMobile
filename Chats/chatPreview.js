@@ -22,21 +22,16 @@ export default class extends React.Component {
         this.setState(this.state);
 
         const updateSelf = () => {
-            fetch(`http://yolo-backend.herokuapp.com/chats/${this.state.id}`)
-            .then(response => response.json())
-            .then(res => {
-                this.state.title = res.title;
-                this.state.allMessages = res.messages;
-                this.state.recentMsg = res.messages[res.messages.length - 1][1];
-                this.state.members = res.members;
-                this.setState(this.state);
-                fetch(`http://yolo-backend.herokuapp.com/events/${res.event}`)
-                .then(resp => resp.json())
-                .then(resJson => {
-                    this.state.image = resJson.image;
+            fetch(`http://yolo-backend.herokuapp.com/chatDetails/${this.state.id}`)
+                .then(response => response.json())
+                .then(res => {
+                    this.state.allMessages = res.messages;
+                    this.state.recentMsg = res.messages[res.messages.length - 1][1];
+                    this.state.members = res.members;
+                    this.state.title = res.eventDetails.title;
+                    this.state.image = res.eventDetails.image;
                     this.setState(this.state);
                 })
-            })
         }
         
         updateSelf();

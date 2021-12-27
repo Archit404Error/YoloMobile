@@ -22,12 +22,12 @@ export default class extends React.Component {
     componentDidMount() {
         this.state.id = this.props.id;
         fetch(`http://yolo-backend.herokuapp.com/user/${this.props.id}`)
-        .then(res => {return res.json()})
-        .then(resJson => {
-            this.state.name = resJson.name;
-            this.state.profPic = resJson.profilePic;
-            this.setState(this.state);
-        });
+            .then(res => res.json())
+            .then(resJson => {
+                this.state.name = resJson.name;
+                this.state.profPic = resJson.profilePic;
+                this.setState(this.state);
+            });
     }
 
     setFriended(friendedState) {

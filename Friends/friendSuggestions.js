@@ -1,13 +1,16 @@
 import React from "react";
 import { Text, SafeAreaView, ScrollView, View } from "react-native";
+import Context from "../Context/context";
 
 import Friend from './friend';
 import Story from './storyPreview';
 import UploadStory from "./uploadStory";
 
 export default class extends React.Component {
+    static contextType = Context;
+
     state = {
-        friends: [1, 2, 3]
+        friends: []
     }
 
     constructor(props) {
@@ -15,15 +18,7 @@ export default class extends React.Component {
     }
 
     componentDidMount() {
-        /*
-        const url = "http://tobeinserted";
-        fetch(url)
-        .then(res => res.json())
-        .then(resJson => {
-            this.state.friends = resJson["suggestions"];
-            this.setState(this.state);
-        })
-        */
+        this.setState({ friends: this.context.friends })
     }
 
     render() {

@@ -70,15 +70,15 @@ export default ({ navigation }) => {
                                     password: password
                                 })
                             })
-                            .then(res => res.json())
-                            .then(resJson => {
-                                if (JSON.stringify(resJson) != "") {
-                                    context.setCredentials(resJson);
-                                    setLoading(true);
-                                } else {
-                                    navigation.navigate("Register");
-                                }
-                            })
+                                .then(res => res.json())
+                                .then(resJson => {
+                                    if (JSON.stringify(resJson) != "") {
+                                        context.setCredentials(resJson);
+                                        setLoading(true);
+                                    } else {
+                                        navigation.navigate("Register");
+                                    }
+                                })
                         }}
                     />
                 </View>
