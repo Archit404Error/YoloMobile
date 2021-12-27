@@ -72,7 +72,7 @@ export default ({ navigation }) => {
                             })
                                 .then(res => res.json())
                                 .then(resJson => {
-                                    if (JSON.stringify(resJson) != "") {
+                                    if (JSON.stringify(resJson) != "{}") {
                                         context.setCredentials(resJson);
                                         setLoading(true);
                                     } else {

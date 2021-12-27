@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { View, Text, ActivityIndicator } from "react-native";
 import { Input, Button } from "react-native-elements";
 import { styles } from "../styles";
+import * as Location from 'expo-location';
 
 import Context from '../Context/context';
 
@@ -46,21 +47,22 @@ export default ({navigation, route}) => {
                 <Input 
                     placeholder = "Name" 
                     value = {name} 
-                    onChange = {currName => setName(currName)} 
+                    onChangeText = {currName => setName(currName)} 
                 />
                 <Input 
                     placeholder = "Username" 
                     value = {username}
-                    onChange = {currUser => setUsername(currUser)}
+                    onChangeText = {currUser => setUsername(currUser)}
                 />
                 <Input 
                     placeholder = "Password"
                     value = {password}
-                    onChange = {currPass => setPassword(currPass)}
+                    onChangeText = {currPass => setPassword(currPass)}
                 />
                 <Button 
                     title = {"Register"}
                     buttonStyle = {styles.confirmButton} 
+                    disabled = {loading}
                     onPress = {
                         () => {
                             fetch("http://yolo-backend.herokuapp.com/register", {
@@ -74,8 +76,9 @@ export default ({navigation, route}) => {
                                     name: name
                                 })
                             })
-                                .then(res => {
-                                    context.setCredentials(res);
+                                .then(res => res.json())
+                                .then(resJson => {
+                                    context.setCredentials(resJson);
                                     setLoading(true);
                                 })
                         }

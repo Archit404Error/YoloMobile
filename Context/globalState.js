@@ -7,7 +7,7 @@ export default class extends React.Component {
         username: '',
         password: '',
         name: '',
-        eventIds: '',
+        eventIds: [],
         location: {
             latitude: 0,
             longitude: 0,
