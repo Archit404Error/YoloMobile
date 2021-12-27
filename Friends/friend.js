@@ -33,7 +33,7 @@ export default class extends React.Component {
     setFriended(friendedState) {
         this.state.friended = friendedState;
         this.setState(this.state);
-        this.context.sendFriendReq(this.state.id);
+        this.context.sendFriendReq(this.state.id, friended);
     }
 
     render() {

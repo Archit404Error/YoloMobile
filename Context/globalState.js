@@ -55,7 +55,7 @@ export default class extends React.Component {
         this.setState(this.state);
     }
 
-    friendRequest = (friendId) => {
+    friendRequest = (friendId, friended) => {
         fetch("http://yolo-backend.herokuapp.com/friendReq", {
             method: "POST",
             headers: {
@@ -63,7 +63,8 @@ export default class extends React.Component {
             },
             body: JSON.stringify({
                 sender: this.state.id,
-                receiver: friendId
+                receiver: friendId,
+                wantToFriend: friended
             })
         })
     }

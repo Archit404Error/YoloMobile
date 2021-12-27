@@ -76,7 +76,10 @@ export default ({ navigation }) => {
                                         context.setCredentials(resJson);
                                         setLoading(true);
                                     } else {
-                                        navigation.navigate("Register");
+                                        navigation.navigate("Register", {
+                                            username: userName,
+                                            password: password
+                                        });
                                     }
                                 })
                         }}
