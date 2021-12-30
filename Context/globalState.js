@@ -1,5 +1,7 @@
 import React from 'react';
+import * as Notifications from 'expo-notifications';
 import Context from './context';
+import Constants from 'expo-constants';
 
 export default class extends React.Component {
     state = {
@@ -55,6 +57,32 @@ export default class extends React.Component {
         this.setState(this.state);
     }
 
+    registerPushNotifs = async () => {
+        if (!Constants.isDevice) {
+            console.log("Must be physics device");
+        }
+        try {
+            const statusResult = await Notifications.getPermissionsAsync();
+            const askResult = statusResult.status !== 'granted'
+                ? await Notifications.requestPermissionsAsync()
+                : statusResult;
+            const tokenData = (await Notifications.getExpoPushTokenAsync()).data;
+            fetch("http://yolo-backend.herokuapp.com/registerPushToken", {
+                method: "POST",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                body: JSON.stringify({
+                    user: this.state.id,
+                    token: tokenData
+                })
+            })
+            console.log(tokenData);
+        } catch (error) {
+            return Promise.reject("Couldn't check notifications permissions");
+        }
+    }    
+
     friendRequest = (friendId, friended) => {
         fetch("http://yolo-backend.herokuapp.com/friendReq", {
             method: "POST",
@@ -87,7 +115,8 @@ export default class extends React.Component {
                     setLocation: this.setLoc,
                     createEventText: this.setEventText,
                     createEventImage: this.setEventImage,
-                    sendFriendReq: this.friendRequest
+                    sendFriendReq: this.friendRequest,
+                    registerTokenAsync: this.registerPushNotifs
                 }}
             >
                 { this.props.children }

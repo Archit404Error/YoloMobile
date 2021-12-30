@@ -10,6 +10,7 @@ export default ({ navigation, route }) => {
             description = {route.params.description}
             location = {route.params.location}
             attendees = {route.params.attendees}
+            navigation = {navigation}
         />
     )
 }

@@ -58,7 +58,7 @@ export default ({ navigation }) => {
                     <Button 
                         title = { "Login / Register" } 
                         buttonStyle = {styles.confirmButton}
-                        disabled = {loading} 
+                        disabled = {loading || userName == '' || password == ''} 
                         onPress = {() => {
                             fetch(`http://yolo-backend.herokuapp.com/auth?`, {
                                 method: 'POST',

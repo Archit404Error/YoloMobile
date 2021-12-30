@@ -18,6 +18,7 @@ export default class extends React.Component{
   }
 
   componentDidMount() {
+    this.context.registerTokenAsync();
     this.setState({ ids : this.context.events })
   }
 
