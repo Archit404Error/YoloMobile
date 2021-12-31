@@ -1,6 +1,9 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
+import socketio from "socket.io-client";
 import { styles } from "../styles";
+
+var socket;
 
 export default class extends React.Component {
     state = {
@@ -10,7 +13,6 @@ export default class extends React.Component {
         recentMsg: 'Loading...',
         members: 'Loading...',
         image: 'Loading...',
-        handler: -1,
     }
 
     constructor(props) {
@@ -21,26 +23,37 @@ export default class extends React.Component {
         this.state.id = this.props.id;
         this.setState(this.state);
 
-        const updateSelf = () => {
+        socket = socketio('http://yolo-backend.herokuapp.com/', {
+            query: `chatId=${this.state.id}`
+        }); 
+        
+        socket.on("messageSent", () => {
+            console.log("client received event");
             fetch(`http://yolo-backend.herokuapp.com/chatDetails/${this.state.id}`)
                 .then(response => response.json())
                 .then(res => {
                     this.state.allMessages = res.messages;
                     this.state.recentMsg = res.messages[res.messages.length - 1][1];
-                    this.state.members = res.members;
-                    this.state.title = res.eventDetails.title;
-                    this.state.image = res.eventDetails.image;
                     this.setState(this.state);
                 })
-        }
+        })
+
+        fetch(`http://yolo-backend.herokuapp.com/chatDetails/${this.state.id}`)
+            .then(response => response.json())
+            .then(res => {
+                this.state.allMessages = res.messages;
+                this.state.recentMsg = res.messages[res.messages.length - 1][1];
+                this.state.members = res.members;
+                this.state.title = res.eventDetails.title;
+                this.state.image = res.eventDetails.image;
+                this.setState(this.state);
+            })
         
-        updateSelf();
-        this.state.handler = setInterval(() => updateSelf(), 100);
         this.setState(this.state);
     }
 
     componentWillUnmount() {
-        clearInterval(this.state.handler);
+        console.log("Disconnecting...")
     }
 
     render() {
@@ -55,7 +68,8 @@ export default class extends React.Component {
                         title: this.state.title,
                         messages: this.state.allMessages,
                         members: this.state.members,
-                        image: this.state.image
+                        image: this.state.image,
+                        socket: socket
                     })
                 }
             }>

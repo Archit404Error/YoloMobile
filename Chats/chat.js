@@ -26,6 +26,14 @@ export default class extends React.Component {
         this.state.messages = this.props.route.params.messages;
         this.state.name = this.context.fullName;
         this.setState(this.state);
+        this.props.route.params.socket.on("messageSent", () => {
+            fetch(`http://yolo-backend.herokuapp.com/chatDetails/${this.state.id}`)
+                .then(response => response.json())
+                .then(res => {
+                    this.state.messages = res.messages;
+                    this.setState(this.state);
+                })
+        })
         fetch(`http://yolo-backend.herokuapp.com/chatUsers/${this.state.id}`)
             .then(resp => resp.json())
             .then(res => {
@@ -38,7 +46,7 @@ export default class extends React.Component {
                 this.setState(this.state);
             })
     }
-    
+
     render() {
         return (
             <View style = {styles.messageContainer}>
@@ -79,9 +87,13 @@ export default class extends React.Component {
                         }
                     </ScrollView>
                 </SafeAreaView>
-                <KeyboardAvoidingView keyboardVerticalOffset = {70} behavior = {'padding'}>
-                    <SendMessage chatId = {this.state.id} sender = {this.context.id} />
-                </KeyboardAvoidingView>
+                <KeyboardAvoidingView behavior = {"padding"} keyboardVerticalOffset = {70}>
+                    <SendMessage 
+                        chatId = {this.state.id} 
+                        sender = {this.context.id} 
+                        socket = {this.props.route.params.socket} 
+                    />
+                </KeyboardAvoidingView>    
             </View>
         )
     }

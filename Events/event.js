@@ -132,7 +132,7 @@ export default class extends React.Component {
                     </TouchableOpacity>
                     <TouchableOpacity style = {styles.rsvpYesContainer} onPress = {
                         () => {
-                            scheduleEvent('D52B918A-9B75-414E-82AF-0AF94768A385', Date.now(), new Date('2021-12-21T20:24:00'), this.state.title)
+                            scheduleEvent('D52B918A-9B75-414E-82AF-0AF94768A385', Date.now(), new Date('2022-12-21T20:24:00'), this.state.title)
                             this.visibilityMutated("accepted")
                         }
                     }>

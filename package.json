@@ -17,6 +17,7 @@
     "expo-apple-authentication": "~3.2.1",
     "expo-calendar": "~9.2.2",
     "expo-cli": "^4.12.1",
+    "expo-constants": "~11.0.1",
     "expo-image-picker": "~10.2.2",
     "expo-location": "~12.1.2",
     "expo-notifications": "~0.12.3",
@@ -30,6 +31,7 @@
     "react-native-elements": "^3.4.2",
     "react-native-flash-message": "^0.2.0",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-keyboard-aware-scrollview": "^2.1.0",
     "react-native-pager-view": "5.0.12",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
@@ -37,7 +39,7 @@
     "react-native-web": "~0.13.12",
     "react-navigation": "^4.4.4",
     "react-navigation-stack": "^2.10.4",
-    "expo-constants": "~11.0.1"
+    "socket.io-client": "^4.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

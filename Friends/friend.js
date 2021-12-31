@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, Image } from "react-native";
 import { Feather } from '@expo/vector-icons';
 import { styles } from "../styles";
 import Context from "../Context/context";
+import { NavigationActions } from "react-navigation";
 
 export default class extends React.Component {
 
@@ -33,7 +34,7 @@ export default class extends React.Component {
     setFriended(friendedState) {
         this.state.friended = friendedState;
         this.setState(this.state);
-        this.context.sendFriendReq(this.state.id, friended);
+        this.context.sendFriendReq(this.state.id, this.state.friended);
     }
 
     render() {
@@ -48,7 +49,15 @@ export default class extends React.Component {
             }}>
                 <Image source = {{ uri: this.state.profPic }} style = {{ width: 40, height: 40, borderRadius: 50 }} />
                 <TouchableOpacity onPress = {() => {
-                    this.props.navigation.navigate("View Profile", {id: this.state.id})
+                    this.props.navigation.navigate(
+                        "Friends", 
+                        {
+                            screen: "View Profile",
+                            params: {
+                                id: this.state.id
+                            }
+                        },
+                    )
                 }}>
                     <Text style = {{ color: 'black', marginTop: 5, marginLeft: 10, marginRight: 10, fontSize: 20 }}>
                         {this.state.name}
