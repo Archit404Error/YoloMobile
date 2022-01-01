@@ -10,7 +10,8 @@ export default class extends React.Component {
     static contextType = Context;
 
     state = {
-        friends: []
+        friends: [],
+        stories: [],
     }
 
     constructor(props) {
@@ -19,6 +20,12 @@ export default class extends React.Component {
 
     componentDidMount() {
         this.setState({ friends: this.context.friends })
+        fetch(`http://yolo-backend.herokuapp.com/storyIds/${this.context.id}`)
+            .then(resp => resp.json())
+            .then(res => {
+                this.state.stories = res;
+                this.setState(this.state);
+            })
     }
 
     render() {
@@ -28,9 +35,9 @@ export default class extends React.Component {
                     <ScrollView horizontal = {true}>
                         <UploadStory />
                         {
-                            this.state.friends.map((id, index) => {
+                            this.state.stories.map((storyObj, index) => {
                                 return (
-                                    <Story key = {index} id = {id} />
+                                    <Story key = {index} id = {storyObj._id} image = {storyObj.storyImage} />
                                 )
                             })
                         }

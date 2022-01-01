@@ -266,4 +266,8 @@ export const styles = StyleSheet.create({
         right: 10,
         zIndex: 999
     },
+    storyContent: {
+        width: windowWidth, 
+        height: windowHeight - 10
+    }
 })

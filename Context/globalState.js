@@ -23,6 +23,7 @@ export default class extends React.Component {
             other: '',
         },
         friendIds: [],
+        friendReqs: [],
         profile: "",
     }
 
@@ -33,6 +34,7 @@ export default class extends React.Component {
         this.state.name = data.name;
         this.state.eventIds = data.pendingEvents;
         this.state.friendIds = data.friends;
+        this.state.friendReqs = data.friendReqs;
         this.state.profile = data.profilePic;
         this.setState(this.state);
     }
@@ -110,6 +112,7 @@ export default class extends React.Component {
                     longitude: this.state.location.longitude,
                     eventDetails: this.state.eventCreationDetails,
                     friends: this.state.friendIds,
+                    friendRequests: this.state.friendReqs,
                     profilePic: this.state.profile,
                     setCredentials: this.setCreds,
                     setLocation: this.setLoc,

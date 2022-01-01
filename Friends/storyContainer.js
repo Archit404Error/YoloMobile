@@ -1,8 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { Text, View, Modal, TouchableOpacity } from "react-native";
+import { Image, View, Modal, TouchableOpacity } from "react-native";
 import Context from "../Context/context";
 import { EvilIcons } from "@expo/vector-icons"
+import { styles } from "../styles";
 
 export default class extends React.Component {
 
@@ -34,6 +35,7 @@ export default class extends React.Component {
     }
     
     render() {
+        console.log(this.props.image);
         return (
             <Modal
                 animationType="slide"
@@ -50,6 +52,7 @@ export default class extends React.Component {
                         <EvilIcons name="close" size={30} color="black" />
                     </TouchableOpacity>
                 </View>
+                <Image source = {{ uri: this.props.image }} style = {styles.storyContent} />
             </Modal>
         )
     }

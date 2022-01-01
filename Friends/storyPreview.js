@@ -42,7 +42,7 @@ export default class extends React.Component {
                         source = {{ uri: this.state.profPic }} 
                     />
                 </TouchableOpacity>
-                <StoryContainer id = {this.state.id} visible = {this.state.visible} />
+                <StoryContainer id = {this.state.id} visible = {this.state.visible} image = {this.props.image} />
             </>
         )
     }
