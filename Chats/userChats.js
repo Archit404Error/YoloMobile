@@ -18,15 +18,6 @@ export default class extends React.Component{
         super(props);
     }
 
-    componentDidMount() {
-        fetch(`http://yolo-backend.herokuapp.com/userChats/${this.context.id}`)
-            .then(res => res.json())
-            .then(resJson => {
-                this.state.chatData = resJson;
-                this.setState(this.state);
-            })
-    }
-
     render() {
         return (
             <SafeAreaView style = {styles.fullScreenContainer}>
@@ -45,11 +36,11 @@ export default class extends React.Component{
                         style = {{ fontSize: 15 }}
                     />
                     {
-                        this.state.chatData.map((json, index) => {
+                        this.context.chats.map((id, index) => {
                             return <ChatPreview 
                                         key = {index} 
                                         navigation = {this.props.navigation} 
-                                        id = {json._id} 
+                                        id = {id} 
                                         display = {this.state.filtered}
                                     />
                         })

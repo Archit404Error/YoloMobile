@@ -1,5 +1,6 @@
 import React from 'react';
 import * as Notifications from 'expo-notifications';
+import socketio from "socket.io-client";
 import Context from './context';
 import Constants from 'expo-constants';
 
@@ -22,9 +23,11 @@ export default class extends React.Component {
             tags: '',
             other: '',
         },
+        chatIds: [],
         friendIds: [],
         friendReqs: [],
         profile: "",
+        socket: {},
     }
 
     setCreds = (data) => {
@@ -35,7 +38,13 @@ export default class extends React.Component {
         this.state.eventIds = data.pendingEvents;
         this.state.friendIds = data.friends;
         this.state.friendReqs = data.friendReqs;
+        this.state.chatIds = data.chats;
         this.state.profile = data.profilePic;
+        let socket = socketio('http://yolo-backend.herokuapp.com/', {
+            query: `chatList=${data.chats}`
+        }); 
+
+        this.state.socket = socket;
         this.setState(this.state);
     }
 
@@ -79,7 +88,6 @@ export default class extends React.Component {
                     token: tokenData
                 })
             })
-            console.log(tokenData);
         } catch (error) {
             return Promise.reject("Couldn't check notifications permissions");
         }
@@ -108,18 +116,20 @@ export default class extends React.Component {
                     password: this.state.password,
                     fullName: this.state.name,
                     events: this.state.eventIds,
+                    chats: this.state.chatIds,
                     latitude: this.state.location.latitude,
                     longitude: this.state.location.longitude,
                     eventDetails: this.state.eventCreationDetails,
                     friends: this.state.friendIds,
                     friendRequests: this.state.friendReqs,
                     profilePic: this.state.profile,
+                    socket: this.state.socket,
                     setCredentials: this.setCreds,
                     setLocation: this.setLoc,
                     createEventText: this.setEventText,
                     createEventImage: this.setEventImage,
                     sendFriendReq: this.friendRequest,
-                    registerTokenAsync: this.registerPushNotifs
+                    registerTokenAsync: this.registerPushNotifs,
                 }}
             >
                 { this.props.children }

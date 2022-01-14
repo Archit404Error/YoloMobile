@@ -35,7 +35,6 @@ export default class extends React.Component {
     }
     
     render() {
-        console.log(this.props.image);
         return (
             <Modal
                 animationType="slide"

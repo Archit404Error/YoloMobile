@@ -33,7 +33,7 @@ export default class extends React.Component {
 
     render() {
         return (
-            <SafeAreaView style = {styles.container}>
+            <SafeAreaView style = {styles.messageContainer}>
                 <ScrollView>
                     <Image source = {{uri: this.state.image}} style = {styles.detailsImg} />
                     <Text style = {styles.title}>{this.state.title}</Text>
@@ -54,7 +54,7 @@ export default class extends React.Component {
                     }
                     <View style = {{ height: 50 }}></View>
                 </ScrollView>
-                <View style = {{ position: 'absolute', top: windowHeight - 150 }}>
+                <View>
                     <View style = {{ flexDirection: 'row' }}>
                         <TouchableOpacity style = {styles.rsvpNoBlock}>
                             <Text style = {{ color: 'white' }}>No thanks</Text>

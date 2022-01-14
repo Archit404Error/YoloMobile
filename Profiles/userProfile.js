@@ -36,6 +36,7 @@ export default class extends React.Component {
                 events = {this.state.events}
                 friends = {this.state.friends}
                 profilePic = {this.state.profPic}
+                navigation = {this.props.navigation}
             />
         );
     }

@@ -1,3 +1,7 @@
+/**
+ * General component for rendering user or friend profiles
+ */
+
 import React from "react";
 import { SafeAreaView, ScrollView, Text, Image } from "react-native"
 import { styles } from "../styles";
@@ -18,7 +22,7 @@ export default class extends React.Component {
                     <Text style = {styles.profTitle}>{this.props.name}</Text>
                     {
                         this.props.friends.map((friendId, index) => {
-                            return <Friend key = {index} id = {friendId} />
+                            return <Friend key = {index} id = {friendId} navigation = {this.props.navigation} />
                         })
                     }
                     {

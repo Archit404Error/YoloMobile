@@ -2,13 +2,23 @@ import React from 'react';
 import { Dimensions } from 'react-native';
 import { StyleSheet } from "react-native";
 
+// Height of the entire phone window
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
+
+// Height of screen minus nav bar
+export const screenWidth = Dimensions.get('screen').width;
+export const screenHeight = Dimensions.get('screen').height;
 
 export const styles = StyleSheet.create({
     container: {
         backgroundColor: "white",
         borderRadius: 0,
+    },
+    flexContainer: {
+        backgroundColor: "white",
+        borderRadius: 0,
+        flex: 1,
     },
     fullScreenContainer: {
         backgroundColor: "white",
@@ -34,10 +44,17 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 1,
         padding: 0,
     },
-    rsvpNoContainer: {
+    rsvpContainer: {
         position: 'absolute',
-        top: 350,
-        left: 5,
+        top: windowHeight / 1.85,
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: windowWidth - 10,
+        alignSelf: 'center',
+    },
+    rsvpNoContainer: {
+        flex: 1,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -45,8 +62,8 @@ export const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-
         elevation: 5,
+        alignItems: 'flex-start'
     },
     rsvpNoBlock: {
         width: windowWidth / 2, 
@@ -55,9 +72,7 @@ export const styles = StyleSheet.create({
         padding: 10,
     },
     rsvpYesContainer: {
-        position: 'absolute',
-        top: 350,
-        right: 5,
+        flex: 1,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -65,8 +80,8 @@ export const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-
         elevation: 5,
+        alignItems: 'flex-end'
     },
     rsvpYesBlock: {
         width: windowWidth / 2, 
@@ -75,9 +90,7 @@ export const styles = StyleSheet.create({
         padding: 10,
     },
     infoContainer: {
-        position: 'absolute',
-        top: 350,
-        right: windowWidth / 2 - 22.5,
+        flex: 1,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -85,8 +98,8 @@ export const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-
         elevation: 5,
+        alignItems: 'center'
     },
     iconBg: {
         backgroundColor: 'white',
@@ -181,7 +194,7 @@ export const styles = StyleSheet.create({
     },
     eventImg: {
         width: '100%',
-        height: windowHeight / 1.75 - 5,
+        height: windowHeight / 1.75,
         alignSelf: 'center'
     },
     detailsImg: {

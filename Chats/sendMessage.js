@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, TextInput, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from "../styles";
+import Context from "../Context/context";
 
 async function sendMessage(message, chatId, sender, socket) {
     const messageData = {
@@ -35,8 +36,9 @@ function showSend(message, chatId, sender, messageFunc, socket) {
     return <></>
 }
 
-export default ({ chatId, sender, socket }) => {
+export default ({ chatId, sender }) => {
     const [message, setMessage] = useState("");
+    const context = useContext(Context);
     return (
         <View style = {{ flexDirection: 'row' }}>
             <TextInput 
@@ -45,12 +47,12 @@ export default ({ chatId, sender, socket }) => {
                 returnKeyType = {"send"} 
                 onChangeText = {text => setMessage(text)}
                 onSubmitEditing = {() => {
-                    sendMessage(message, chatId, sender, socket);
+                    sendMessage(message, chatId, sender, context.socket);
                     setMessage("");
                 }}
                 value = {message}
             />
-        { showSend(message, chatId, sender, setMessage, socket) }
+        { showSend(message, chatId, sender, setMessage, context.socket) }
         </View>
     )
 }

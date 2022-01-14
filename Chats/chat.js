@@ -21,30 +21,29 @@ export default class extends React.Component {
         super(props);
     }
 
-    componentDidMount() {
-        this.state.id = this.props.route.params.id;
-        this.state.messages = this.props.route.params.messages;
-        this.state.name = this.context.fullName;
-        this.setState(this.state);
-        this.props.route.params.socket.on("messageSent", () => {
+    handleChatUpdate = (chatId) => {
+        if (chatId == this.state.id) {
             fetch(`http://yolo-backend.herokuapp.com/chatDetails/${this.state.id}`)
                 .then(response => response.json())
                 .then(res => {
                     this.state.messages = res.messages;
+                    this.state.memberDetails = res.members;
                     this.setState(this.state);
                 })
-        })
-        fetch(`http://yolo-backend.herokuapp.com/chatUsers/${this.state.id}`)
-            .then(resp => resp.json())
-            .then(res => {
-                res.memberDetails.forEach(member => {
-                    this.state.members[member._id] = {
-                        name: member.name, 
-                        pic: member.profilePic
-                    }
-                });
-                this.setState(this.state);
-            })
+        }
+    }
+
+    componentDidMount() {
+        this.state.id = this.props.route.params.id;
+        this.state.messages = this.props.route.params.messages;
+        this.state.memberDetails = this.props.route.params.members;
+        this.state.name = this.context.username;
+        this.setState(this.state);
+        this.context.socket.on("messageSent", this.handleChatUpdate);
+    }
+
+    componentWillUnmount() {
+        this.context.socket.off("messageSent", this.handleChatUpdate);
     }
 
     render() {
@@ -56,18 +55,16 @@ export default class extends React.Component {
                         onContentSizeChange={() => this.scrollView.scrollToEnd({animated: true})}
                         style = {styles.messageScrollView}>
                         {
-                            this.state.messages.map((messageArr, index) => {
-                                let sender = '';
-                                try {
-                                    sender = this.state.members[messageArr[0]].name;
-                                } catch (err) {}
-                                const msg = messageArr[1];
+                            this.state.messages.map((messageObj, index) => {
+                                let sender = messageObj.sender;
                                 return(
-                                    <View key = {msg + " " + index} style = { styles.chatMessageContainer }>
+                                    <View key = {index} style = { styles.chatMessageContainer }>
                                         {   
                                             (() => {
                                                 if (this.state.lastSender != sender) {
                                                     this.state.lastSender = sender;
+                                                    if (index == this.state.messages.length) 
+                                                        this.state.lastSender = ""
                                                     return (
                                                         <View style = { sender == this.state.name ? styles.userChatName : styles.otherUserChatName }>
                                                             <Text>{sender}</Text>
@@ -78,7 +75,7 @@ export default class extends React.Component {
                                         }
                                         <View style = { sender == this.state.name ? styles.userChatMessage : styles.chatMessage }>
                                             <Text style = {sender == this.state.name ? { color: 'white' } : { color: 'black' }}>
-                                                {msg}
+                                                {messageObj.message}
                                             </Text>
                                         </View>
                                     </View>
@@ -90,8 +87,7 @@ export default class extends React.Component {
                 <KeyboardAvoidingView behavior = {"padding"} keyboardVerticalOffset = {70}>
                     <SendMessage 
                         chatId = {this.state.id} 
-                        sender = {this.context.id} 
-                        socket = {this.props.route.params.socket} 
+                        sender = {this.context.username} 
                     />
                 </KeyboardAvoidingView>    
             </View>
