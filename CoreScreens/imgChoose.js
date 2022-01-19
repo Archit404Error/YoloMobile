@@ -3,8 +3,6 @@ import { Text, Image, View, TouchableOpacity } from 'react-native';
 import { Dimensions } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
-import * as firebase from 'firebase';
-import uuid from 'uuid';
 import Context from '../Context/context';
 
 const windowHeight = Dimensions.get('window').height;

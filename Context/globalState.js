@@ -20,6 +20,8 @@ export default class extends React.Component {
             description: '',
             image: '',
             location: '',
+            startDate: null,
+            endDate: null,
             tags: '',
             other: '',
         },
@@ -59,10 +61,12 @@ export default class extends React.Component {
         this.setState(this.state);
     }
 
-    setEventText = (title, description, location, tags, other) => {
+    setEventText = (title, description, location, startDate, endDate, tags, other) => {
         this.state.eventCreationDetails.title = title;
         this.state.eventCreationDetails.description = description;
         this.state.eventCreationDetails.location = location;
+        this.state.eventCreationDetails.startDate = startDate;
+        this.state.eventCreationDetails.endDate = endDate;
         this.state.eventCreationDetails.tags = tags;
         this.state.eventCreationDetails.other = other;
         this.setState(this.state);

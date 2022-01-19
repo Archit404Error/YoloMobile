@@ -9,6 +9,8 @@ export default ({ navigation, route }) => {
             image = {route.params.image}
             description = {route.params.description}
             location = {route.params.location}
+            startDate = {route.params.startDate}
+            endDate = {route.params.endDate}
             attendees = {route.params.attendees}
             navigation = {navigation}
         />

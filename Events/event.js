@@ -15,6 +15,8 @@ export default class extends React.Component {
         title: "Loading...",
         description: "Loading...",
         location: "Loading...",
+        startDate: null,
+        endDate: null,
         tags: [],
         attendees: [],
         distance: 0,
@@ -35,6 +37,8 @@ export default class extends React.Component {
                 this.state.title = res.title;
                 this.state.description = res.description;
                 this.state.location = res.location;
+                this.state.startDate = new Date(res.startDate);
+                this.state.endDate = new Date(res.endDate);
                 this.state.attendees = res.attendees;
                 this.state.tags = res.tags.split(", ");
                 this.setState(this.state);
@@ -75,6 +79,8 @@ export default class extends React.Component {
             description: this.state.description,
             tags: this.state.tags,
             location: this.state.location,
+            startDate: this.state.startDate,
+            endDate: this.state.endDate,
             attendees: this.state.attendees
         })
     }
@@ -119,26 +125,14 @@ export default class extends React.Component {
                                 <AntDesign name="closecircle" size={45} color="red" />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity style = {styles.infoContainer} onPress = {
-                            () => {
-                                this.props.navigation.navigate("Details", {
-                                    id: this.state.id,
-                                    title: this.state.title,
-                                    image: this.state.image,
-                                    description: this.state.description,
-                                    tags: this.state.tags,
-                                    location: this.state.location,
-                                    attendees: this.state.attendees
-                                })
-                            }
-                        }>
+                        <TouchableOpacity style = {styles.infoContainer} onPress = {() => this.displayDetails()}>
                             <View style = {styles.iconBg}>
                                 <AntDesign name="infocirlce" size={45} color="black" />
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity style = {styles.rsvpYesContainer} onPress = {
                             () => {
-                                scheduleEvent('D52B918A-9B75-414E-82AF-0AF94768A385', Date.now(), new Date('2022-12-21T20:24:00'), this.state.title)
+                                scheduleEvent(this.state.startDate, this.state.endDate, this.state.title)
                                 this.visibilityMutated("accepted")
                             }
                         }>

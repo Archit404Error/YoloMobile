@@ -68,7 +68,7 @@ export default ({ navigation }) => {
                                 () => { 
                                     uploadImageAsync(context.eventDetails.image)
                                     .then(
-                                        (resUrl) => {
+                                        resUrl => {
                                             context.createEventImage(resUrl)
                                             submitEventAsync(context.eventDetails) 
                                         }

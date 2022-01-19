@@ -66,7 +66,7 @@ export const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     rsvpNoBlock: {
-        width: windowWidth / 2, 
+        width: windowWidth / 2,
         alignItems: 'center',
         backgroundColor: 'red',
         padding: 10,
@@ -84,7 +84,7 @@ export const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     rsvpYesBlock: {
-        width: windowWidth / 2, 
+        width: windowWidth / 2,
         alignItems: 'center',
         backgroundColor: 'green',
         padding: 10,
@@ -117,8 +117,8 @@ export const styles = StyleSheet.create({
         marginBottom: -5,
     },
     otherUserChatName: {
-        paddingLeft: 10, 
-        paddingRight: 10, 
+        paddingLeft: 10,
+        paddingRight: 10,
         paddingBottom: 5,
     },
     userChatName: {
@@ -218,8 +218,8 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 1,
     },
     confirmButton: {
-        backgroundColor: 'black', 
-        borderRadius: 0, 
+        backgroundColor: 'black',
+        borderRadius: 0,
         width: 300,
     },
     tag: {
@@ -280,7 +280,7 @@ export const styles = StyleSheet.create({
         zIndex: 999
     },
     storyContent: {
-        width: windowWidth, 
+        width: windowWidth,
         height: windowHeight - 10
     }
 })
