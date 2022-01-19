@@ -31,7 +31,8 @@ export const uploadImageAsync = async (uri) => {
     return await snapshot.ref.getDownloadURL();
 }
 
-const submitEventAsync = async (eventDetails) => {
+const submitEventAsync = async (eventDetails, creatorId) => {
+    eventDetails["creator"] = creatorId;
     const res = await fetch("http://yolo-backend.herokuapp.com/create", {
         method: "POST",
         headers: {
@@ -70,7 +71,7 @@ export default ({ navigation }) => {
                                     .then(
                                         resUrl => {
                                             context.createEventImage(resUrl)
-                                            submitEventAsync(context.eventDetails) 
+                                            submitEventAsync(context.eventDetails, context.id) 
                                         }
                                     )
                                     .then(() => navigation.navigate("Submit Event"));

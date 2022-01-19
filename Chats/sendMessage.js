@@ -4,10 +4,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { styles } from "../styles";
 import Context from "../Context/context";
 
-async function sendMessage(message, chatId, sender, socket) {
+async function sendMessage(message, chatId, chatName, sender, socket) {
     const messageData = {
         sender: sender,
         chat: chatId,
+        title: chatName,
         message: message,
     };
     fetch(`http://yolo-backend.herokuapp.com/sendMessage`, {
@@ -22,11 +23,11 @@ async function sendMessage(message, chatId, sender, socket) {
         })
 }
 
-function showSend(message, chatId, sender, messageFunc, socket) {
+function showSend(message, chatId, chatName, sender, messageFunc, socket) {
     if (message.length >= 1) {
         return (
             <TouchableOpacity onPress =  {() => {
-                sendMessage(message, chatId, sender, socket);
+                sendMessage(message, chatId, chatName, sender, socket);
                 messageFunc("");
             }}>
                 <Ionicons name = { "send-sharp" } size = {25} style = {{ marginTop: 15 }} />
@@ -36,7 +37,7 @@ function showSend(message, chatId, sender, messageFunc, socket) {
     return <></>
 }
 
-export default ({ chatId, sender }) => {
+export default ({ chatId, chatName, sender }) => {
     const [message, setMessage] = useState("");
     const context = useContext(Context);
     return (
@@ -47,12 +48,12 @@ export default ({ chatId, sender }) => {
                 returnKeyType = {"send"} 
                 onChangeText = {text => setMessage(text)}
                 onSubmitEditing = {() => {
-                    sendMessage(message, chatId, sender, context.socket);
+                    sendMessage(message, chatId, chatName, sender, context.socket);
                     setMessage("");
                 }}
                 value = {message}
             />
-        { showSend(message, chatId, sender, setMessage, context.socket) }
+        { showSend(message, chatId, chatName, sender, setMessage, context.socket) }
         </View>
     )
 }

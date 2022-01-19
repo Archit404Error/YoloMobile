@@ -105,6 +105,7 @@ export default class extends React.Component {
             },
             body: JSON.stringify({
                 sender: this.state.id,
+                name: this.state.name,
                 receiver: friendId,
                 wantToFriend: friended
             })

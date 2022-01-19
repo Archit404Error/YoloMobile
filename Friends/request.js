@@ -39,7 +39,8 @@ export default class extends React.Component {
             body: JSON.stringify({
                 accepted: accepted,
                 sender: this.props.id,
-                receiver: this.context.id
+                receiver: this.context.id,
+                name: this.context.name
             })
         })
             .then(res => {
@@ -79,6 +80,9 @@ export default class extends React.Component {
                 </TouchableOpacity>
                 <TouchableOpacity style = {{ marginTop: 5, right: -100 }} onPress = {() => this.requestAccepted(true)}>
                     <Feather name = "check" size = {25} />
+                </TouchableOpacity>
+                <TouchableOpacity style = {{ marginTop: 5, right: -50 }} onPress = {() => this.requestAccepted(false)}>
+                    <Feather name = "x" size = {25} />
                 </TouchableOpacity>
             </View>
         );

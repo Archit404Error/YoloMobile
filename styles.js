@@ -108,6 +108,16 @@ export const styles = StyleSheet.create({
         width: 55,
         padding: 5,
     },
+    datePickerHeading: {
+        flex: 1, 
+        alignSelf: 'center',
+        fontSize: 18, 
+        margin: 10
+    },
+    datePicker: {
+        flex: 2,
+        marginBottom: 10,
+    },
     messageScrollView: {
         height: windowHeight - 170
     },

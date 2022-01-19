@@ -61,18 +61,26 @@ export default ({ navigation }) => {
                             clearButtonMode = "while-editing"
                             onChangeText = {setOther}
                         />
-                        <Text>{"Event start"}</Text>
-                        <RNDateTimePicker 
-                            value = {startDate} 
-                            mode = {"datetime"}
-                            onChange = {(selectEvent, data) => setStartDate(data || startDate)} 
-                        /> 
-                        <Text>{"Event end"}</Text>
-                        <RNDateTimePicker 
-                            value = {endDate} 
-                            mode = {"datetime"}
-                            onChange = {(selectEvent, data) => setEndDate(data || endDate)} 
-                        />
+                        <View style = {{ flex: 1, flexDirection: 'row', backgroundColor: 'white' }}>
+                            <View style = {{ flex: 1 }}>
+                                <Text style = {styles.datePickerHeading}>{"Starting Time"}</Text>
+                                <RNDateTimePicker 
+                                    value = {startDate} 
+                                    mode = {"datetime"}
+                                    onChange = {(selectEvent, data) => setStartDate(data || startDate)} 
+                                    style = {styles.datePicker}
+                                />
+                            </View> 
+                            <View style = {{ flex: 1 }}>
+                                <Text style = {styles.datePickerHeading}>{"Ending Time"}</Text>
+                                <RNDateTimePicker 
+                                    value = {endDate} 
+                                    mode = {"datetime"}
+                                    onChange = {(selectEvent, data) => setEndDate(data || endDate)} 
+                                    style = {styles.datePicker}
+                                />
+                            </View>
+                        </View>
                         <ImgScreen />
                         <TouchableOpacity 
                             style = {{ backgroundColor: 'white', width: '100%', alignItems: 'center', marginTop: 10, padding: 10 }} 

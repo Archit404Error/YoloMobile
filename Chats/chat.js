@@ -10,6 +10,7 @@ export default class extends React.Component {
 
     state = {
         id: -1,
+        title: "",
         messages: [],
         members: {},
         name: "",
@@ -35,6 +36,7 @@ export default class extends React.Component {
 
     componentDidMount() {
         this.state.id = this.props.route.params.id;
+        this.state.title = this.props.route.params.title;
         this.state.messages = this.props.route.params.messages;
         this.state.memberDetails = this.props.route.params.members;
         this.state.name = this.context.username;
@@ -86,7 +88,8 @@ export default class extends React.Component {
                 </SafeAreaView>
                 <KeyboardAvoidingView behavior = {"padding"} keyboardVerticalOffset = {70}>
                     <SendMessage 
-                        chatId = {this.state.id} 
+                        chatId = {this.state.id}
+                        chatName = {this.state.title} 
                         sender = {this.context.username} 
                     />
                 </KeyboardAvoidingView>    
