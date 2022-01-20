@@ -27,15 +27,11 @@ export default ({ navigation }) => {
     }, []);
 
     useEffect(() => {
-        (() => {
-            if (loading) navigation.navigate("App");
-        })();
+        if (loading) navigation.navigate("App");
     }, [loc]);
 
     useEffect(() => {
-        (() => {
-            if (JSON.stringify(loc) != "{}") navigation.navigate("App");
-        })();
+        if (JSON.stringify(loc) != "{}") navigation.navigate("App");
     }, [loading]);
     
     return (

@@ -21,7 +21,9 @@ import LoginScreen from './CoreScreens/login';
 import RegisterScreen from './CoreScreens/register';
 import ProfileScreen from './Profiles/userProfile';
 import FriendProfileScreen from './Profiles/friendProfile';
-import NotifScreen from './CoreScreens/notifications';
+import EventNotifScreen from './CoreScreens/eventNotifications';
+import EventStatScreen from './Notifications/eventStats';
+import UserNotifScreen from './CoreScreens/userNotifications';
 import GlobalState from './Context/globalState';
 
 import firebaseInit from './Context/firebaseInit';
@@ -70,13 +72,30 @@ function updateStack() {
     >
       <TopTab.Screen
         name = "Notifications"
-        component = { NotifScreen }
+        component = { UserNotifScreen }
       />
       <TopTab.Screen 
         name = "Event Updates"
-        component = { NotifScreen }
+        component = { eventStatStack }
       />
     </TopTab.Navigator>
+  )
+}
+
+function eventStatStack() {
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen 
+        name = "Created Events"
+        component = { EventNotifScreen }
+      />
+      <Stack.Screen 
+        name = "Event Stats"
+        component = { EventStatScreen }
+      />
+    </Stack.Navigator>
   )
 }
 

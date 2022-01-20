@@ -3,7 +3,7 @@ import { Text, View, SafeAreaView, Image, TouchableOpacity, TouchableWithoutFeed
 import { AntDesign } from '@expo/vector-icons';
 import Context from "../Context/context";
 import { styles } from "../styles";
-import { scheduleEvent } from "./calendarNotif";
+import { scheduleEvent } from "../Notifications/calendarNotif";
 
 export default class extends React.Component {
 

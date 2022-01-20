@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { View } from "react-native";
 import Context from "../Context/context";
 import { styles } from "../styles";
-import Request from "../Friends/request";
+import Request from "../Notifications/request";
 
 export default () => {
     const context = useContext(Context);
