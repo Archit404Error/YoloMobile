@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
         minHeight: windowHeight,
         justifyContent: 'center',
     },
-    messageContainer: {
+    alignBottomContainer: {
         backgroundColor: "white",
         borderRadius: 0,
         flex: 1,

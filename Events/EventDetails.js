@@ -68,7 +68,7 @@ export default class extends React.Component {
 
     render() {
         return (
-            <SafeAreaView style = {styles.messageContainer}>
+            <SafeAreaView style = {styles.alignBottomContainer}>
                 <ScrollView>
                     <Image source = {{uri: this.state.image}} style = {styles.detailsImg} />
                     <Text style = {styles.title}>{this.state.title}</Text>

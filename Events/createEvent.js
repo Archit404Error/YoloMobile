@@ -42,7 +42,7 @@ export default ({ navigation }) => {
                         <TextInput 
                             style = {styles.titleInput} 
                             placeholder = "Add event location" 
-                            maxLength = {25} 
+                            maxLength = {50} 
                             clearButtonMode = "while-editing"
                             onChangeText = {setLocation}
                         />
@@ -85,7 +85,7 @@ export default ({ navigation }) => {
                         <TouchableOpacity 
                             style = {{ backgroundColor: 'white', width: '100%', alignItems: 'center', marginTop: 10, padding: 10 }} 
                             onPress={() => { 
-                                context.createEventText(title, description, location, date, tags, other);
+                                context.createEventText(title, description, location, startDate, endDate, tags, other);
                                 navigation.navigate("Preview Event")
                             }}
                         >

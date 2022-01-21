@@ -24,7 +24,7 @@ export default () => {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [3, 4],
-      quality: 1,
+      quality: 0.25,
     });
 
     if (!result.cancelled) {

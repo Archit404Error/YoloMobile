@@ -50,7 +50,7 @@ export default class extends React.Component {
 
     render() {
         return (
-            <View style = {styles.messageContainer}>
+            <View style = {styles.alignBottomContainer}>
                 <SafeAreaView>
                     <ScrollView 
                         ref={ref => {this.scrollView = ref}}
