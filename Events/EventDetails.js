@@ -1,10 +1,11 @@
 import React from "react";
 import Friend from "../Friends/friend"
 
-import { SafeAreaView, ScrollView, View, Image, Text, TouchableOpacity } from "react-native";
-import { MaterialIcons } from '@expo/vector-icons';
+import { SafeAreaView, ScrollView, View, Image, Text, TouchableOpacity, Share, Platform } from "react-native";
+import * as Linking from 'expo-linking';
+import { MaterialIcons, Feather } from '@expo/vector-icons';
 
-import { styles } from "../styles";
+import { styles, windowWidth } from "../styles";
 
 export default class extends React.Component {
     state = {
@@ -66,12 +67,34 @@ export default class extends React.Component {
         return `${this.formatHours(this.state.startDate)} - ${this.formatHours(this.state.endDate)}`
     }
 
+    /**
+     * Creates an event link for this event and allows user to share it
+     */
+    shareEventLink() {
+        const eventUrl = Linking.createURL('/event', {
+            queryParams: { id: this.state.id  }
+        })
+        try {
+            if (Platform.OS == "ios")
+                Share.share({url: eventUrl})
+            else
+                Share.share({message: eventUrl})
+        } catch (err) {
+            alert(err.message);
+        }
+    }
+
     render() {
         return (
             <SafeAreaView style = {styles.alignBottomContainer}>
                 <ScrollView>
                     <Image source = {{uri: this.state.image}} style = {styles.detailsImg} />
-                    <Text style = {styles.title}>{this.state.title}</Text>
+                    <View style = {{flexDirection: 'row', maxWidth: windowWidth - 40}}>
+                        <Text style = {styles.title}>{this.state.title}</Text>
+                        <TouchableOpacity onPress = {() => this.shareEventLink()} style = {{marginTop: 40}}>
+                        <Feather name = {"external-link"} size={20} color="blue" />
+                        </TouchableOpacity>
+                    </View>
                     <Text style = {styles.subText}>{this.state.desc}</Text>
                     <View style = {{ flex: 1, flexDirection: 'row' }}>
                         <MaterialIcons name = {"location-pin"} size = {24} style = {{ margin: 6 }} />

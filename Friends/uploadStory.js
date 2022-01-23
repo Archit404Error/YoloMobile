@@ -36,14 +36,14 @@ export default () => {
         }
     }
 
-    const uploadStory = (imgUrl) => {
+    const uploadStory = (id, imgUrl) => {
         fetch(`http://yolo-backend.herokuapp.com/uploadStory`, {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json"
             },
             body: JSON.stringify({
-                user: this.context.id,
+                user: id,
                 image: imgUrl
             })
         })
@@ -88,7 +88,7 @@ export default () => {
                     <Image source = {{ uri: image }} style = {{ height: windowHeight, width: windowWidth }} />
                     <TouchableOpacity onPress = {() => {
                         uploadImageAsync(image)
-                            .then(resUrl => uploadStory(resUrl))
+                            .then(resUrl => uploadStory(context.id, resUrl))
                         setModalVisible(false);
                     }}>
                         <View style = {styles.postStoryContainer}>

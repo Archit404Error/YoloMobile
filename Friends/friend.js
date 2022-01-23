@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity, Image } from "react-native";
 import { Feather } from '@expo/vector-icons';
 import { styles } from "../styles";
 import Context from "../Context/context";
-import { NavigationActions } from "react-navigation";
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 export default class extends React.Component {
 
@@ -32,9 +32,9 @@ export default class extends React.Component {
     }
 
     setFriended(friendedState) {
+        this.context.sendFriendReq(this.state.id, friendedState);
         this.state.friended = friendedState;
-        this.setState(this.state);
-        this.context.sendFriendReq(this.state.id, this.state.friended);
+        this.setState(this.state)
     }
 
     render() {
@@ -63,7 +63,14 @@ export default class extends React.Component {
                         {this.state.name}
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style = {{ marginTop: 5 }} onPress = {() => this.setFriended(!this.state.friended)}>
+                <TouchableOpacity style = {{ marginTop: 5 }} onPress = {() => {
+                    const action = !this.state.friended ? `sent to ${this.state.name}` : `to ${this.state.name} unsent`;
+                    showMessage({
+                        message: `Friend request ${action}`,
+                        type: 'info'
+                    });
+                    this.setFriended(!this.state.friended)
+                }}>
                     <Feather name = {iconName} size = {25} />
                 </TouchableOpacity>
             </View>

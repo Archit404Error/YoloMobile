@@ -1,5 +1,6 @@
 import React from 'react';
 import * as firebase from "firebase";
+import * as Linking from 'expo-linking';
 import FlashMessage from 'react-native-flash-message';
 import { TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -209,6 +210,10 @@ function Authentication() {
 }
 
 export default function App() {
+  Linking.addEventListener('url', data => {
+    const url = data.url;
+    const eventId = Linking.parse(url).queryParams.id;
+  })
 
   if (!firebase.apps.length) { 
     firebase.initializeApp(firebaseInit.firebaseConfig) 

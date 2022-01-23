@@ -41,6 +41,7 @@ const submitEventAsync = async (eventDetails, creatorId) => {
         },
         body: JSON.stringify(eventDetails)
     });
+    return res;
 }
 
 export default ({ navigation }) => {
@@ -66,15 +67,11 @@ export default ({ navigation }) => {
                         <Text style = {styles.subText}>{context.eventDetails.description}</Text>
                         <Button title = {"Add Event!"} 
                             onPress = {
-                                () => { 
-                                    uploadImageAsync(context.eventDetails.image)
-                                    .then(
-                                        resUrl => {
-                                            context.createEventImage(resUrl)
-                                            submitEventAsync(context.eventDetails, context.id) 
-                                        }
-                                    )
-                                    .then(() => navigation.navigate("Submit Event"));
+                                async () => { 
+                                    const resUrl = await uploadImageAsync(context.eventDetails.image)
+                                    context.createEventImage(await resUrl)
+                                    submitEventAsync(context.eventDetails, context.id) 
+                                    navigation.navigate("Submit Event")
                                 }
                             } 
                         />

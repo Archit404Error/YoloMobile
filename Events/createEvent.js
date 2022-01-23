@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { SafeAreaView, ScrollView, View, TextInput, TouchableOpacity, Text } from 'react-native';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { styles } from '../styles';
-import ImgScreen from '../CoreScreens/imgChoose';
+import ImgScreen from './imgChoose';
+import LocationChooser from './locationChoose';
 import Context from '../Context/context';
 
 export default ({ navigation }) => {
@@ -14,6 +15,7 @@ export default ({ navigation }) => {
     const [endDate, setEndDate] = useState(new Date());
     const [tags, setTags] = useState("");
     const [other, setOther] = useState("");
+    const [isPrivate, setPrivacy] = useState(false);
 
     const formatTags = (text) => {
         text = text.replace(" ", "|");
@@ -45,6 +47,10 @@ export default ({ navigation }) => {
                             maxLength = {50} 
                             clearButtonMode = "while-editing"
                             onChangeText = {setLocation}
+                        />
+                        <LocationChooser 
+                            initialLat={context.latitude}
+                            initialLong={context.longitude}
                         />
                         <TextInput 
                             style = {styles.titleInput} 

@@ -5,7 +5,7 @@ import { styles, windowHeight } from '../styles';
 export default ({ eventData, navigation }) => {
     return (
         <TouchableOpacity 
-            style = {{ flex: 1, backgroundColor: 'white', minHeight: windowHeight / 8 }}
+            style = {{ flex: 1, backgroundColor: 'white', minHeight: windowHeight / 8, maxHeight: windowHeight / 4 }}
             onPress={() => navigation.navigate("Event Stats", { eventData: eventData })}
         >
             <View style = {{ flexDirection: 'row', flex: 1 }}>
