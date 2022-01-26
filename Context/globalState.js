@@ -43,7 +43,7 @@ export default class extends React.Component {
         this.state.chatIds = data.chats;
         this.state.profile = data.profilePic;
         let socket = socketio('http://yolo-backend.herokuapp.com/', {
-            query: `chatList=${data.chats}`
+            query: `chatList=${data.chats}&user=${data._id}`
         }); 
 
         this.state.socket = socket;
@@ -95,7 +95,19 @@ export default class extends React.Component {
         } catch (error) {
             return Promise.reject("Couldn't check notifications permissions");
         }
-    }    
+    }
+    
+    /**
+     * General purpose function to modify portions of state without exposing state
+     * @param {String[]} keyList an array of key values
+     * @param {Object} dataList an array of data values
+     */
+    modifyState = (keyList, dataList) => {
+        for (let i = 0; i < keyList.length; i++)
+            this.state[keyList[i]] = dataList[i];
+
+        this.setState(this.state);
+    }
 
     friendRequest = (friendId, friended) => {
         fetch("http://yolo-backend.herokuapp.com/friendReq", {
@@ -135,6 +147,7 @@ export default class extends React.Component {
                     createEventImage: this.setEventImage,
                     sendFriendReq: this.friendRequest,
                     registerTokenAsync: this.registerPushNotifs,
+                    modifyState: this.modifyState,
                 }}
             >
                 { this.props.children }

@@ -14,8 +14,25 @@ export default class extends React.Component{
         filtered: "",
     }
 
+    getLatestChats() {
+        // Update context data and then re-render
+        fetch(`http://yolo-backend.herokuapp.com/user/${this.context.id}`)
+            .then(res => res.json())
+            .then(json => this.context.modifyState(["chatIds"], [json.chats]))
+            .then(() => this.setState(this.state))
+    }
+
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount() {
+        this.getLatestChats();
+        this.context.socket.on("eventsUpdated", () => this.getLatestChats())
+    }
+
+    componentWillUnmount() {
+        this.context.socket.off("eventsUpdated", () => this.getLatestChats())
     }
 
     render() {

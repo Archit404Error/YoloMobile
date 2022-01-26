@@ -133,6 +133,7 @@ export default class extends React.Component {
                         <TouchableOpacity style = {styles.rsvpYesContainer} onPress = {
                             () => {
                                 scheduleEvent(this.state.startDate, this.state.endDate, this.state.title)
+                                this.context.socket.emit("eventsUpdated");
                                 this.visibilityMutated("accepted")
                             }
                         }>
