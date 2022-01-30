@@ -24,8 +24,8 @@ export const styles = StyleSheet.create({
         backgroundColor: "white",
         borderRadius: 0,
         width: windowWidth,
-        minHeight: windowHeight,
         justifyContent: 'center',
+        flex: 1
     },
     alignBottomContainer: {
         backgroundColor: "white",

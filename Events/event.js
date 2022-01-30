@@ -1,9 +1,11 @@
 import React from "react";
-import { Text, View, SafeAreaView, Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { Text, View, SafeAreaView, Image, TouchableOpacity, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import Context from "../Context/context";
 import { styles } from "../styles";
 import { scheduleEvent } from "../Notifications/calendarNotif";
+import RBSheet from "react-native-raw-bottom-sheet";
+import FriendInvitation from '../Friends/friendInvitation';
 
 export default class extends React.Component {
 
@@ -56,8 +58,6 @@ export default class extends React.Component {
     }
 
     visibilityMutated(action) {
-        this.state.visible = false;
-        this.setState(this.state);
         fetch("http://yolo-backend.herokuapp.com/eventRSVP", {
             method: "POST",
             headers: {
@@ -86,14 +86,28 @@ export default class extends React.Component {
     }
 
     render() {
-        if (!this.state.visible) {
-            return (
-                <>
-                </>
-            )
-        }
+        if (!this.state.visible) return <></>
+
         return (
             <SafeAreaView>
+                <RBSheet 
+                    ref = { ref => this.sendModal = ref }
+                    height = {300}
+                    openDuration = {250}
+                    closeOnDragDown = {true}
+                    onClose = {() => {
+                        this.state.visible = false;
+                        this.setState(this.state);
+                    }}
+                >
+                    <Text style = {styles.title}>Invite Your Friends</Text>
+                    <ScrollView>
+                    {
+                        this.context.friends.map(friendId => <FriendInvitation id = {friendId} eventId = {this.state.id} />)
+                    }
+                    </ScrollView>
+                </RBSheet>
+
                 <View style={styles.flexContainer}>
                     <TouchableWithoutFeedback
                         onLongPress={ () => this.displayDetails() }
@@ -133,8 +147,9 @@ export default class extends React.Component {
                         <TouchableOpacity style = {styles.rsvpYesContainer} onPress = {
                             () => {
                                 scheduleEvent(this.state.startDate, this.state.endDate, this.state.title)
+                                this.sendModal.open();
                                 this.context.socket.emit("eventsUpdated");
-                                this.visibilityMutated("accepted")
+                                this.visibilityMutated("accepted");
                             }
                         }>
                             <View style = {styles.iconBg}>

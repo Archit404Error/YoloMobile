@@ -209,6 +209,25 @@ function Authentication() {
   );
 }
 
+const deepLinkMapping = {
+  prefixes: [Linking.createURL('/')],
+  screens: {
+    Authentication: {
+      screens: {
+        App: {
+          screens: {
+            Events: {
+              screens: {
+                Details: 'event/:id'
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 export default function App() {
   Linking.addEventListener('url', data => {
     const url = data.url;
