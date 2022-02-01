@@ -57,7 +57,11 @@ export default class extends React.Component {
             })
     }
 
-    visibilityMutated(action) {
+    /**
+     * Communicates a particular user action to the server, where it is recorded
+     * @param {String} action must be 'accepted', 'viewed', or 'rejected' (add Enum when switch to TS)
+     */
+    eventInteraction(action) {
         fetch("http://yolo-backend.herokuapp.com/eventRSVP", {
             method: "POST",
             headers: {
@@ -98,6 +102,7 @@ export default class extends React.Component {
                     onClose = {() => {
                         this.state.visible = false;
                         this.setState(this.state);
+                        scheduleEvent(this.state.startDate, this.state.endDate, this.state.title);
                     }}
                 >
                     <Text style = {styles.title}>Invite Your Friends</Text>
@@ -134,22 +139,26 @@ export default class extends React.Component {
                         <Text style = {styles.subText}>{this.state.description.substr(0, 75) + "...(Read More)"}</Text>
                     </TouchableOpacity>
                     <View style = {styles.rsvpContainer}>
-                        <TouchableOpacity style = {styles.rsvpNoContainer} onPress = {() => { this.visibilityMutated("rejected") }}>
+                        <TouchableOpacity style = {styles.rsvpNoContainer} onPress = {() => { this.eventInteraction("rejected") }}>
                             <View style = {styles.iconBg}>
                                 <AntDesign name="closecircle" size={45} color="red" />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity style = {styles.infoContainer} onPress = {() => this.displayDetails()}>
+                        <TouchableOpacity style = {styles.infoContainer} onPress = {
+                            () => {
+                                this.displayDetails();
+                                this.eventInteraction("viewed");
+                            }
+                        }>
                             <View style = {styles.iconBg}>
                                 <AntDesign name="infocirlce" size={45} color="black" />
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity style = {styles.rsvpYesContainer} onPress = {
                             () => {
-                                scheduleEvent(this.state.startDate, this.state.endDate, this.state.title)
                                 this.sendModal.open();
                                 this.context.socket.emit("eventsUpdated");
-                                this.visibilityMutated("accepted");
+                                this.eventInteraction("accepted");
                             }
                         }>
                             <View style = {styles.iconBg}>

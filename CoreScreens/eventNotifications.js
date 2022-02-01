@@ -8,7 +8,6 @@ export default ({ navigation }) => {
     const context = useContext(Context);
 
     async function fetchData() {
-        console.log("fetching data...")
         fetch(`http://yolo-backend.herokuapp.com/createdEvents/${context.id}`)
             .then(res => res.json())
             .then(json => setUserEvents(json))
@@ -18,6 +17,7 @@ export default ({ navigation }) => {
     useEffect(
         () => {
             fetchData();
+            context.socket.on("userCreatedEvent", fetchData);
             // Turn off listener on unmount
             return () => context.socket.off("userCreatedEvent", fetchData);
         }, 
