@@ -108,7 +108,7 @@ export default class extends React.Component {
                     <Text style = {styles.title}>Invite Your Friends</Text>
                     <ScrollView>
                     {
-                        this.context.friends.map(friendId => <FriendInvitation id = {friendId} eventId = {this.state.id} />)
+                        this.context.friends.map(friendId => <FriendInvitation id = {friendId} key = {friendId} eventId = {this.state.id} />)
                     }
                     </ScrollView>
                 </RBSheet>

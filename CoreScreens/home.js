@@ -1,44 +1,49 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Event from '../Events/event';
-import { SafeAreaView, ScrollView } from 'react-native';
+import { SafeAreaView, ScrollView, RefreshControl } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Dimensions } from 'react-native';
+import { windowHeight } from '../styles';
 import Context from '../Context/context';
 
-const windowHeight = Dimensions.get('window').height;
-export default class extends React.Component{
-  static contextType = Context;
+export default ({ navigation }) => {
+  const context = useContext(Context);
 
-  state = {
-    ids : []
+  const [ids, setIds] = useState(context.events);
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(context.registerTokenAsync, [])
+
+  const refreshEvents = () => {
+    setRefreshing(true);
+    fetch(`http://yolo-backend.herokuapp.com/user/${context.id}`)
+      .then(res => res.json())
+      .then(json => {
+        setIds(json.pendingEvents);
+        setRefreshing(false);
+      })
   }
 
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-    this.context.registerTokenAsync();
-    this.setState({ ids : this.context.events })
-  }
-
-  render() {
-      return (
-          <SafeAreaView>
-            <ScrollView 
-              vertical = {true} 
-              decelerationRate = {0} 
-              snapToInterval = {windowHeight / 1.5 + 125} 
-              snapToAlignment = {"center"}
-            >
-              {
-                this.state.ids.map((id) => {
-                  return <Event key = {id} id = {id} navigation = {this.props.navigation} />
-                })
-              }
-              <StatusBar />
-            </ScrollView>
-          </SafeAreaView>
-        );
-  }
+  return (
+      <SafeAreaView>
+        <ScrollView 
+          vertical = {true} 
+          decelerationRate = {0} 
+          snapToInterval = {windowHeight / 1.5 + 125} 
+          snapToAlignment = {"center"}
+          refreshControl = {
+            <RefreshControl 
+              refreshing = {refreshing}
+              onRefresh = {refreshEvents}
+            />
+          }
+        >
+          {
+            ids.map(id => {
+              return <Event key = {id} id = {id} navigation = {navigation} />
+            })
+          }
+          <StatusBar />
+        </ScrollView>
+      </SafeAreaView>
+    );
 }
