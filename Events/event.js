@@ -136,7 +136,7 @@ export default class extends React.Component {
                         }
                     </View>
                     <TouchableOpacity onPress = { () => this.displayDetails() }>
-                        <Text style = {styles.subText}>{this.state.description.substr(0, 75) + "...(Read More)"}</Text>
+                        <Text style = {styles.subText}>{this.state.description.substring(0, 75) + "...(Read More)"}</Text>
                     </TouchableOpacity>
                     <View style = {styles.rsvpContainer}>
                         <TouchableOpacity style = {styles.rsvpNoContainer} onPress = {() => { this.eventInteraction("rejected") }}>

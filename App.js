@@ -1,6 +1,7 @@
 import React from 'react';
 import * as firebase from "firebase";
 import * as Linking from 'expo-linking';
+import * as Notifications from 'expo-notifications';
 import FlashMessage from 'react-native-flash-message';
 import { TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -109,6 +110,7 @@ function FriendStack() {
       />
       <Stack.Screen 
         name = "View Profile"
+        options={{ headerBackTitle: 'friends' }}
         component = { FriendProfileScreen }
       />
     </Stack.Navigator>
@@ -227,6 +229,14 @@ const deepLinkMapping = {
     }
   }
 }
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true
+  })
+});
 
 export default function App() {
   Linking.addEventListener('url', data => {

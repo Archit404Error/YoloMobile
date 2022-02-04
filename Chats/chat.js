@@ -50,8 +50,8 @@ export default class extends React.Component {
 
     render() {
         return (
-            <View style = {styles.alignBottomContainer}>
-                <SafeAreaView>
+            <>
+                <SafeAreaView style = {styles.alignBottomContainer}>
                     <ScrollView 
                         ref={ref => {this.scrollView = ref}}
                         onContentSizeChange={() => this.scrollView.scrollToEnd({animated: true})}
@@ -86,14 +86,14 @@ export default class extends React.Component {
                         }
                     </ScrollView>
                 </SafeAreaView>
-                <KeyboardAvoidingView behavior = {"padding"} keyboardVerticalOffset = {70}>
+                <KeyboardAvoidingView behavior = {"padding"} keyboardVerticalOffset = {90} style = {{ backgroundColor: 'white' }}>
                     <SendMessage 
                         chatId = {this.state.id}
                         chatName = {this.state.title} 
                         sender = {this.context.username} 
                     />
                 </KeyboardAvoidingView>    
-            </View>
+            </>
         )
     }
 }
