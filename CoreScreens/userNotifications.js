@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import { View } from "react-native";
 import Context from "../Context/context";
 import { styles } from "../styles";
-import Request from "../Notifications/request";
+import FriendRequest from "../Notifications/request";
+import EventInvite from "../Notifications/eventInvite";
 
 export default () => {
     const context = useContext(Context);
@@ -10,8 +11,19 @@ export default () => {
     return (
         <View style = { styles.container }>
             {
-                context.friendRequests.map((requesterId, index) => {
-                    return <Request key = {index} id = {requesterId} />
+                context.notifications.map((notifObject, index) => {
+                    if (notifObject.type === "friend")
+                        return <FriendRequest key = {index} id = {notifObject.sender} />
+                    else if (notifObject.type === "invite")
+                        return <EventInvite 
+                            eventId = {notifObject.event} 
+                            senderId = {notifObject.sender}
+                            eventName = {notifObject.eventName}
+                            senderName = {notifObject.senderName}
+                        />
+                    else if (notifObject.type === "newFriend")
+                        // Create new friend notif and add that here later
+                        return <></>
                 })
             }
         </View>

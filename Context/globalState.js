@@ -27,7 +27,7 @@ export default class extends React.Component {
         },
         chatIds: [],
         friendIds: [],
-        friendReqs: [],
+        notifications: [],
         profile: "",
         socket: {},
     }
@@ -39,7 +39,7 @@ export default class extends React.Component {
         this.state.name = data.name;
         this.state.eventIds = data.pendingEvents;
         this.state.friendIds = data.friends;
-        this.state.friendReqs = data.friendReqs;
+        this.state.notifications = data.notifications;
         this.state.chatIds = data.chats;
         this.state.profile = data.profilePic;
         let socket = socketio('http://yolo-backend.herokuapp.com/', {
@@ -138,7 +138,7 @@ export default class extends React.Component {
                     longitude: this.state.location.longitude,
                     eventDetails: this.state.eventCreationDetails,
                     friends: this.state.friendIds,
-                    friendRequests: this.state.friendReqs,
+                    notifications: this.state.notifications,
                     profilePic: this.state.profile,
                     socket: this.state.socket,
                     setCredentials: this.setCreds,

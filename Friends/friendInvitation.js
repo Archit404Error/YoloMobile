@@ -4,7 +4,7 @@ import { showMessage } from 'react-native-flash-message';
 import { Feather } from '@expo/vector-icons';
 import Context from '../Context/context';
 
-export default ({ id, eventId }) => {
+export default ({ id, eventId, eventName }) => {
     const [profile, setProfile] = useState("");
     const [name, setName] = useState("");
     const [invited, setInvited] = useState(false);
@@ -27,7 +27,9 @@ export default ({ id, eventId }) => {
             },
             body: JSON.stringify({
                 sender: context.id,
+                senderName: context.name,
                 event: eventId,
+                eventName: eventName,
                 friend: id
             })
         })
