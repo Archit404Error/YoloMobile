@@ -1,8 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext } from "react";
 import { View } from "react-native";
+import { eventInteraction } from "../Events/eventHelperFuncs";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useState } from "react";
+import Context from "../Context/context";
 
 export default ({ eventId, senderId, eventName, senderName }) => {
-    // Eventually this component should be built out to enable event RSVP and navigation to event
+    const context = useContext(Context);
+    const [rsvped, setRSVP] = useState(false);
+
+    if (rsvped) return <></>
+
     return (
         <View style={{
             flexDirection: 'row',
@@ -11,30 +19,44 @@ export default ({ eventId, senderId, eventName, senderName }) => {
             borderBottomColor: '#f2f2f2',
             borderBottomWidth: 1
         }}>
-            <TouchableOpacity onPress={() => {
-                this.props.navigation.navigate(
-                    "Friends",
-                    {
-                        screen: "View Profile",
-                        params: {
-                            id: senderId
-                        }
-                    },
-                )
-            }}>
-                <View style={{ flexDirection: 'column' }}>
+            <View style={{ flexDirection: 'column' }}>
+                <TouchableOpacity onPress={() => {
+                    this.props.navigation.navigate(
+                        "Friends",
+                        {
+                            screen: "View Profile",
+                            params: {
+                                id: senderId
+                            }
+                        },
+                    )
+                }}>
                     <Text style={{ color: 'black', marginTop: 5, marginLeft: 10, marginRight: 10, fontSize: 20 }}>
                         {senderName}
                     </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    eventInteraction('viewed', context.id, eventId);
+                    this.props.navigation.navigate("Events", {
+                        screen: "Details",
+                        params: { id: eventId }
+                    })
+                }}>
                     <Text style={{ color: 'gray', fontSize: 10, marginLeft: 10 }}>invited you to {eventName}</Text>
-                </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={{ marginTop: 5, right: -100 }} onPress={() => console.log("unimplemented")}>
+                </TouchableOpacity>
+            </View>
+            <TouchableOpacity style={{ marginTop: 5, right: -100 }} onPress={() => {
+                eventInteraction('accepted', context.id, eventId);
+                setRSVP(true)
+            }}>
                 <Feather name="check" size={25} />
             </TouchableOpacity>
-            <TouchableOpacity style={{ marginTop: 5, right: -50 }} onPress={() => console.log("unimplemented")}>
+            <TouchableOpacity style={{ marginTop: 5, right: -100 }} onPress={() => {
+                eventInteraction('rejected', context.id, eventId);
+                setRSVP(true)
+            }}>
                 <Feather name="x" size={25} />
             </TouchableOpacity>
-        </View>
+        </View >
     )
 }
