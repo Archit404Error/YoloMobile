@@ -5,6 +5,11 @@ import { styles } from '../styles';
 import * as firebase from 'firebase';
 import uuid from 'uuid';
 
+/**
+ * It takes a URL, downloads the image, and uploads it to Firebase Storage
+ * @param uri - The URI of the image you want to upload.
+ * @returns A promise that resolves to a URL.
+ */
 export const uploadImageAsync = async (uri) => {
     const blob = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
@@ -31,6 +36,13 @@ export const uploadImageAsync = async (uri) => {
     return await snapshot.ref.getDownloadURL();
 }
 
+/**
+ * This function takes in an event object and a user id and sends a POST request to the backend to
+ * create a new event
+ * @param eventDetails - The event details that were entered by the user.
+ * @param creatorId - The id of the user who created the event.
+ * @returns A promise that resolves to the response from the server.
+ */
 const submitEventAsync = async (eventDetails, creatorId) => {
     eventDetails["creator"] = creatorId;
     const res = await fetch("http://yolo-backend.herokuapp.com/create", {

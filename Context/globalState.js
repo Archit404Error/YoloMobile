@@ -24,6 +24,7 @@ export default class extends React.Component {
             endDate: null,
             tags: '',
             other: '',
+            public: true,
         },
         chatIds: [],
         friendIds: [],
@@ -32,6 +33,10 @@ export default class extends React.Component {
         socket: {},
     }
 
+    /**
+     * Sets user credentials upon successful login
+     * @param data the response sent from the server with user info
+     */
     setCreds = (data) => {
         this.state.id = data._id;
         this.state.username = data.username;
@@ -61,17 +66,27 @@ export default class extends React.Component {
         this.setState(this.state);
     }
 
-    setEventText = (title, description, location, startDate, endDate, tags, other) => {
-        this.state.eventCreationDetails.title = title;
-        this.state.eventCreationDetails.description = description;
-        this.state.eventCreationDetails.location = location;
-        this.state.eventCreationDetails.startDate = startDate;
-        this.state.eventCreationDetails.endDate = endDate;
-        this.state.eventCreationDetails.tags = tags;
-        this.state.eventCreationDetails.other = other;
+    /**
+     * Stores event details of an event the user is attempting to create so we can easily send to server
+     */
+    setEventDetails = (title, description, location, startDate, endDate, tags, other, isPublic) => {
+        let details = this.state.eventCreationDetails
+        details.title = title;
+        details.description = description;
+        details.location = location;
+        details.startDate = startDate;
+        details.endDate = endDate;
+        details.tags = tags;
+        details.other = other;
+        details.public = isPublic;
+        // need to re-assign because of how JS vars work
+        this.state.eventCreationDetails = details;
         this.setState(this.state);
     }
 
+    /**
+     * Registers device for push notifications if permission is granted and it's a new device
+     */
     registerPushNotifs = async () => {
         if (!Constants.isDevice) {
             console.log("Must be physics device");
@@ -109,6 +124,11 @@ export default class extends React.Component {
         this.setState(this.state);
     }
 
+    /**
+     * Sends friend request from this user to another user
+     * @param friendId the id of the person who is being sent the request
+     * @param wantToFriend whether the user wants to send a request or cancel a request
+     */
     friendRequest = (friendId, friended) => {
         fetch("http://yolo-backend.herokuapp.com/friendReq", {
             method: "POST",
@@ -143,7 +163,7 @@ export default class extends React.Component {
                     socket: this.state.socket,
                     setCredentials: this.setCreds,
                     setLocation: this.setLoc,
-                    createEventText: this.setEventText,
+                    createEventDetails: this.setEventDetails,
                     createEventImage: this.setEventImage,
                     sendFriendReq: this.friendRequest,
                     registerTokenAsync: this.registerPushNotifs,

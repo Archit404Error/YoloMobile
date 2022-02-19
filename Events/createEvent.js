@@ -88,10 +88,34 @@ export default ({ navigation }) => {
                             </View>
                         </View>
                         <ImgScreen />
+                        <View style={{ flexDirection: 'column', flex: 1, backgroundColor: 'white', padding: 10 }}>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={{ alignSelf: 'center', fontSize: 15 }}>Public Event</Text>
+                                <Switch
+                                    value={!isPrivate}
+                                    onChange={() => setPrivacy(!isPrivate)}
+                                    trackColor={{ true: "#2d6ff4" }}
+                                    style={{ marginLeft: 20 }}
+                                />
+                            </View>
+                            {isPrivate &&
+                                <Text style={{ color: 'gray', fontSize: 10 }}>
+                                    Making this event private means it will only be visible to people to whom you send the event link
+                                </Text>
+                            }
+                        </View>
                         <TouchableOpacity
                             style={{ backgroundColor: 'white', width: '100%', alignItems: 'center', marginTop: 10, padding: 10 }}
                             onPress={() => {
-                                context.createEventText(title, description, location, startDate, endDate, tags, other);
+                                context.createEventDetails(
+                                    title, description,
+                                    location,
+                                    startDate,
+                                    endDate,
+                                    tags,
+                                    other,
+                                    isPrivate
+                                );
                                 navigation.navigate("Preview Event")
                             }}
                         >
