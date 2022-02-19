@@ -27,7 +27,7 @@ export default ({ id, eventId, eventName }) => {
             },
             body: JSON.stringify({
                 sender: context.id,
-                senderName: context.name,
+                senderName: context.fullName,
                 event: eventId,
                 eventName: eventName,
                 friend: id

@@ -39,7 +39,7 @@ export const uploadImageAsync = async (uri) => {
 /**
  * This function takes in an event object and a user id and sends a POST request to the backend to
  * create a new event
- * @param eventDetails - The event details that were entered by the user.
+ * @param eventDetails - The event details that were entered by the user (pulled from context).
  * @param creatorId - The id of the user who created the event.
  * @returns A promise that resolves to the response from the server.
  */

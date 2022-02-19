@@ -94,82 +94,82 @@ export default class extends React.Component {
 
         return (
             <SafeAreaView>
-                <RBSheet 
-                    ref = { ref => this.sendModal = ref }
-                    height = {300}
-                    openDuration = {250}
-                    closeOnDragDown = {true}
-                    onClose = {() => {
+                <RBSheet
+                    ref={ref => this.sendModal = ref}
+                    height={300}
+                    openDuration={250}
+                    closeOnDragDown={true}
+                    onClose={() => {
                         this.state.visible = false;
                         this.setState(this.state);
                         scheduleEvent(this.state.startDate, this.state.endDate, this.state.title);
                     }}
                 >
-                    <Text style = {styles.title}>Invite Your Friends</Text>
+                    <Text style={styles.title}>Invite Your Friends</Text>
                     <ScrollView>
-                    {
-                        this.context.friends.map(friendId => 
-                            <FriendInvitation 
-                                key = {friendId}
-                                id = {friendId}  
-                                eventId = {this.state.id} 
-                                eventName = {this.state.name}
-                            />
-                        )
-                    }
+                        {
+                            this.context.friends.map(friendId =>
+                                <FriendInvitation
+                                    key={friendId}
+                                    id={friendId}
+                                    eventId={this.state.id}
+                                    eventName={this.state.title}
+                                />
+                            )
+                        }
                     </ScrollView>
                 </RBSheet>
 
                 <View style={styles.flexContainer}>
                     <TouchableWithoutFeedback
-                        onLongPress={ () => this.displayDetails() }
+                        onLongPress={() => this.displayDetails()}
                     >
-                        <Image style = {styles.eventImg} source = {{ uri: this.state.image }} />
+                        <Image style={styles.eventImg} source={{ uri: this.state.image }} />
                     </TouchableWithoutFeedback>
-                    <Text style = {styles.title}>{this.state.title}</Text>
-                    <View style = {{ flexDirection: 'row' }}>
-                        <Text style = {styles.addressText}>{this.state.location}</Text>
-                        <Text style = {styles.addressText}>{Math.round(this.state.distance)} mi</Text>
+                    <Text style={styles.title}>{this.state.title}</Text>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text style={styles.addressText}>{this.state.location}</Text>
+                        <Text style={styles.addressText}>{Math.round(this.state.distance)} mi</Text>
                     </View>
-                    <View style = {{ flexDirection: 'row', marginLeft: 8 }}>
+                    <View style={{ flexDirection: 'row', marginLeft: 8 }}>
                         {
                             this.state.tags.map((tag, index) => {
                                 return (
-                                    <TouchableOpacity key = {index}>
-                                        <Text style = {styles.tag}>{tag}</Text>
+                                    <TouchableOpacity key={index}>
+                                        <Text style={styles.tag}>{tag}</Text>
                                     </TouchableOpacity>
                                 );
                             })
                         }
                     </View>
-                    <TouchableOpacity onPress = { () => this.displayDetails() }>
-                        <Text style = {styles.subText}>{this.state.description.substring(0, 75) + "...(Read More)"}</Text>
+                    <TouchableOpacity onPress={() => this.displayDetails()}>
+                        <Text style={styles.subText}>{this.state.description.substring(0, 75) + "...(Read More)"}</Text>
                     </TouchableOpacity>
-                    <View style = {styles.rsvpContainer}>
-                        <TouchableOpacity style = {styles.rsvpNoContainer} onPress = {() => { this.eventInteraction("rejected") }}>
-                            <View style = {styles.iconBg}>
+                    <View style={styles.rsvpContainer}>
+                        <TouchableOpacity style={styles.rsvpNoContainer} onPress={() => { this.eventInteraction("rejected") }}>
+                            <View style={styles.iconBg}>
                                 <AntDesign name="closecircle" size={45} color="red" />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity style = {styles.infoContainer} onPress = {
+                        <TouchableOpacity style={styles.infoContainer} onPress={
                             () => {
                                 this.displayDetails();
                                 this.eventInteraction("viewed");
                             }
                         }>
-                            <View style = {styles.iconBg}>
+                            <View style={styles.iconBg}>
                                 <AntDesign name="infocirlce" size={45} color="black" />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity style = {styles.rsvpYesContainer} onPress = {
+                        <TouchableOpacity style={styles.rsvpYesContainer} onPress={
                             () => {
                                 this.sendModal.open();
                                 this.context.socket.emit("eventsUpdated");
                                 this.eventInteraction("accepted");
                             }
                         }>
-                            <View style = {styles.iconBg}>
-                                <AntDesign name = "checkcircle" size = {45} color = "green" />
+                            <View style={styles.iconBg}>
+                                <AntDesign name="checkcircle" size={45} color="green" />
                             </View>
                         </TouchableOpacity>
                     </View>
