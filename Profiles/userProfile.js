@@ -8,7 +8,7 @@ export default class extends React.Component {
     static contextType = Context;
 
     state = {
-        id : -1,
+        id: -1,
         name: 'Sample Name',
         profPic: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
         friends: [],
@@ -30,13 +30,13 @@ export default class extends React.Component {
 
     render() {
         return (
-            <DisplayProfile 
-                id = {this.state.id} 
-                name = {this.state.name}
-                events = {this.state.events}
-                friends = {this.state.friends}
-                profilePic = {this.state.profPic}
-                navigation = {this.props.navigation}
+            <DisplayProfile
+                id={this.state.id}
+                name={this.state.name}
+                events={this.state.events}
+                friends={this.state.friends}
+                profilePic={this.state.profPic}
+                navigation={this.props.navigation}
             />
         );
     }

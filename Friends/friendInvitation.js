@@ -23,7 +23,7 @@ export default ({ id, eventId, eventName }) => {
         fetch(`http://yolo-backend.herokuapp.com/inviteFriend`, {
             method: "POST",
             headers: {
-                'Content-Type' : 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 sender: context.id,
@@ -40,17 +40,17 @@ export default ({ id, eventId, eventName }) => {
     useEffect(fetchDetails, [])
 
     return (
-        <View style = {{
-            flexDirection: 'row', 
-            backgroundColor: 'white', 
-            padding: 15, 
-            borderBottomColor: '#f2f2f2', 
+        <View style={{
+            flexDirection: 'row',
+            backgroundColor: 'white',
+            padding: 15,
+            borderBottomColor: '#f2f2f2',
             borderBottomWidth: 1
         }}>
-            <Image source = {{ uri: profile }} style = {{ width: 40, height: 40, borderRadius: 50 }} />
-            <TouchableOpacity onPress = {() => {
+            <Image source={{ uri: profile }} style={{ width: 40, height: 40, borderRadius: 50 }} />
+            <TouchableOpacity onPress={() => {
                 this.props.navigation.navigate(
-                    "Friends", 
+                    "Friends",
                     {
                         screen: "View Profile",
                         params: {
@@ -59,11 +59,11 @@ export default ({ id, eventId, eventName }) => {
                     },
                 )
             }}>
-                <Text style = {{ color: 'black', marginTop: 5, marginLeft: 10, marginRight: 10, fontSize: 20 }}>
+                <Text style={{ color: 'black', marginTop: 5, marginLeft: 10, marginRight: 10, fontSize: 20 }}>
                     {name}
                 </Text>
             </TouchableOpacity>
-            <TouchableOpacity style = {{ marginTop: 5 }} onPress = {() => {
+            <TouchableOpacity style={{ marginTop: 5 }} onPress={() => {
                 if (!invited) {
                     sendInvite();
                     showMessage({
@@ -72,7 +72,7 @@ export default ({ id, eventId, eventName }) => {
                     });
                 }
             }}>
-                <Feather name = {'send'} size = {25} />
+                <Feather name={'send'} size={25} />
             </TouchableOpacity>
         </View>
     )

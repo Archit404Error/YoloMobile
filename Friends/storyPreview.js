@@ -24,7 +24,7 @@ export default class extends React.Component {
         fetch(`http://yolo-backend.herokuapp.com/user/${this.state.id}`)
             .then(res => res.json())
             .then(resJson => {
-                this.state.profPic = resJson.profilePic; 
+                this.state.profPic = resJson.profilePic;
                 this.setState(this.state)
             })
         this.setState(this.state);
@@ -33,16 +33,16 @@ export default class extends React.Component {
     render() {
         return (
             <>
-                <TouchableOpacity onPress = {() => {
+                <TouchableOpacity onPress={() => {
                     this.state.visible = true && !this.state.forUpload;
                     this.setState(this.state);
                 }}>
-                    <Image 
-                        style = { this.state.viewed ? styles.storyImg : styles.storyImgNew } 
-                        source = {{ uri: this.state.profPic }} 
+                    <Image
+                        style={this.state.viewed ? styles.storyImg : styles.storyImgNew}
+                        source={{ uri: this.state.profPic }}
                     />
                 </TouchableOpacity>
-                <StoryContainer id = {this.state.id} visible = {this.state.visible} image = {this.props.image} />
+                <StoryContainer id={this.state.id} visible={this.state.visible} image={this.props.image} />
             </>
         )
     }

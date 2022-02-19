@@ -17,15 +17,15 @@ export default ({ initialLat, initialLong }) => {
     })
 
     return (
-        <MapView 
-            region = {region}
+        <MapView
+            region={region}
             onRegionChangeComplete={reg => setRegion(reg)}
             onMarkerDrag={dragEvent => setMarkerPos(dragEvent.nativeEvent.coordinate)}
-            style={{height: windowHeight / 3, width: windowWidth}}
+            style={{ height: windowHeight / 3, width: windowWidth }}
         >
             <Marker
                 draggable
-                coordinate = {markerPos}
+                coordinate={markerPos}
             />
         </MapView>
     )

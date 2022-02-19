@@ -44,7 +44,7 @@ export default class extends React.Component {
         this.state.profile = data.profilePic;
         let socket = socketio('http://yolo-backend.herokuapp.com/', {
             query: `chatList=${data.chats}&user=${data._id}`
-        }); 
+        });
 
         this.state.socket = socket;
         this.setState(this.state);
@@ -85,7 +85,7 @@ export default class extends React.Component {
             fetch("http://yolo-backend.herokuapp.com/registerPushToken", {
                 method: "POST",
                 headers: {
-                    "Content-Type" : "application/json"
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     user: this.state.id,
@@ -96,7 +96,7 @@ export default class extends React.Component {
             return Promise.reject("Couldn't check notifications permissions");
         }
     }
-    
+
     /**
      * General purpose function to modify portions of state without exposing state
      * @param {String[]} keyList an array of key values
@@ -113,7 +113,7 @@ export default class extends React.Component {
         fetch("http://yolo-backend.herokuapp.com/friendReq", {
             method: "POST",
             headers: {
-                "Content-Type" : "application/json"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 sender: this.state.id,
@@ -127,7 +127,7 @@ export default class extends React.Component {
     render() {
         return (
             <Context.Provider
-                value = {{
+                value={{
                     id: this.state.id,
                     username: this.state.username,
                     password: this.state.password,
@@ -150,7 +150,7 @@ export default class extends React.Component {
                     modifyState: this.modifyState,
                 }}
             >
-                { this.props.children }
+                {this.props.children}
             </Context.Provider>
         )
     }

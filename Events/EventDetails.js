@@ -9,14 +9,14 @@ import { styles, windowWidth } from "../styles";
 
 export default class extends React.Component {
     state = {
-        id : -1,
-        title : "Loading...",
-        image : "https://www.usnews.com/dims4/USNEWS/74cbc08/17177859217/resize/800x540%3E/quality/85/?url=https%3A%2F%2Fmedia.beam.usnews.com%2F59%2F0dd395ffda36a08c792a2b32303c7b%2Fcollege-photo_73.jpg",
-        desc : "Loading...",
+        id: -1,
+        title: "Loading...",
+        image: "https://www.usnews.com/dims4/USNEWS/74cbc08/17177859217/resize/800x540%3E/quality/85/?url=https%3A%2F%2Fmedia.beam.usnews.com%2F59%2F0dd395ffda36a08c792a2b32303c7b%2Fcollege-photo_73.jpg",
+        desc: "Loading...",
         startDate: new Date(),
         endDate: new Date(),
-        loc : "Loading...",
-        people : []
+        loc: "Loading...",
+        people: []
     };
 
     constructor(props) {
@@ -55,7 +55,7 @@ export default class extends React.Component {
         const ampm = hours >= 12 ? 'pm' : 'am';
         hours = hours % 12;
         hours = hours ? hours : 12; // the hour '0' should be '12'
-        minutes = minutes < 10 ? '0'+minutes : minutes;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
         var strTime = hours + ':' + minutes + ' ' + ampm;
         return strTime;
     }
@@ -72,13 +72,13 @@ export default class extends React.Component {
      */
     shareEventLink() {
         const eventUrl = Linking.createURL('/event', {
-            queryParams: { id: this.state.id  }
+            queryParams: { id: this.state.id }
         })
         try {
             if (Platform.OS == "ios")
-                Share.share({url: eventUrl})
+                Share.share({ url: eventUrl })
             else
-                Share.share({message: eventUrl})
+                Share.share({ message: eventUrl })
         } catch (err) {
             alert(err.message);
         }
@@ -86,47 +86,47 @@ export default class extends React.Component {
 
     render() {
         return (
-            <SafeAreaView style = {styles.alignBottomContainer}>
+            <SafeAreaView style={styles.alignBottomContainer}>
                 <ScrollView>
-                    <Image source = {{uri: this.state.image}} style = {styles.detailsImg} />
-                    <View style = {{flexDirection: 'row', maxWidth: windowWidth - 40}}>
-                        <Text style = {styles.title}>{this.state.title}</Text>
-                        <TouchableOpacity onPress = {() => this.shareEventLink()} style = {{marginTop: 40}}>
-                        <Feather name = {"external-link"} size={20} color="blue" />
+                    <Image source={{ uri: this.state.image }} style={styles.detailsImg} />
+                    <View style={{ flexDirection: 'row', maxWidth: windowWidth - 40 }}>
+                        <Text style={styles.title}>{this.state.title}</Text>
+                        <TouchableOpacity onPress={() => this.shareEventLink()} style={{ marginTop: 40 }}>
+                            <Feather name={"external-link"} size={20} color="blue" />
                         </TouchableOpacity>
                     </View>
-                    <Text style = {styles.subText}>{this.state.desc}</Text>
-                    <View style = {{ flex: 1, flexDirection: 'row' }}>
-                        <MaterialIcons name = {"location-pin"} size = {24} style = {{ margin: 6 }} />
-                        <Text style = {styles.addressText}>{this.state.loc}</Text>
+                    <Text style={styles.subText}>{this.state.desc}</Text>
+                    <View style={{ flex: 1, flexDirection: 'row' }}>
+                        <MaterialIcons name={"location-pin"} size={24} style={{ margin: 6 }} />
+                        <Text style={styles.addressText}>{this.state.loc}</Text>
                     </View>
-                    <View style = {{ flex: 1, flexDirection: 'row' }}>
-                        <MaterialIcons name = {"calendar-today"} size = {24} style = {{ margin: 6 }} />
-                        <Text style = {styles.addressText}>
+                    <View style={{ flex: 1, flexDirection: 'row' }}>
+                        <MaterialIcons name={"calendar-today"} size={24} style={{ margin: 6 }} />
+                        <Text style={styles.addressText}>
                             {this.getDates()}
                         </Text>
                     </View>
-                    <View style = {{ flex: 1, flexDirection: 'row' }}>
-                        <MaterialIcons name = {"access-time"} size = {24} style = {{ margin: 6 }} />
-                        <Text style = {styles.addressText}>
+                    <View style={{ flex: 1, flexDirection: 'row' }}>
+                        <MaterialIcons name={"access-time"} size={24} style={{ margin: 6 }} />
+                        <Text style={styles.addressText}>
                             {this.getHours()}
                         </Text>
                     </View>
-                    <Text style = {styles.title}>Attendees</Text>
+                    <Text style={styles.title}>Attendees</Text>
                     {
                         this.state.people.map((id) => {
-                            return <Friend key = {id} id = {id} navigation = {this.props.navigation} />
+                            return <Friend key={id} id={id} navigation={this.props.navigation} />
                         })
                     }
-                    <View style = {{ height: 50 }}></View>
+                    <View style={{ height: 50 }}></View>
                 </ScrollView>
                 <View>
-                    <View style = {{ flexDirection: 'row' }}>
-                        <TouchableOpacity style = {styles.rsvpNoBlock}>
-                            <Text style = {{ color: 'white' }}>No thanks</Text>
+                    <View style={{ flexDirection: 'row' }}>
+                        <TouchableOpacity style={styles.rsvpNoBlock}>
+                            <Text style={{ color: 'white' }}>No thanks</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style = {styles.rsvpYesBlock}>
-                            <Text style = {{ color: 'white' }}>Interested</Text>
+                        <TouchableOpacity style={styles.rsvpYesBlock}>
+                            <Text style={{ color: 'white' }}>Interested</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

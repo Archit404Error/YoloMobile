@@ -15,14 +15,14 @@ export default ({ navigation }) => {
 
     useEffect(() => {
         (async () => {
-          let { status } = await Location.requestForegroundPermissionsAsync();
-          if (status !== 'granted') {
-            setErrorMsg('Permission to access location was denied');
-            return;
-          }
-          let location = await Location.getCurrentPositionAsync({});
-          context.setLocation(location.coords.latitude, location.coords.longitude);
-          setLoc(location);
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                setErrorMsg('Permission to access location was denied');
+                return;
+            }
+            let location = await Location.getCurrentPositionAsync({});
+            context.setLocation(location.coords.latitude, location.coords.longitude);
+            setLoc(location);
         })();
     }, []);
 
@@ -33,29 +33,29 @@ export default ({ navigation }) => {
     useEffect(() => {
         if (JSON.stringify(loc) != "{}") navigation.navigate("App");
     }, [loading]);
-    
+
     return (
         <>
-            <View style = {styles.fullScreenContainer}>
-                <View style = {{ alignItems: 'center' }}>
-                    <Text style = { styles.title } >Login/Register</Text>
-                    <Input 
-                        placeholder = "Email" 
-                        textContentType = {'emailAddress'} 
-                        leftIcon = {<Ionicons name = "mail-open" size = {20} />} 
-                        onChangeText = {t => setUserName(t)}
+            <View style={styles.fullScreenContainer}>
+                <View style={{ alignItems: 'center' }}>
+                    <Text style={styles.title} >Login/Register</Text>
+                    <Input
+                        placeholder="Email"
+                        textContentType={'emailAddress'}
+                        leftIcon={<Ionicons name="mail-open" size={20} />}
+                        onChangeText={t => setUserName(t)}
                     />
-                    <Input 
-                        placeholder = "Password" 
-                        textContentType = {'password'} 
-                        leftIcon = {<Ionicons name = "key-outline" size = {20} />} 
-                        onChangeText = {t => setPassword(t)}
+                    <Input
+                        placeholder="Password"
+                        textContentType={'password'}
+                        leftIcon={<Ionicons name="key-outline" size={20} />}
+                        onChangeText={t => setPassword(t)}
                     />
-                    <Button 
-                        title = { "Login / Register" } 
-                        buttonStyle = {styles.confirmButton}
-                        disabled = {loading || userName == '' || password == ''} 
-                        onPress = {() => {
+                    <Button
+                        title={"Login / Register"}
+                        buttonStyle={styles.confirmButton}
+                        disabled={loading || userName == '' || password == ''}
+                        onPress={() => {
                             fetch(`http://yolo-backend.herokuapp.com/auth?`, {
                                 method: 'POST',
                                 headers: {
@@ -81,8 +81,8 @@ export default ({ navigation }) => {
                         }}
                     />
                 </View>
-                { loading && 
-                    <ActivityIndicator size = "large" style = {{ marginTop: 10 }} />
+                {loading &&
+                    <ActivityIndicator size="large" style={{ marginTop: 10 }} />
                 }
             </View>
         </>

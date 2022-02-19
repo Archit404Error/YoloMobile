@@ -26,11 +26,11 @@ async function sendMessage(message, chatId, chatName, sender, socket) {
 function showSend(message, chatId, chatName, sender, messageFunc, socket) {
     if (message.length >= 1) {
         return (
-            <TouchableOpacity onPress =  {() => {
+            <TouchableOpacity onPress={() => {
                 sendMessage(message, chatId, chatName, sender, socket);
                 messageFunc("");
             }}>
-                <Ionicons name = { "send-sharp" } size = {25} style = {{ marginTop: 15 }} />
+                <Ionicons name={"send-sharp"} size={25} style={{ marginTop: 15 }} />
             </TouchableOpacity>
         )
     }
@@ -41,19 +41,19 @@ export default ({ chatId, chatName, sender }) => {
     const [message, setMessage] = useState("");
     const context = useContext(Context);
     return (
-        <View style = {{ flexDirection: 'row' }}>
-            <TextInput 
-                style = { styles.chatInput } 
-                placeholder = {"Send Message..."} 
-                returnKeyType = {"send"} 
-                onChangeText = {text => setMessage(text)}
-                onSubmitEditing = {() => {
+        <View style={{ flexDirection: 'row' }}>
+            <TextInput
+                style={styles.chatInput}
+                placeholder={"Send Message..."}
+                returnKeyType={"send"}
+                onChangeText={text => setMessage(text)}
+                onSubmitEditing={() => {
                     sendMessage(message, chatId, chatName, sender, context.socket);
                     setMessage("");
                 }}
-                value = {message}
+                value={message}
             />
-        { showSend(message, chatId, chatName, sender, setMessage, context.socket) }
+            {showSend(message, chatId, chatName, sender, setMessage, context.socket)}
         </View>
     )
 }

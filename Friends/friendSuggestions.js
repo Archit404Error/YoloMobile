@@ -30,23 +30,23 @@ export default class extends React.Component {
 
     render() {
         return (
-            <View style = {{flex: 1}}>
+            <View style={{ flex: 1 }}>
                 <SafeAreaView>
-                    <ScrollView horizontal = {true}>
+                    <ScrollView horizontal={true}>
                         <UploadStory />
                         {
                             this.state.stories.map((storyObj, index) => {
                                 return (
-                                    <Story key = {index} id = {storyObj._id} image = {storyObj.storyImage} />
+                                    <Story key={index} id={storyObj._id} image={storyObj.storyImage} />
                                 )
                             })
                         }
                     </ScrollView>
                 </SafeAreaView>
-                { 
+                {
                     this.state.friends.map((id, index) => {
                         return (
-                            <Friend key = {index} id = {id} navigation = {this.props.navigation} />
+                            <Friend key={index} id={id} navigation={this.props.navigation} />
                         );
                     })
                 }

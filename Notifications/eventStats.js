@@ -21,34 +21,34 @@ export default ({ route }) => {
     }, [])
 
     return (
-        <SafeAreaView style = {{ backgroundColor: 'white', flex: 1 }}>
+        <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
             <ScrollView>
-                <Image 
-                    style = {{ width: windowWidth, height: windowHeight / 5 }} 
-                    source = {{ uri: data.image }}
+                <Image
+                    style={{ width: windowWidth, height: windowHeight / 5 }}
+                    source={{ uri: data.image }}
                 />
-                <Text style = {styles.title}>{data.title}</Text>
-                <Text style = {styles.title}>{`Attendees (${data.attendees.length})`}</Text>
+                <Text style={styles.title}>{data.title}</Text>
+                <Text style={styles.title}>{`Attendees (${data.attendees.length})`}</Text>
                 {
                     data.attendees.map((id, index) => {
-                        <Text key = {index}>{id}</Text>
+                        <Text key={index}>{id}</Text>
                     })
                 }
-                <View style = {{ flexDirection: 'row' }}>
-                    <View style = {{ flex: 1, alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flex: 1, alignItems: 'center' }}>
                         <Ionicons name="eye" size={24} color="black" />
-                        <Text style = {styles.chatTitle}>Viewed</Text>
-                        <Text style = {styles.subText}>{data.viewers.length}</Text>
+                        <Text style={styles.chatTitle}>Viewed</Text>
+                        <Text style={styles.subText}>{data.viewers.length}</Text>
                     </View>
-                    <View style = {{ flex: 1, alignItems: 'center' }}>
+                    <View style={{ flex: 1, alignItems: 'center' }}>
                         <Ionicons name="md-close" size={24} color="black" />
-                        <Text style = {styles.chatTitle}>Denied</Text>
-                        <Text style = {styles.subText}>{data.rejecters.length}</Text>
+                        <Text style={styles.chatTitle}>Denied</Text>
+                        <Text style={styles.subText}>{data.rejecters.length}</Text>
                     </View>
-                    <View style = {{ flex: 1, alignItems: 'center' }}>
+                    <View style={{ flex: 1, alignItems: 'center' }}>
                         <Ionicons name="checkmark" size={24} color="black" />
-                        <Text style = {styles.chatTitle}>Agreed</Text>
-                        <Text style = {styles.subText}>{data.attendees.length}</Text>
+                        <Text style={styles.chatTitle}>Agreed</Text>
+                        <Text style={styles.subText}>{data.attendees.length}</Text>
                     </View>
                 </View>
             </ScrollView>

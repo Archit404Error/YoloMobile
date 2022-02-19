@@ -32,13 +32,13 @@ export default class extends React.Component {
 
     render() {
         return (
-            <DisplayProfile 
-                id = {this.state.id}
-                name = {this.state.name}
-                friends = {this.state.friends}
-                events = {this.state.events}
-                profilePic = {this.state.profPic}
-                navigation = {this.props.navigation}
+            <DisplayProfile
+                id={this.state.id}
+                name={this.state.name}
+                friends={this.state.friends}
+                events={this.state.events}
+                profilePic={this.state.profPic}
+                navigation={this.props.navigation}
             />
         );
     }

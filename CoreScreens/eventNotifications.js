@@ -20,8 +20,8 @@ export default ({ navigation }) => {
             context.socket.on("userCreatedEvent", fetchData);
             // Turn off listener on unmount
             return () => context.socket.off("userCreatedEvent", fetchData);
-        }, 
-    [])
+        },
+        [])
 
     return (
         <SafeAreaView>
@@ -29,10 +29,10 @@ export default ({ navigation }) => {
                 {
                     userEvents.map((eventData, index) => {
                         return (
-                            <EventPreview 
-                                key = {index}  
-                                eventData = {eventData}
-                                navigation = {navigation}
+                            <EventPreview
+                                key={index}
+                                eventData={eventData}
+                                navigation={navigation}
                             />
                         )
                     })

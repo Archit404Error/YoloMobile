@@ -42,7 +42,7 @@ export default class extends React.Component {
                 this.state.startDate = new Date(res.startDate);
                 this.state.endDate = new Date(res.endDate);
                 this.state.attendees = res.attendees;
-                this.state.tags = res.tags.split(", ");
+                this.state.tags = res.tags;
                 this.setState(this.state);
                 const locUrl =
                     `http://router.project-osrm.org/route/v1/car/${this.context.longitude},${this.context.latitude};${res.longitude},${res.latitude}`;

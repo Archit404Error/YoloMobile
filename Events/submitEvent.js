@@ -10,8 +10,8 @@ export default class extends React.Component {
 
     render() {
         return (
-            <View style = { styles.container, {justifyContent: 'center'} }>
-                <Text style = {styles.title}>
+            <View style={styles.container, { justifyContent: 'center' }}>
+                <Text style={styles.title}>
                     Event created!
                 </Text>
             </View>

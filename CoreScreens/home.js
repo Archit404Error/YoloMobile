@@ -24,26 +24,26 @@ export default ({ navigation }) => {
   }
 
   return (
-      <SafeAreaView>
-        <ScrollView 
-          vertical = {true} 
-          decelerationRate = {0} 
-          snapToInterval = {windowHeight / 1.5 + 125} 
-          snapToAlignment = {"center"}
-          refreshControl = {
-            <RefreshControl 
-              refreshing = {refreshing}
-              onRefresh = {refreshEvents}
-            />
-          }
-        >
-          {
-            ids.map(id => {
-              return <Event key = {id} id = {id} navigation = {navigation} />
-            })
-          }
-          <StatusBar />
-        </ScrollView>
-      </SafeAreaView>
-    );
+    <SafeAreaView>
+      <ScrollView
+        vertical={true}
+        decelerationRate={0}
+        snapToInterval={windowHeight / 1.5 + 125}
+        snapToAlignment={"center"}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={refreshEvents}
+          />
+        }
+      >
+        {
+          ids.map(id => {
+            return <Event key={id} id={id} navigation={navigation} />
+          })
+        }
+        <StatusBar />
+      </ScrollView>
+    </SafeAreaView>
+  );
 }

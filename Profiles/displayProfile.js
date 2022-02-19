@@ -17,18 +17,18 @@ export default class extends React.Component {
     render() {
         return (
             <SafeAreaView>
-                <ScrollView style = {styles.container}>
-                    <Image style = {styles.profImg} source = {{uri: this.props.profilePic}} />
-                    <Text style = {styles.profTitle}>{this.props.name}</Text>
+                <ScrollView style={styles.container}>
+                    <Image style={styles.profImg} source={{ uri: this.props.profilePic }} />
+                    <Text style={styles.profTitle}>{this.props.name}</Text>
                     {
                         this.props.friends.map((friendId, index) => {
-                            return <Friend key = {index} id = {friendId} navigation = {this.props.navigation} />
+                            return <Friend key={index} id={friendId} navigation={this.props.navigation} />
                         })
                     }
                     {
                         this.props.events.map((eventId) => {
                             return (
-                                <Event key = {eventId} id = {eventId} />
+                                <Event key={eventId} id={eventId} />
                             )
                         })
                     }

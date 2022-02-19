@@ -25,13 +25,13 @@ export default class extends React.Component {
 
     handlePrevUpdate = (chatId) => {
         if (chatId == this.state.id) {
-        fetch(`http://yolo-backend.herokuapp.com/chatDetails/${this.state.id}`)
-            .then(response => response.json())
-            .then(res => {
-                this.state.allMessages = res.messages;
-                this.state.recentMsg = res.messages[res.messages.length - 1];
-                this.setState(this.state);
-            })
+            fetch(`http://yolo-backend.herokuapp.com/chatDetails/${this.state.id}`)
+                .then(response => response.json())
+                .then(res => {
+                    this.state.allMessages = res.messages;
+                    this.state.recentMsg = res.messages[res.messages.length - 1];
+                    this.setState(this.state);
+                })
         }
     }
 
@@ -60,10 +60,10 @@ export default class extends React.Component {
         }
 
         return (
-            <TouchableOpacity 
-                onPress = {() => {
+            <TouchableOpacity
+                onPress={() => {
                     // this.context.socket.removeAllListeners("messageSent");
-                    this.props.navigation.navigate("Messages", { 
+                    this.props.navigation.navigate("Messages", {
                         id: this.state.id,
                         title: this.state.title,
                         messages: this.state.allMessages,
@@ -71,29 +71,29 @@ export default class extends React.Component {
                         image: this.state.image,
                     })
                 }
-            }>
-                <View style = {styles.chatContainer}>
-                    <View style = {{ flexDirection: 'row' }}>
-                        <Image style = {styles.chatImg} source = {{ uri: this.state.image }} />
-                        <View style = {{ flexDirection: 'column', padding: 10 }}>
-                            <View style = {{ flexDirection: 'row' }}>
-                                <Text style = { styles.chatTitle }>
+                }>
+                <View style={styles.chatContainer}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Image style={styles.chatImg} source={{ uri: this.state.image }} />
+                        <View style={{ flexDirection: 'column', padding: 10 }}>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={styles.chatTitle}>
                                     {
                                         this.state.title.substring(0, this.state.title.indexOf(this.props.display))
                                     }
                                 </Text>
-                                <Text style = { styles.matchTitle }>
+                                <Text style={styles.matchTitle}>
                                     {
                                         this.state.title.substring(this.state.title.indexOf(this.props.display), this.state.title.indexOf(this.props.display) + this.props.display.length)
                                     }
                                 </Text>
-                                <Text style = { styles.chatTitle }>
+                                <Text style={styles.chatTitle}>
                                     {
                                         this.state.title.substring(this.state.title.indexOf(this.props.display) + this.props.display.length, this.state.title.length)
                                     }
                                 </Text>
                             </View>
-                            <Text style = {{ color: 'gray', marginTop: 10 }}>
+                            <Text style={{ color: 'gray', marginTop: 10 }}>
                                 {
                                     `${this.state.recentMsg.sender}: ${this.state.recentMsg.message}`
                                 }

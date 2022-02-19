@@ -36,17 +36,17 @@ export default () => {
 
   return (
     <Context.Consumer>
-    { context =>
-    <View style={{ marginTop: 20, alignItems: 'center', justifyContent: 'center' }}>
-      <TouchableOpacity 
-        style = {{ backgroundColor: 'white', width: '100%', alignItems: 'center', padding: 10 }} 
-        onPress={() => pickImage(context)}
-      >
-        <Text style = {{ color: '#2d6ff4' }}>Add Image</Text>
-      </TouchableOpacity>
-      {image && <Image source={{ uri: image }} style={{ width: '100%', height: imgHt }} />}
-    </View>
-    }
+      {context =>
+        <View style={{ marginTop: 20, alignItems: 'center', justifyContent: 'center' }}>
+          <TouchableOpacity
+            style={{ backgroundColor: 'white', width: '100%', alignItems: 'center', padding: 10 }}
+            onPress={() => pickImage(context)}
+          >
+            <Text style={{ color: '#2d6ff4' }}>Add Image</Text>
+          </TouchableOpacity>
+          {image && <Image source={{ uri: image }} style={{ width: '100%', height: imgHt }} />}
+        </View>
+      }
     </Context.Consumer>
   );
 }

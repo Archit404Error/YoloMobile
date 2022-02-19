@@ -7,27 +7,27 @@ import uuid from 'uuid';
 
 export const uploadImageAsync = async (uri) => {
     const blob = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function() {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function(e) {
-        console.log(e);
-        reject(new TypeError('Network request failed'));
-      };
-      xhr.responseType = 'blob';
-      xhr.open('GET', uri, true);
-      xhr.send(null);
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            resolve(xhr.response);
+        };
+        xhr.onerror = function (e) {
+            console.log(e);
+            reject(new TypeError('Network request failed'));
+        };
+        xhr.responseType = 'blob';
+        xhr.open('GET', uri, true);
+        xhr.send(null);
     });
-  
+
     const ref = firebase
-      .storage()
-      .ref()
-      .child(uuid.v4());
+        .storage()
+        .ref()
+        .child(uuid.v4());
     const snapshot = await ref.put(blob);
-  
+
     blob.close();
-  
+
     return await snapshot.ref.getDownloadURL();
 }
 
@@ -47,33 +47,33 @@ const submitEventAsync = async (eventDetails, creatorId) => {
 export default ({ navigation }) => {
     return (
         <Context.Consumer>
-            { context =>
+            {context =>
                 <SafeAreaView>
-                    <ScrollView style = {styles.container}>
-                        <Image style = {styles.eventImg} source = {{ uri: context.eventDetails.image }} />
-                        <Text style = {styles.title}>{context.eventDetails.title}</Text>
-                        <Text style = {styles.addressText}>{context.eventDetails.location}</Text>
-                        <View style = {{ flex: 1, flexDirection: 'row', marginLeft: 10, }}>
-                        {
-                            context.eventDetails.tags.split("|").map((tag, index) => {
-                                return (
-                                    <View key = {index} style = {styles.tag}>
-                                        <Text>{tag}</Text>
-                                    </View>
-                                )
-                            })
-                        }
+                    <ScrollView style={styles.container}>
+                        <Image style={styles.eventImg} source={{ uri: context.eventDetails.image }} />
+                        <Text style={styles.title}>{context.eventDetails.title}</Text>
+                        <Text style={styles.addressText}>{context.eventDetails.location}</Text>
+                        <View style={{ flex: 1, flexDirection: 'row', marginLeft: 10, }}>
+                            {
+                                context.eventDetails.tags.split("|").map((tag, index) => {
+                                    return (
+                                        <View key={index} style={styles.tag}>
+                                            <Text>{tag}</Text>
+                                        </View>
+                                    )
+                                })
+                            }
                         </View>
-                        <Text style = {styles.subText}>{context.eventDetails.description}</Text>
-                        <Button title = {"Add Event!"} 
-                            onPress = {
-                                async () => { 
+                        <Text style={styles.subText}>{context.eventDetails.description}</Text>
+                        <Button title={"Add Event!"}
+                            onPress={
+                                async () => {
                                     const resUrl = await uploadImageAsync(context.eventDetails.image)
                                     context.createEventImage(await resUrl)
-                                    submitEventAsync(context.eventDetails, context.id) 
+                                    submitEventAsync(context.eventDetails, context.id)
                                     navigation.navigate("Submit Event")
                                 }
-                            } 
+                            }
                         />
                     </ScrollView>
                 </SafeAreaView>

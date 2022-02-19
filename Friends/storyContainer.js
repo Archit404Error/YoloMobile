@@ -33,7 +33,7 @@ export default class extends React.Component {
         state.visible = props.visible;
         return state;
     }
-    
+
     render() {
         return (
             <Modal
@@ -42,8 +42,8 @@ export default class extends React.Component {
                 visible={this.state.visible}
             >
                 <StatusBar hidden />
-                <View style = {{ alignItems: 'flex-end', marginRight: 10, marginTop: 10 }}>
-                    <TouchableOpacity onPress = {() => {
+                <View style={{ alignItems: 'flex-end', marginRight: 10, marginTop: 10 }}>
+                    <TouchableOpacity onPress={() => {
                         this.state.visible = false;
                         this.state.closing = true;
                         this.setState(this.state);
@@ -51,7 +51,7 @@ export default class extends React.Component {
                         <EvilIcons name="close" size={30} color="black" />
                     </TouchableOpacity>
                 </View>
-                <Image source = {{ uri: this.props.image }} style = {styles.storyContent} />
+                <Image source={{ uri: this.props.image }} style={styles.storyContent} />
             </Modal>
         )
     }

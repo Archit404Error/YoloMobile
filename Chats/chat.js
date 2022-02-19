@@ -17,7 +17,7 @@ export default class extends React.Component {
         handler: -1,
         lastSender: "",
     }
-    
+
     constructor(props) {
         super(props);
     }
@@ -51,32 +51,32 @@ export default class extends React.Component {
     render() {
         return (
             <>
-                <SafeAreaView style = {styles.alignBottomContainer}>
-                    <ScrollView 
-                        ref={ref => {this.scrollView = ref}}
-                        onContentSizeChange={() => this.scrollView.scrollToEnd({animated: true})}
-                        style = {styles.messageScrollView}>
+                <SafeAreaView style={styles.alignBottomContainer}>
+                    <ScrollView
+                        ref={ref => { this.scrollView = ref }}
+                        onContentSizeChange={() => this.scrollView.scrollToEnd({ animated: true })}
+                        style={styles.messageScrollView}>
                         {
                             this.state.messages.map((messageObj, index) => {
                                 let sender = messageObj.sender;
-                                return(
-                                    <View key = {index} style = { styles.chatMessageContainer }>
-                                        {   
+                                return (
+                                    <View key={index} style={styles.chatMessageContainer}>
+                                        {
                                             (() => {
                                                 if (this.state.lastSender != sender) {
                                                     this.state.lastSender = sender;
-                                                    if (index == this.state.messages.length) 
+                                                    if (index == this.state.messages.length)
                                                         this.state.lastSender = ""
                                                     return (
-                                                        <View style = { sender == this.state.name ? styles.userChatName : styles.otherUserChatName }>
+                                                        <View style={sender == this.state.name ? styles.userChatName : styles.otherUserChatName}>
                                                             <Text>{sender}</Text>
                                                         </View>
                                                     )
                                                 }
                                             })()
                                         }
-                                        <View style = { sender == this.state.name ? styles.userChatMessage : styles.chatMessage }>
-                                            <Text style = {sender == this.state.name ? { color: 'white' } : { color: 'black' }}>
+                                        <View style={sender == this.state.name ? styles.userChatMessage : styles.chatMessage}>
+                                            <Text style={sender == this.state.name ? { color: 'white' } : { color: 'black' }}>
                                                 {messageObj.message}
                                             </Text>
                                         </View>
@@ -86,13 +86,13 @@ export default class extends React.Component {
                         }
                     </ScrollView>
                 </SafeAreaView>
-                <KeyboardAvoidingView behavior = {"padding"} keyboardVerticalOffset = {90} style = {{ backgroundColor: 'white' }}>
-                    <SendMessage 
-                        chatId = {this.state.id}
-                        chatName = {this.state.title} 
-                        sender = {this.context.username} 
+                <KeyboardAvoidingView behavior={"padding"} keyboardVerticalOffset={90} style={{ backgroundColor: 'white' }}>
+                    <SendMessage
+                        chatId={this.state.id}
+                        chatName={this.state.title}
+                        sender={this.context.username}
                     />
-                </KeyboardAvoidingView>    
+                </KeyboardAvoidingView>
             </>
         )
     }
