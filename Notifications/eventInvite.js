@@ -45,18 +45,18 @@ export default ({ navigation, eventId, senderId, eventName, senderName }) => {
                     <Text style={{ color: 'gray', fontSize: 10, marginLeft: 10 }}>invited you to {eventName}</Text>
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity style={{ marginTop: 5, right: -100 }} onPress={() => {
+            <TouchableOpacity style={{ marginLeft: 60, marginTop: 5 }} onPress={() => {
                 eventInteraction('accepted', context.id, eventId);
                 setRSVP(true)
             }}>
                 <Feather name="check" size={25} />
             </TouchableOpacity>
-            <TouchableOpacity style={{ marginTop: 5, right: -100 }} onPress={() => {
+            <TouchableOpacity style={{ marginLeft: 30, marginTop: 5 }} onPress={() => {
                 eventInteraction('rejected', context.id, eventId);
                 setRSVP(true)
             }}>
                 <Feather name="x" size={25} />
             </TouchableOpacity>
-        </View >
+        </View>
     )
 }

@@ -28,7 +28,7 @@ export default ({ navigation }) => {
       <ScrollView
         vertical={true}
         decelerationRate={0}
-        snapToInterval={windowHeight / 1.5 + 125}
+        snapToInterval={windowHeight / 1.5 + 112}
         snapToAlignment={"center"}
         refreshControl={
           <RefreshControl
