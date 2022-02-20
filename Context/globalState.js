@@ -2,7 +2,7 @@ import React from 'react';
 import * as Notifications from 'expo-notifications';
 import socketio from "socket.io-client";
 import Context from './context';
-import Constants from 'expo-constants';
+import Device from 'expo-device';
 
 export default class extends React.Component {
     state = {
@@ -88,9 +88,7 @@ export default class extends React.Component {
      * Registers device for push notifications if permission is granted and it's a new device
      */
     registerPushNotifs = async () => {
-        if (!Constants.isDevice) {
-            console.log("Must be physics device");
-        }
+        if (!Device.isDevice) { return }
         try {
             const statusResult = await Notifications.getPermissionsAsync();
             const askResult = statusResult.status !== 'granted'

@@ -20,6 +20,7 @@ export default ({ id, eventId, eventName }) => {
     }
 
     const sendInvite = () => {
+        console.log(id)
         fetch(`http://yolo-backend.herokuapp.com/inviteFriend`, {
             method: "POST",
             headers: {

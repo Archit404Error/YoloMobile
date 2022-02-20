@@ -1,8 +1,7 @@
 import React, { useState, useContext } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { eventInteraction } from "../Events/eventHelperFuncs";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useState } from "react";
 import Context from "../Context/context";
 
 export default ({ eventId, senderId, eventName, senderName }) => {
