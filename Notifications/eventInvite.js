@@ -2,9 +2,10 @@ import React, { useState, useContext } from "react";
 import { View, Text } from "react-native";
 import { eventInteraction } from "../Events/eventHelperFuncs";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { Feather } from '@expo/vector-icons';
 import Context from "../Context/context";
 
-export default ({ eventId, senderId, eventName, senderName }) => {
+export default ({ navigation, eventId, senderId, eventName, senderName }) => {
     const context = useContext(Context);
     const [rsvped, setRSVP] = useState(false);
 
@@ -20,7 +21,7 @@ export default ({ eventId, senderId, eventName, senderName }) => {
         }}>
             <View style={{ flexDirection: 'column' }}>
                 <TouchableOpacity onPress={() => {
-                    this.props.navigation.navigate(
+                    navigation.navigate(
                         "Friends",
                         {
                             screen: "View Profile",
@@ -36,7 +37,7 @@ export default ({ eventId, senderId, eventName, senderName }) => {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
                     eventInteraction('viewed', context.id, eventId);
-                    this.props.navigation.navigate("Events", {
+                    navigation.navigate("Events", {
                         screen: "Details",
                         params: { id: eventId }
                     })

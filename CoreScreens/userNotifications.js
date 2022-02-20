@@ -5,7 +5,7 @@ import { styles } from "../styles";
 import FriendRequest from "../Notifications/request";
 import EventInvite from "../Notifications/eventInvite";
 
-export default () => {
+export default ({ navigation }) => {
     const context = useContext(Context);
 
     return (
@@ -20,6 +20,7 @@ export default () => {
                             senderId={notifObject.sender}
                             eventName={notifObject.eventName}
                             senderName={notifObject.senderName}
+                            navigation={navigation}
                         />
                     else if (notifObject.type === "newFriend")
                         // Create new friend notif and add that here later
