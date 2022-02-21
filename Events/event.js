@@ -5,6 +5,7 @@ import Context from "../Context/context";
 import { styles } from "../styles";
 import { scheduleEvent } from "../Notifications/calendarNotif";
 import { eventInteraction } from "./eventHelperFuncs";
+import { showMessage, hideMessage } from "react-native-flash-message";
 import RBSheet from "react-native-raw-bottom-sheet";
 import FriendInvitation from '../Friends/friendInvitation';
 
@@ -129,7 +130,15 @@ export default class extends React.Component {
                         <Text style={styles.subText}>{this.state.description.substring(0, 75) + "...(Read More)"}</Text>
                     </TouchableOpacity>
                     <View style={styles.rsvpContainer}>
-                        <TouchableOpacity style={styles.rsvpNoContainer} onPress={() => { eventInteraction("rejected", this.context.id, this.state.id) }}>
+                        <TouchableOpacity style={styles.rsvpNoContainer} onPress={() => {
+                            eventInteraction("rejected", this.context.id, this.state.id);
+                            showMessage({
+                                message: `${this.state.title} was rejected`,
+                                type: 'danger'
+                            });
+                            this.state.visible = false;
+                            this.setState(this.state);
+                        }}>
                             <View style={styles.iconBg}>
                                 <AntDesign name="closecircle" size={45} color="red" />
                             </View>
