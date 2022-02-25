@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator, KeyboardAvoidingView } from 'react-native';
 import * as Location from 'expo-location';
 import { styles } from '../styles';
 import { Input, Button } from 'react-native-elements/';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import Context from '../Context/context';
+import { useFonts } from 'expo-font';
+
 
 export default ({ navigation }) => {
     const [userName, setUserName] = useState("");
@@ -12,6 +15,9 @@ export default ({ navigation }) => {
     const [loc, setLoc] = useState({});
     const [loading, setLoading] = useState(false);
     const context = useContext(Context);
+    const [loaded] = useFonts({
+        Spartan: require('../assets/fonts/spartan.ttf'),
+    });
 
     useEffect(() => {
         (async () => {
@@ -34,27 +40,52 @@ export default ({ navigation }) => {
         if (JSON.stringify(loc) != "{}") navigation.navigate("App");
     }, [loading]);
 
+    if (!loaded) {
+        return null;
+    }
+
+    const disabled = loading || userName == '' || password == '';
+
     return (
         <>
-            <View style={styles.fullScreenContainer}>
+            <KeyboardAvoidingView behavior='padding' style={styles.loginScreenContainer}>
+                <LinearGradient
+                    // Background Linear Gradient
+                    colors={['rgba(236, 99, 94, 1)', 'rgba(245, 192, 106, 1)']}
+                    style={{ position: 'absolute', top: 0, left: 0, width: "100%", height: "100%" }}
+                />
                 <View style={{ alignItems: 'center' }}>
-                    <Text style={styles.title} >Login/Register</Text>
+                    <Text style={{ color: 'white', fontSize: 100, fontWeight: "600", fontFamily: 'Spartan' }}>YOLO</Text>
                     <Input
                         placeholder="Email"
+                        placeholderTextColor='rgba(255,255,255,0.6)'
                         textContentType={'emailAddress'}
-                        leftIcon={<Ionicons name="mail-open" size={20} />}
+                        leftIcon={<Ionicons name="mail-open" size={20} style={styles.loginIcon} />}
                         onChangeText={t => setUserName(t)}
+                        inputContainerStyle={{ borderBottomColor: 'white', marginLeft: 20, marginRight: 20 }}
+                        containerStyle={{ marginTop: 20 }}
+                        inputStyle={{ color: 'white', fontSize: 22 }}
                     />
                     <Input
                         placeholder="Password"
+                        secureTextEntry
+                        placeholderTextColor='rgba(255,255,255,0.6)'
                         textContentType={'password'}
-                        leftIcon={<Ionicons name="key-outline" size={20} />}
+                        leftIcon={<Ionicons name="key-outline" size={20} style={styles.loginIcon} />}
                         onChangeText={t => setPassword(t)}
+                        inputContainerStyle={{ borderBottomColor: 'white', marginLeft: 20, marginRight: 20 }}
+                        inputStyle={{ color: 'white', fontSize: 22 }}
+
                     />
                     <Button
-                        title={"Login / Register"}
+
+                        title={
+                            <Text style={
+                                disabled ? styles.buttonDisabledTitle : styles.buttonTitle
+                            }> Login </Text>}
                         buttonStyle={styles.confirmButton}
-                        disabled={loading || userName == '' || password == ''}
+                        disabledStyle={styles.confirmButtonDisabled}
+                        disabled={disabled}
                         onPress={() => {
                             fetch(`http://yolo-backend.herokuapp.com/auth?`, {
                                 method: 'POST',
@@ -84,7 +115,7 @@ export default ({ navigation }) => {
                 {loading &&
                     <ActivityIndicator size="large" style={{ marginTop: 10 }} />
                 }
-            </View>
+            </KeyboardAvoidingView>
         </>
     );
 }

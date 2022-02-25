@@ -27,6 +27,16 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         flex: 1
     },
+    loginScreenContainer: {
+        borderRadius: 0,
+        width: windowWidth,
+        justifyContent: 'center',
+        flex: 1
+    },
+    loginIcon: {
+        color: 'white',
+        marginRight: 10,
+    },
     alignBottomContainer: {
         backgroundColor: "white",
         borderRadius: 0,
@@ -109,9 +119,9 @@ export const styles = StyleSheet.create({
         padding: 5,
     },
     datePickerHeading: {
-        flex: 1, 
+        flex: 1,
         alignSelf: 'center',
-        fontSize: 18, 
+        fontSize: 18,
         margin: 10
     },
     datePicker: {
@@ -228,9 +238,30 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 1,
     },
     confirmButton: {
-        backgroundColor: 'black',
-        borderRadius: 0,
+        backgroundColor: 'rgba(255,255,255,1)',
+        borderWidth: 1,
+        borderColor: 'white',
+        borderRadius: 8,
         width: 300,
+        padding: 12,
+        marginTop: 50
+    },
+    buttonDisabledTitle: {
+        color: 'white',
+        fontSize: 22
+    },
+    buttonTitle: {
+        color: 'orange',
+        fontSize: 22
+    },
+    confirmButtonDisabled: {
+        backgroundColor: 'rgba(0,0,0,0)',
+        borderWidth: 1,
+        borderColor: 'white',
+        borderRadius: 8,
+        width: 300,
+        padding: 12,
+        marginTop: 50
     },
     tag: {
         paddingLeft: 5,
