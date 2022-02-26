@@ -88,7 +88,9 @@ export default class extends React.Component {
      * Registers device for push notifications if permission is granted and it's a new device
      */
     registerPushNotifs = async () => {
-        if (!Device.isDevice) { return }
+        try {
+            if (!Device.isDevice()) { return }
+        } catch (err) { }
         try {
             const statusResult = await Notifications.getPermissionsAsync();
             const askResult = statusResult.status !== 'granted'

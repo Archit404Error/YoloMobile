@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, Image, View, TouchableOpacity } from 'react-native';
 import { Dimensions } from 'react-native';
-import * as Permissions from 'expo-permissions';
+import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import Context from '../Context/context';
 
@@ -13,8 +13,7 @@ export default () => {
 
   useEffect(() => {
     (async () => {
-      await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      await Permissions.askAsync(Permissions.CAMERA);
+      await Camera.requestCameraPermissionsAsync();
     })();
   }, []);
 

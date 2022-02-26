@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView, ScrollView, View, Text, Image, Button } from 'react-native';
 import Context from '../Context/context';
 import { styles } from '../styles';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/compat/app';
 import uuid from 'uuid';
 
 /**

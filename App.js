@@ -1,5 +1,5 @@
 import React from 'react';
-import * as firebase from "firebase";
+import firebase from "firebase/compat/app";
 import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
 import FlashMessage from 'react-native-flash-message';

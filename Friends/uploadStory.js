@@ -7,7 +7,7 @@ import { uploadImageAsync } from "../Events/previewEvent";
 import { TouchableOpacity, Modal, Image, View, Text } from "react-native";
 import { Badge } from "react-native-elements";
 import { EvilIcons, Ionicons } from "@expo/vector-icons"
-import * as Permissions from 'expo-permissions';
+import { Camera } from "expo-camera";
 import * as ImagePicker from 'expo-image-picker';
 
 export default () => {
@@ -17,8 +17,7 @@ export default () => {
 
     useEffect(() => {
         (async () => {
-            await Permissions.askAsync(Permissions.CAMERA_ROLL);
-            await Permissions.askAsync(Permissions.CAMERA);
+            await Camera.requestCameraPermissionsAsync();
         })();
     }, []);
 
