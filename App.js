@@ -168,7 +168,7 @@ function MainTab() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color }) => {
+        tabBarIcon: ({ focused }) => {
           let iconName;
 
           if (route.name === 'Events') {
@@ -183,10 +183,8 @@ function MainTab() {
             iconName = focused ? 'person-circle' : 'person-circle-outline';
           }
 
-          return <Ionicons name={iconName} size={30} color={color} />;
+          return <Ionicons name={iconName} size={30} color={focused ? '#ec632f' : 'gray'} />;
         },
-        activeTintColor: '#2d6ff4',
-        inactiveTintColor: 'gray',
       })}
     >
       <Tab.Screen name="Events" component={HomeStack} options={{ headerShown: false, tabBarShowLabel: false }} />
