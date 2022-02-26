@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, ActivityIndicator, KeyboardAvoidingView } from 'react-native';
+import { View, Text, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import * as Location from 'expo-location';
 import { styles } from '../styles';
 import { Input, Button } from 'react-native-elements/';
@@ -33,15 +33,15 @@ export default ({ navigation }) => {
     }, []);
 
     useEffect(() => {
-        if (loading) navigation.navigate("App");
+        // if (loading) navigation.navigate("App");
     }, [loc]);
 
     useEffect(() => {
-        if (JSON.stringify(loc) != "{}") navigation.navigate("App");
+        // if (JSON.stringify(loc) != "{}") navigation.navigate("App");
     }, [loading]);
 
     if (!loaded) {
-        return null;
+        return <></>;
     }
 
     const disabled = loading || userName == '' || password == '';
@@ -55,7 +55,7 @@ export default ({ navigation }) => {
                     style={{ position: 'absolute', top: 0, left: 0, width: "100%", height: "100%" }}
                 />
                 <View style={{ alignItems: 'center' }}>
-                    <Text style={{ color: 'white', fontSize: 100, fontWeight: "600", fontFamily: 'Spartan' }}>YOLO</Text>
+                    <Text style={{ color: 'white', fontSize: 100, fontWeight: "900", fontFamily: 'Spartan' }}>YOLO</Text>
                     <Input
                         placeholder="Email"
                         placeholderTextColor='rgba(255,255,255,0.6)'
@@ -78,11 +78,13 @@ export default ({ navigation }) => {
 
                     />
                     <Button
-
                         title={
                             <Text style={
                                 disabled ? styles.buttonDisabledTitle : styles.buttonTitle
-                            }> Login </Text>}
+                            }>
+                                Login
+                            </Text>
+                        }
                         buttonStyle={styles.confirmButton}
                         disabledStyle={styles.confirmButtonDisabled}
                         disabled={disabled}
@@ -103,10 +105,7 @@ export default ({ navigation }) => {
                                         context.setCredentials(resJson);
                                         setLoading(true);
                                     } else {
-                                        navigation.navigate("Register", {
-                                            username: userName,
-                                            password: password
-                                        });
+                                        // Show error message upon failure
                                     }
                                 })
                         }}
@@ -115,6 +114,16 @@ export default ({ navigation }) => {
                 {loading &&
                     <ActivityIndicator size="large" style={{ marginTop: 10 }} />
                 }
+                <TouchableOpacity onPress={() => {
+                    navigation.navigate("Register", {
+                        username: userName,
+                        password: password
+                    });
+                }}>
+                    <Text style={{ color: "white", alignSelf: 'center', marginTop: 30 }}>
+                        Don't have an account? <Text style={{ fontWeight: "bold" }}>Sign up here!</Text>
+                    </Text>
+                </TouchableOpacity>
             </KeyboardAvoidingView>
         </>
     );

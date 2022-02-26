@@ -4,6 +4,7 @@ import { SearchBar } from "react-native-elements";
 
 import ChatPreview from './chatPreview';
 import Context from "../Context/context";
+import NoChatScreen from './emptyChat';
 import { styles } from "../styles";
 
 export default class extends React.Component {
@@ -36,6 +37,8 @@ export default class extends React.Component {
     }
 
     render() {
+        if (this.context.chats.length == 0) return <NoChatScreen />
+
         return (
             <SafeAreaView style={styles.fullScreenContainer}>
                 <ScrollView>
