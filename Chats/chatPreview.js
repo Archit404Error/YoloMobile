@@ -15,7 +15,7 @@ export default class extends React.Component {
             sender: "",
             message: "",
         },
-        members: {},
+        members: [],
         image: 'Loading...',
     }
 
@@ -62,7 +62,6 @@ export default class extends React.Component {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    // this.context.socket.removeAllListeners("messageSent");
                     this.props.navigation.navigate("Messages", {
                         id: this.state.id,
                         title: this.state.title,

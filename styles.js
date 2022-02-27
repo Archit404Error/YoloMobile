@@ -132,6 +132,7 @@ export const styles = StyleSheet.create({
         height: windowHeight - 170
     },
     chatMessageContainer: {
+        flex: 10,
         padding: 10,
         paddingTop: 0,
         marginBottom: -5,
