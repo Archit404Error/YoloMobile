@@ -5,9 +5,13 @@ import { SafeAreaView, ScrollView, View, Image, Text, TouchableOpacity, Share, P
 import * as Linking from 'expo-linking';
 import { MaterialIcons, Feather } from '@expo/vector-icons';
 
+import Context from "../Context/context";
+import { acceptedFlow, rejectionFlow } from "./eventHelperFuncs";
 import { styles, windowWidth } from "../styles";
 
 export default class extends React.Component {
+    static contextType = Context
+
     state = {
         id: -1,
         title: "Loading...",
@@ -122,10 +126,16 @@ export default class extends React.Component {
                 </ScrollView>
                 <View>
                     <View style={{ flexDirection: 'row' }}>
-                        <TouchableOpacity style={styles.rsvpNoBlock}>
+                        <TouchableOpacity
+                            style={styles.rsvpNoBlock}
+                            onPress={() => rejectionFlow(this.context.id, this.state.id, this.state.title)}
+                        >
                             <Text style={{ color: 'white' }}>No thanks</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.rsvpYesBlock}>
+                        <TouchableOpacity
+                            style={styles.rsvpYesBlock}
+                            onPress={() => acceptedFlow(this.context.id, this.state.id, this.state.title)}
+                        >
                             <Text style={{ color: 'white' }}>Interested</Text>
                         </TouchableOpacity>
                     </View>

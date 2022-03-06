@@ -4,8 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 import Context from "../Context/context";
 import { styles } from "../styles";
 import { scheduleEvent } from "../Notifications/calendarNotif";
-import { eventInteraction } from "./eventHelperFuncs";
-import { showMessage, hideMessage } from "react-native-flash-message";
+import { eventInteraction, rejectionFlow } from "./eventHelperFuncs";
 import RBSheet from "react-native-raw-bottom-sheet";
 import FriendInvitation from '../Friends/friendInvitation';
 
@@ -131,11 +130,7 @@ export default class extends React.Component {
                     </TouchableOpacity>
                     <View style={styles.rsvpContainer}>
                         <TouchableOpacity style={styles.rsvpNoContainer} onPress={() => {
-                            eventInteraction("rejected", this.context.id, this.state.id);
-                            showMessage({
-                                message: `${this.state.title} was rejected`,
-                                type: 'danger'
-                            });
+                            rejectionFlow(this.context.id, this.state.id, this.state.title);
                             this.state.visible = false;
                             this.setState(this.state);
                         }}>
