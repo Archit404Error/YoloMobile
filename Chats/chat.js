@@ -27,6 +27,7 @@ export default class extends React.Component {
             fetch(`http://yolo-backend.herokuapp.com/chatDetails/${this.state.id}`)
                 .then(response => response.json())
                 .then(res => {
+                    console.log(res)
                     this.state.messages = res.messages;
                     this.state.memberDetails = res.members;
                     this.setState(this.state);
@@ -73,7 +74,7 @@ export default class extends React.Component {
                                             {this.state.lastSender != sender &&
                                                 <Image
                                                     source={{ uri: this.getMemberImage(sender) }}
-                                                    style={{ width: 35, height: 35, borderRadius: 50 }}
+                                                    style={{ width: 35, height: 35, borderRadius: 35 }}
                                                 />
                                             }
                                         </View>

@@ -5,6 +5,8 @@ import { styles } from "../styles";
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Location from 'expo-location';
+import { useFonts } from 'expo-font';
+
 
 import Context from '../Context/context';
 
@@ -17,6 +19,10 @@ export default ({ navigation, route }) => {
     const disabled = loading || name == '' || username == '' || password == '';
 
     const context = useContext(Context);
+
+    const [loaded] = useFonts({
+        Spartan: require('../assets/fonts/spartan.ttf'),
+    });
 
     useEffect(() => {
         (async () => {
@@ -51,7 +57,15 @@ export default ({ navigation, route }) => {
                 style={{ position: 'absolute', top: 0, left: 0, width: "100%", height: "100%" }}
             />
             <View style={{ alignItems: 'center' }}>
-                <Text style={styles.title}>Register</Text>
+                <Text style={{
+                    fontFamily: 'Spartan',
+                    fontSize: 25,
+                    margin: 10,
+                    color: 'white',
+                    marginTop: 35,
+                    marginBottom: 10,
+                    fontWeight: 'bold'
+                }}>Register</Text>
                 <Input
                     placeholder="Name"
                     placeholderTextColor='rgba(255,255,255,0.6)'

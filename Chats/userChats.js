@@ -30,6 +30,7 @@ export default class extends React.Component {
     componentDidMount() {
         this.getLatestChats();
         this.context.socket.on("eventsUpdated", () => this.getLatestChats())
+        this.context.joinChannel()
     }
 
     componentWillUnmount() {
