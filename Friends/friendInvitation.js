@@ -72,7 +72,7 @@ export default ({ id, eventId, eventName }) => {
                     });
                 }
             }}>
-                <Feather name={'send'} size={25} />
+                <Feather name={!invited ? 'send' : 'check-circle'} size={25} />
             </TouchableOpacity>
         </View>
     )
