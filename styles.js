@@ -191,6 +191,7 @@ export const styles = StyleSheet.create({
         marginBottom: -5,
         fontWeight: 'bold',
     },
+    
     subText: {
         fontFamily: 'Arial',
         color: "grey",
@@ -294,6 +295,26 @@ export const styles = StyleSheet.create({
         width: windowWidth / 3,
         height: windowWidth / 3,
         alignSelf: 'center'
+    },
+    smallProfImg:{
+        marginTop:10,
+        marginLeft:10,
+        marginBottom:10,
+        width: 40,
+        height: 40, 
+        borderWidth: 1,
+        borderColor: "orange",
+        borderRadius: 50
+    },
+    resTitleText:{
+        fontSize:16,
+        marginLeft: 10,
+        color: "black",
+    },
+    resDescText:{
+        fontSize:16,
+        marginLeft: 10,
+        color: "grey",
     },
     storyImg: {
         borderRadius: 500,
