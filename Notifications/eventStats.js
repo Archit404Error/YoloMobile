@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Image, Text, SafeAreaView, ScrollView, View } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { styles, windowWidth, windowHeight } from "../styles";
+import Friend from "../Friends/friend";
 import Context from "../Context/context";
 
 export default ({ route }) => {
@@ -28,28 +29,41 @@ export default ({ route }) => {
                     source={{ uri: data.image }}
                 />
                 <Text style={styles.title}>{data.title}</Text>
-                <Text style={styles.title}>{`Attendees (${data.attendees.length})`}</Text>
-                {
-                    data.attendees.map((id, index) => {
-                        <Text key={index}>{id}</Text>
-                    })
-                }
+                <Text style={styles.subText}>{`Attendees (${data.attendees.length})`}</Text>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={{ flex: 1, alignItems: 'center' }}>
                         <Ionicons name="eye" size={24} color="black" />
-                        <Text style={styles.chatTitle}>Viewed</Text>
+                        <Text style={styles.boldSubHeader}>Viewed</Text>
                         <Text style={styles.subText}>{data.viewers.length}</Text>
                     </View>
                     <View style={{ flex: 1, alignItems: 'center' }}>
                         <Ionicons name="md-close" size={24} color="black" />
-                        <Text style={styles.chatTitle}>Denied</Text>
+                        <Text style={styles.boldSubHeader}>Denied</Text>
                         <Text style={styles.subText}>{data.rejecters.length}</Text>
                     </View>
                     <View style={{ flex: 1, alignItems: 'center' }}>
                         <Ionicons name="checkmark" size={24} color="black" />
-                        <Text style={styles.chatTitle}>Agreed</Text>
+                        <Text style={styles.boldSubHeader}>Agreed</Text>
                         <Text style={styles.subText}>{data.attendees.length}</Text>
                     </View>
+                </View>
+                <View>
+                    <Text style={styles.subSectionHeading}>Recently Accepted</Text>
+                    {
+                        data.attendees.slice(data.attendees.length > 5 ? -5 : 0)
+                            .map((userId, index) =>
+                                <Friend key={index} id={userId} />
+                            )
+                    }
+                </View>
+                <View>
+                    <Text style={styles.subSectionHeading}>Recently Viewed</Text>
+                    {
+                        data.viewers.slice(data.viewers.length > 5 ? -5 : 0)
+                            .map((userId, index) =>
+                                <Friend key={index} id={userId} />
+                            )
+                    }
                 </View>
             </ScrollView>
         </SafeAreaView>

@@ -27,6 +27,13 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         flex: 1
     },
+    subSectionHeading: {
+        fontFamily: 'Arial',
+        fontSize: 20,
+        fontWeight: '700',
+        marginBottom: 5,
+        marginLeft: 5
+    },
     loginScreenContainer: {
         borderRadius: 0,
         width: windowWidth,
@@ -202,7 +209,7 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         textTransform: 'uppercase'
     },
-    chatTitle: {
+    boldSubHeader: {
         fontFamily: 'Arial',
         fontSize: 20,
         fontWeight: 'bold',

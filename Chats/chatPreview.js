@@ -76,7 +76,7 @@ export default class extends React.Component {
                         <Image style={styles.chatImg} source={{ uri: this.state.image }} />
                         <View style={{ flexDirection: 'column', padding: 10 }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={styles.chatTitle}>
+                                <Text style={styles.boldSubHeader}>
                                     {
                                         this.state.title.substring(0, this.state.title.indexOf(this.props.display))
                                     }
@@ -86,7 +86,7 @@ export default class extends React.Component {
                                         this.state.title.substring(this.state.title.indexOf(this.props.display), this.state.title.indexOf(this.props.display) + this.props.display.length)
                                     }
                                 </Text>
-                                <Text style={styles.chatTitle}>
+                                <Text style={styles.boldSubHeader}>
                                     {
                                         this.state.title.substring(this.state.title.indexOf(this.props.display) + this.props.display.length, this.state.title.length)
                                     }

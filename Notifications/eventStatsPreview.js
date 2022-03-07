@@ -11,7 +11,7 @@ export default ({ eventData, navigation }) => {
             <View style={{ flexDirection: 'row', flex: 1 }}>
                 <Image source={{ uri: eventData.image }} style={{ flex: 2 }} />
                 <View style={{ flex: 5, padding: 10 }}>
-                    <Text style={styles.chatTitle}>{eventData.title}</Text>
+                    <Text style={styles.boldSubHeader}>{eventData.title}</Text>
                     <Text style={{ color: 'gray', marginTop: 10 }}>
                         {`${new Date(eventData.startDate).toDateString()} - ${new Date(eventData.endDate).toDateString()}`}
                     </Text>
