@@ -55,14 +55,7 @@ export default class extends React.Component {
         this.setState(this.state);
     }
 
-    joinChannel = () => {
-        let socket = socketio('http://yolo-backend.herokuapp.com/', {
-            query: `chatList=${this.state.chatIds}&user=${this.state.id}`
-        });
-        this.state.socket.disconnect()
-        this.state.socket = socket;
-        this.setState(this.state);
-    }
+    joinChatRooms = () => this.state.socket.emit("joinRooms", this.state.chatIds)
 
     setLoc = (lat, long) => {
         this.state.location.latitude = lat;
@@ -177,7 +170,7 @@ export default class extends React.Component {
                     sendFriendReq: this.friendRequest,
                     registerTokenAsync: this.registerPushNotifs,
                     modifyState: this.modifyState,
-                    joinChannel:this.joinChannel
+                    joinChatRooms: this.joinChatRooms
                 }}
             >
                 {this.props.children}

@@ -27,7 +27,6 @@ export default class extends React.Component {
             fetch(`http://yolo-backend.herokuapp.com/chatDetails/${this.state.id}`)
                 .then(response => response.json())
                 .then(res => {
-                    console.log(res)
                     this.state.messages = res.messages;
                     this.state.memberDetails = res.members;
                     this.setState(this.state);
