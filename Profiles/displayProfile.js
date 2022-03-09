@@ -26,9 +26,9 @@ export default class extends React.Component {
                         })
                     }
                     {
-                        this.props.events.map((eventId) => {
+                        this.props.events.map((event) => {
                             return (
-                                <Event key={eventId} id={eventId} />
+                                <Event key={event._id} id={event._id} />
                             )
                         })
                     }
