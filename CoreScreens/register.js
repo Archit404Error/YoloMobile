@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, ActivityIndicator, KeyboardAvoidingView } from "react-native";
+import { View, Text, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity} from "react-native";
 import { Input, Button } from "react-native-elements";
 import { styles } from "../styles";
 import { Ionicons } from '@expo/vector-icons';
@@ -128,6 +128,13 @@ export default ({ navigation, route }) => {
                 {loading &&
                     <ActivityIndicator size="large" style={{ marginTop: 10 }} />
                 }
+                  <TouchableOpacity onPress={() => {
+                    navigation.navigate("Login");
+                }}>
+                    <Text style={{ color: "white", alignSelf: 'center', marginTop: 30, fontWeight:"bold"}}>
+                        Go back 
+                    </Text>
+                </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
     )

@@ -91,7 +91,7 @@ export default class extends React.Component {
                     {
                         Array.from(this.state.suggestions).map((res) => {
                             return (
-                                <SuggestionCell data={res}/>
+                                <SuggestionCell data={res} navigation={this.props.navigation}/>
                             );
                         })
                     }
