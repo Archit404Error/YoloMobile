@@ -60,7 +60,8 @@ export default class extends React.Component {
      * Stores user credentials in local storage
      */
     storeCreds = async () => {
-        let dataStore = this.state;
+        // Deep clone state
+        let dataStore = JSON.parse(JSON.stringify(this.state));
         dataStore.socket = {};
         try {
             await AsyncStorage.setItem('userCreds', JSON.stringify(dataStore))
@@ -84,8 +85,6 @@ export default class extends React.Component {
                 query: `chatList=${await credentials.chatIds}&user=${await credentials.id}`
             })
             this.modifyState(Object.keys(await credentials), Object.values(await credentials))
-            console.log(await credentials)
-            console.log(this.state)
             return true
         } catch (err) {
             console.log(err)
