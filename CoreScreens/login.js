@@ -103,6 +103,7 @@ export default ({ navigation }) => {
                                 .then(resJson => {
                                     if (JSON.stringify(resJson) != "{}") {
                                         context.setCredentials(resJson);
+                                        context.storeCreds();
                                         setLoading(true);
                                     } else {
                                         // Show error message upon failure
