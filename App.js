@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import firebase from "firebase/compat/app";
 import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
@@ -28,6 +28,7 @@ import UserNotifScreen from './CoreScreens/userNotifications';
 import GlobalState from './Context/globalState';
 
 import firebaseInit from './Context/firebaseInit';
+import Context from './Context/context';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -164,7 +165,7 @@ function ChatStack() {
   )
 }
 
-function MainTab() {
+export function MainTab() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -196,7 +197,7 @@ function MainTab() {
   );
 }
 
-function Authentication() {
+export function Authentication() {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false, headerBackTitleVisible: false, gestureEnabled: false }}
@@ -206,6 +207,28 @@ function Authentication() {
       <Stack.Screen name="App" component={MainTab} />
     </Stack.Navigator>
   );
+}
+
+function DetermineScreen() {
+  const context = useContext(Context)
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    (async () =>
+      setLoggedIn(await context.fetchCreds())
+    )()
+
+    return () => context.socket.disconnect()
+  }, [])
+
+  return (
+    <>
+      {loggedIn ?
+        <MainTab /> :
+        <Authentication />
+      }
+    </>
+  )
 }
 
 const deepLinkMapping = {
@@ -236,6 +259,7 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
+
   Linking.addEventListener('url', data => {
     const url = data.url;
     const eventId = Linking.parse(url).queryParams.id;
@@ -248,7 +272,7 @@ export default function App() {
   return (
     <GlobalState>
       <NavigationContainer>
-        <Authentication />
+        <DetermineScreen />
         <FlashMessage position="bottom" />
       </NavigationContainer>
     </GlobalState>

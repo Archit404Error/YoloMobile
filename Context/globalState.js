@@ -1,4 +1,5 @@
 import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 import socketio from "socket.io-client";
 import Context from './context';
@@ -53,6 +54,41 @@ export default class extends React.Component {
 
         this.state.socket = socket;
         this.setState(this.state);
+    }
+
+    /**
+     * Stores user credentials in local storage
+     */
+    storeCreds = async () => {
+        // Deep clone state
+        let dataStore = JSON.parse(JSON.stringify(this.state));
+        dataStore.socket = {};
+        try {
+            await AsyncStorage.setItem('userCreds', JSON.stringify(dataStore))
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    /**
+     * Fetches local user data and creates new client socket, if found
+     * @returns whether local data was found
+     */
+    fetchCreds = async () => {
+        try {
+            const userCreds = await AsyncStorage.getItem('userCreds');
+            // Check if present
+            if (!userCreds)
+                return false
+            const credentials = await JSON.parse(userCreds);
+            credentials.socket = socketio('http://yolo-backend.herokuapp.com/', {
+                query: `chatList=${await credentials.chatIds}&user=${await credentials.id}`
+            })
+            this.modifyState(Object.keys(await credentials), Object.values(await credentials))
+            return true
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     joinChatRooms = () => this.state.socket.emit("joinRooms", this.state.chatIds)
@@ -117,7 +153,8 @@ export default class extends React.Component {
     /**
      * General purpose function to modify portions of state without exposing state
      * @param {String[]} keyList an array of key values
-     * @param {Object} dataList an array of data values
+     * @param {String[]} dataList an array of data values
+     * Requires: keyList.length == dataList.length
      */
     modifyState = (keyList, dataList) => {
         for (let i = 0; i < keyList.length; i++)
@@ -167,10 +204,12 @@ export default class extends React.Component {
                     setLocation: this.setLoc,
                     createEventDetails: this.setEventDetails,
                     createEventImage: this.setEventImage,
+                    joinChatRooms: this.joinChatRooms,
                     sendFriendReq: this.friendRequest,
                     registerTokenAsync: this.registerPushNotifs,
+                    storeCreds: this.storeCreds,
+                    fetchCreds: this.fetchCreds,
                     modifyState: this.modifyState,
-                    joinChatRooms: this.joinChatRooms
                 }}
             >
                 {this.props.children}
