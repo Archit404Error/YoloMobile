@@ -217,8 +217,6 @@ function DetermineScreen() {
     (async () =>
       setLoggedIn(await context.fetchCreds())
     )()
-
-    return () => context.socket.disconnect()
   }, [])
 
   return (

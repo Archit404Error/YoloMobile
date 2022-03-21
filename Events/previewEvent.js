@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView, ScrollView, View, Text, Image, Button } from 'react-native';
 import Context from '../Context/context';
 import { styles } from '../styles';
-import * as firebase from 'firebase/compat/app';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import uuid from 'uuid';
 
 /**
@@ -24,15 +24,12 @@ export const uploadImageAsync = async (uri) => {
         xhr.send(null);
     });
 
-    const ref = firebase
-        .storage()
-        .ref()
-        .child(uuid.v4());
-    const snapshot = await ref.put(blob);
+    const fireRef = ref(getStorage(), uuid.v4())
+    const snapshot = await uploadBytes(fireRef, blob);
 
     blob.close();
 
-    return await snapshot.ref.getDownloadURL();
+    return await getDownloadURL(snapshot.ref);
 }
 
 /**
