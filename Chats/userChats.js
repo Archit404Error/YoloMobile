@@ -21,6 +21,7 @@ export default class extends React.Component {
             .then(res => res.json())
             .then(json => this.context.modifyState(["chatIds"], [json.chats]))
             .then(() => this.setState(this.state))
+            .then(() => this.context.joinChatRooms())
     }
 
     constructor(props) {

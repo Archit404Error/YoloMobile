@@ -61,10 +61,28 @@ export default class extends React.Component {
      */
     storeCreds = async () => {
         // Deep clone state
-        let dataStore = JSON.parse(JSON.stringify(this.state));
-        dataStore.socket = {};
+        let dataStore = {}
+        for (const key of Object.keys(this.state)) {
+            if (key === "socket") {
+                dataStore[key] = {}
+                continue
+            }
+            dataStore[key] = this.state[key]
+        }
+
         try {
             await AsyncStorage.setItem('userCreds', JSON.stringify(dataStore))
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    /**
+     * Removes existing user data in phone cache
+     */
+    removeCreds = async () => {
+        try {
+            await AsyncStorage.removeItem('userCreds')
         } catch (err) {
             console.log(err)
         }
@@ -91,7 +109,8 @@ export default class extends React.Component {
         }
     }
 
-    joinChatRooms = () => this.state.socket.emit("joinRooms", this.state.chatIds)
+    joinChatRooms = () =>
+        this.state.socket.emit("joinRooms", this.state.chatIds)
 
     setLoc = (lat, long) => {
         this.state.location.latitude = lat;
@@ -208,6 +227,7 @@ export default class extends React.Component {
                     sendFriendReq: this.friendRequest,
                     registerTokenAsync: this.registerPushNotifs,
                     storeCreds: this.storeCreds,
+                    removeCreds: this.removeCreds,
                     fetchCreds: this.fetchCreds,
                     modifyState: this.modifyState,
                 }}
