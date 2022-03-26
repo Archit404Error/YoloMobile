@@ -6,10 +6,10 @@ import React from "react";
 import { SafeAreaView, ScrollView, Text, Image, View, TouchableOpacity } from "react-native"
 import { styles } from "../styles";
 import { state, useState } from "react";
-import Friend from "../Friends/friend"
 import CondensedEvent from "../Events/condensedEvent";
 import * as ImagePicker from 'expo-image-picker';
 import { uploadImageAsync  } from "../Events/previewEvent";
+import FriendList from '../Components/Lists/friendList'
 
 export default class extends React.Component {
     state = {
@@ -76,10 +76,17 @@ export default class extends React.Component {
                     <Image style={styles.profImg} source={{ uri:this.props.profilePic}}/>
                     </TouchableOpacity>
                    
-
+                    
                     <Text style={styles.profTitle}>{this.props.name}</Text>
                     <View style={{ flexDirection: 'row', backgroundColor: 'white' }}>
-                        <TouchableOpacity style={styles.paddedFlexContainer}>
+                        <TouchableOpacity style={styles.paddedFlexContainer} onPress = { () => {
+                            console.log(this.props.navigation)                            
+                            this.props.navigation.navigate("View friends", {
+                                friends:this.props.friends
+                            })
+
+
+                        }}>
                             <Text style={styles.centeredSubHeader}>
                                 {this.props.friends.length}
                             </Text>

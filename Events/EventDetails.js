@@ -130,13 +130,13 @@ export default class extends React.Component {
                             style={styles.rsvpNoBlock}
                             onPress={() => rejectionFlow(this.context.id, this.state.id, this.state.title)}
                         >
-                            <Text style={{ color: 'white' }}>No thanks</Text>
+                            <Text style={{ color: 'red' }}>No thanks</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.rsvpYesBlock}
                             onPress={() => acceptedFlow(this.context.id, this.state.id, this.state.title)}
                         >
-                            <Text style={{ color: 'white' }}>Interested</Text>
+                            <Text style={{ color: 'green' }}>Interested</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

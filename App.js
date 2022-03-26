@@ -25,6 +25,7 @@ import FriendProfileScreen from './Profiles/friendProfile';
 import EventNotifScreen from './CoreScreens/eventNotifications';
 import EventStatScreen from './Notifications/eventStats';
 import UserNotifScreen from './CoreScreens/userNotifications';
+import FriendList from './Components/Lists/friendList';
 import GlobalState from './Context/globalState';
 
 import firebaseInit from './Context/firebaseInit';
@@ -113,6 +114,11 @@ function FriendStack() {
         options={{ headerBackTitle: 'friends' }}
         component={FriendProfileScreen}
       />
+      <Stack.Screen
+        name="View friends"
+        options={{ headerBackTitle: 'Back' }}
+        component={FriendList}
+      />
     </Stack.Navigator>
   )
 }
@@ -139,6 +145,24 @@ function AddStack() {
       />
     </Stack.Navigator>
   )
+}
+function ProfileStack(){
+return (
+  <Stack.Navigator
+  screenOptions={{ headerShown: false, headerBackTitleVisible: false, gestureEnabled: false }}>
+    <Stack.Screen
+        name="Profile"
+        options={{ headerBackTitle: 'Back' }}
+        component={ProfileScreen}
+      />
+    <Stack.Screen
+        name="View friends"
+        options={{ headerBackTitle: 'Back' }}
+        component={FriendList}
+      />
+
+  </Stack.Navigator>
+)
 }
 
 function ChatStack() {
@@ -192,7 +216,8 @@ export function MainTab() {
       <Tab.Screen name="Friends" component={FriendStack} options={{ tabBarShowLabel: false }} />
       <Tab.Screen name="Create" options={{ headerShown: false, tabBarShowLabel: false }} component={AddStack} />
       <Tab.Screen name="Chats" component={ChatStack} options={{ headerShown: false, tabBarShowLabel: false }} />
-      <Tab.Screen name="Profile" component={ProfileScreen} options={{ tabBarShowLabel: false }} />
+      <Tab.Screen name="Profile" component={ProfileStack} options={{ tabBarShowLabel: false }} />
+      
     </Tab.Navigator>
   );
 }

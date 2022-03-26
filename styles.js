@@ -89,9 +89,12 @@ export const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     rsvpNoBlock: {
+        color:'red',
         width: windowWidth / 2,
+        borderTopColor:'red',
+        borderTopWidth:2,
         alignItems: 'center',
-        backgroundColor: 'red',
+        backgroundColor: 'white',
         padding: 10,
     },
     rsvpYesContainer: {
@@ -107,9 +110,12 @@ export const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     rsvpYesBlock: {
+        color:'green',
+        borderTopColor:'green',
+        borderTopWidth:2,
         width: windowWidth / 2,
         alignItems: 'center',
-        backgroundColor: 'green',
+        backgroundColor: 'white',
         padding: 10,
     },
     infoContainer: {
