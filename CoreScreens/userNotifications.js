@@ -13,7 +13,6 @@ export default ({ navigation }) => {
         fetch(`http://yolo-backend.herokuapp.com/user/${context.id}`)
             .then(res => res.json())
             .then(json => {
-                console.log(json.notifications)
                 setNotifObjs(json.notifications)
                 return json.notifications
             })

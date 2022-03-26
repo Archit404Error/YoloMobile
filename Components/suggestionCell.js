@@ -12,7 +12,6 @@ export const SuggestionCell = ({ data, navigation }) => {
             fetch(`http://yolo-backend.herokuapp.com/event/${data._id}`)
                 .then(response => response.json())
                 .then(res => {
-                    console.log(res);
                     navigation.navigate("Details", {
                         id: data._id,
                         title: res.title,

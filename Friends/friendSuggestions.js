@@ -1,8 +1,7 @@
 import React from "react";
-import { Text, SafeAreaView, ScrollView, View, Picker } from "react-native";
+import { Text, SafeAreaView, ScrollView, View } from "react-native";
 import Context from "../Context/context";
-import { SearchBar, ThemeConsumer } from "react-native-elements";
-import SearchableDropdown from 'react-native-searchable-dropdown';
+import { SearchBar } from "react-native-elements";
 
 import { SuggestionCell } from "../Components/suggestionCell";
 
@@ -18,9 +17,9 @@ export default class extends React.Component {
     static contextType = Context;
 
     state = {
-        friends: [],
+        friendSuggestions: [],
         stories: [],
-        suggestions: new Set()
+        searchSuggestions: new Set()
     }
 
     constructor(props) {
@@ -28,7 +27,7 @@ export default class extends React.Component {
     }
 
     resetSuggestions = () => {
-        this.state.suggestions = new Set()
+        this.state.searchSuggestions = new Set()
         this.setState(this.state)
     }
 
@@ -37,14 +36,14 @@ export default class extends React.Component {
             .then(resp => resp.json())
             .then(res => {
                 for (const elem of res) {
-                    this.state.suggestions.add(elem)
+                    this.state.searchSuggestions.add(elem)
                 }
                 this.setState(this.state)
             })
     }
 
     componentDidMount() {
-        this.setState({ friends: this.context.friends })
+        this.setState({ friendSuggestions: this.context.friendSuggs })
         fetch(`http://yolo-backend.herokuapp.com/storyIds/${this.context.id}`)
             .then(resp => resp.json())
             .then(res => {
@@ -52,6 +51,7 @@ export default class extends React.Component {
                 this.setState(this.state);
             })
     }
+
     render() {
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -60,9 +60,7 @@ export default class extends React.Component {
                         <UploadStory />
                         {
                             this.state.stories.map((storyObj, index) => {
-                                return (
-                                    <Story key={index} id={storyObj._id} image={storyObj.storyImage} />
-                                )
+                                return < Story key={index} id={storyObj._id} image={storyObj.storyImage} />
                             })
                         }
                     </ScrollView>
@@ -83,7 +81,9 @@ export default class extends React.Component {
                     style={{ fontSize: 15 }}
                 />
                 {
-                    Array.from(this.state.suggestions).map(res => <SuggestionCell data={res} navigation={this.props.navigation} />)
+                    Array.from(this.state.searchSuggestions).map(res =>
+                        <SuggestionCell data={res} navigation={this.props.navigation} />
+                    )
                 }
 
                 <Text style={{
@@ -93,7 +93,7 @@ export default class extends React.Component {
                     margin: 20,
                 }}>Friend Suggestions</Text>
                 {
-                    this.state.friends.map((id, index) => {
+                    this.state.friendSuggestions.map((id, index) => {
                         return (
                             <Friend key={index} id={id} navigation={this.props.navigation} />
                         );
