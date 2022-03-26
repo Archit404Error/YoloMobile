@@ -21,7 +21,7 @@ export default ({ navigation, route }) => {
     const context = useContext(Context);
 
     const [loaded] = useFonts({
-        Spartan: require('../assets/fonts/spartan.ttf'),
+        Fredoka: require('../assets/fonts/FredokaOne-Regular.ttf'),
     });
 
     useEffect(() => {
@@ -58,7 +58,7 @@ export default ({ navigation, route }) => {
             />
             <View style={{ alignItems: 'center' }}>
                 <Text style={{
-                    fontFamily: 'Spartan',
+                    fontFamily: 'Fredoka',
                     fontSize: 25,
                     margin: 10,
                     color: 'white',

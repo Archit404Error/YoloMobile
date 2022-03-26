@@ -102,7 +102,6 @@ export default class extends React.Component {
             </View>
         );
     }
-
 }
 
 SuggestionsList = (props) => {

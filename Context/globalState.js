@@ -4,6 +4,8 @@ import * as Notifications from 'expo-notifications';
 import socketio from "socket.io-client";
 import Context from './context';
 import Device from 'expo-device';
+import { Linking } from 'react-native'
+import { showMessage } from 'react-native-flash-message';
 
 export default class extends React.Component {
     state = {
@@ -169,7 +171,10 @@ export default class extends React.Component {
                 })
             })
         } catch (error) {
+            showMessage({message:"We need access to your notifications", type:'danger'})
             return Promise.reject("Couldn't check notifications permissions");
+            Linking.openURL('app-settings:')
+
         }
     }
 

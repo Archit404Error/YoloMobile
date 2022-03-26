@@ -7,6 +7,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import Context from '../Context/context';
 import { useFonts } from 'expo-font';
+import { showMessage } from 'react-native-flash-message';
+import { Linking } from 'react-native'
 
 
 export default ({ navigation }) => {
@@ -16,7 +18,7 @@ export default ({ navigation }) => {
     const [loading, setLoading] = useState(false);
     const context = useContext(Context);
     const [loaded] = useFonts({
-        Spartan: require('../assets/fonts/spartan.ttf'),
+        Fredoka: require('../assets/fonts/FredokaOne-Regular.ttf'),
     });
 
     useEffect(() => {
@@ -24,6 +26,8 @@ export default ({ navigation }) => {
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
                 setErrorMsg('Permission to access location was denied');
+                showMessage({message:"We need access to your location to find events near you.", type:'danger'})
+                Linking.openURL('app-settings:')
                 return;
             }
             let location = await Location.getCurrentPositionAsync({});
@@ -55,7 +59,7 @@ export default ({ navigation }) => {
                     style={{ position: 'absolute', top: 0, left: 0, width: "100%", height: "100%" }}
                 />
                 <View style={{ alignItems: 'center' }}>
-                    <Text style={{ color: 'white', fontSize: 100, fontWeight: "900", fontFamily: 'Spartan' }}>YOLO</Text>
+                    <Text style={{ color: 'white', fontSize: 100, fontWeight: "900", fontFamily: 'Fredoka' }}>YOLO</Text>
                     <Input
                         placeholder="Username"
                         placeholderTextColor='rgba(255,255,255,0.6)'
