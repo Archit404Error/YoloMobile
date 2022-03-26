@@ -78,7 +78,7 @@ export default ({ navigation, route }) => {
                 <Input
                     placeholder="Username"
                     placeholderTextColor='rgba(255,255,255,0.6)'
-                    leftIcon={<Ionicons name="mail-open" size={20} style={styles.loginIcon} />}
+                    leftIcon={<Ionicons name="person-circle-outline" size={20} style={styles.loginIcon} />}
                     value={username}
                     onChangeText={currUser => setUsername(currUser)}
                     inputContainerStyle={{ borderBottomColor: 'white', marginLeft: 20, marginRight: 20 }}

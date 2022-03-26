@@ -57,10 +57,10 @@ export default ({ navigation }) => {
                 <View style={{ alignItems: 'center' }}>
                     <Text style={{ color: 'white', fontSize: 100, fontWeight: "900", fontFamily: 'Spartan' }}>YOLO</Text>
                     <Input
-                        placeholder="Email"
+                        placeholder="Username"
                         placeholderTextColor='rgba(255,255,255,0.6)'
-                        textContentType={'emailAddress'}
-                        leftIcon={<Ionicons name="mail-open" size={20} style={styles.loginIcon} />}
+                        textContentType={'username'}
+                        leftIcon={<Ionicons name="person" size={20} style={styles.loginIcon} />}
                         onChangeText={t => setUserName(t)}
                         inputContainerStyle={{ borderBottomColor: 'white', marginLeft: 20, marginRight: 20 }}
                         containerStyle={{ marginTop: 20 }}

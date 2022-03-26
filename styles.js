@@ -20,6 +20,12 @@ export const styles = StyleSheet.create({
         borderRadius: 0,
         flex: 1,
     },
+    paddedFlexContainer: {
+        flex: 1,
+        backgroundColor: 'white',
+        marginTop: 10,
+        padding: 10
+    },
     fullScreenContainer: {
         backgroundColor: "white",
         borderRadius: 0,
@@ -191,7 +197,7 @@ export const styles = StyleSheet.create({
         marginBottom: -5,
         fontWeight: 'bold',
     },
-    
+
     subText: {
         fontFamily: 'Arial',
         color: "grey",
@@ -211,6 +217,12 @@ export const styles = StyleSheet.create({
         textTransform: 'uppercase'
     },
     boldSubHeader: {
+        fontFamily: 'Arial',
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    centeredSubHeader: {
+        alignSelf: 'center',
         fontFamily: 'Arial',
         fontSize: 20,
         fontWeight: 'bold',
@@ -291,28 +303,29 @@ export const styles = StyleSheet.create({
         elevation: 4,
     },
     profImg: {
+        marginTop: 10,
         borderRadius: 500,
         width: windowWidth / 3,
         height: windowWidth / 3,
         alignSelf: 'center'
     },
-    smallProfImg:{
-        marginTop:10,
-        marginLeft:10,
-        marginBottom:10,
+    smallProfImg: {
+        marginTop: 10,
+        marginLeft: 10,
+        marginBottom: 10,
         width: 40,
-        height: 40, 
+        height: 40,
         borderWidth: 1,
         borderColor: "orange",
         borderRadius: 50
     },
-    resTitleText:{
-        fontSize:16,
+    resTitleText: {
+        fontSize: 16,
         marginLeft: 10,
         color: "black",
     },
-    resDescText:{
-        fontSize:16,
+    resDescText: {
+        fontSize: 16,
         marginLeft: 10,
         color: "grey",
     },

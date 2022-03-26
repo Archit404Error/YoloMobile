@@ -11,7 +11,8 @@ export default class extends React.Component {
         username: '',
         password: '',
         name: '',
-        eventIds: [],
+        acceptedEvents: [],
+        pendingEvents: [],
         location: {
             latitude: 0,
             longitude: 0,
@@ -44,7 +45,8 @@ export default class extends React.Component {
         this.state.username = data.username;
         this.state.password = data.password;
         this.state.name = data.name;
-        this.state.eventIds = data.pendingEvents;
+        this.state.acceptedEvents = data.acceptedEvents
+        this.state.pendingEvents = data.pendingEvents;
         this.state.friendIds = data.friends;
         this.state.friendSuggs = data.friendRecommendations
         this.state.notifications = data.notifications;
@@ -212,7 +214,8 @@ export default class extends React.Component {
                     username: this.state.username,
                     password: this.state.password,
                     fullName: this.state.name,
-                    events: this.state.eventIds,
+                    acceptedEvents: this.state.acceptedEvents,
+                    pendingEvents: this.state.pendingEvents,
                     chats: this.state.chatIds,
                     latitude: this.state.location.latitude,
                     longitude: this.state.location.longitude,

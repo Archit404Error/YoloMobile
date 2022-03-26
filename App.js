@@ -213,7 +213,8 @@ function DetermineScreen() {
   const context = useContext(Context)
   const [loggedIn, setLoggedIn] = useState(false);
 
-  // A test for login stuff: context.removeCreds()
+  // A test for login stuff: 
+  context.removeCreds()
 
   useEffect(() => {
     (async () =>

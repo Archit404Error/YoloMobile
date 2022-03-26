@@ -8,7 +8,7 @@ import Context from '../Context/context';
 export default ({ navigation }) => {
   const context = useContext(Context);
 
-  const [ids, setIds] = useState(context.events);
+  const [ids, setIds] = useState(context.pendingEvents);
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(context.registerTokenAsync, [])
