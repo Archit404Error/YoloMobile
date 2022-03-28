@@ -1,6 +1,9 @@
 import React from "react";
+import { Text} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Friend from "../../Friends/friend";
+import { styles } from "../../styles";
+
 export default class extends React.Component {
 
     
@@ -9,14 +12,17 @@ export default class extends React.Component {
     }
 
     render() {
+      
         console.log(this.props)
         return (
-            
+           
            <SafeAreaView>
+                <Text style={styles.listHead}> Friends </Text>
+            
             {
 
                 this.props.route.params.friends.map(key =>
-                <Friend key={key} id={key} navigation={this.props.navigation} />
+                <Friend key={key} id={key} isUser={true} navigation={this.props.navigation} />
                 )
              }
             </SafeAreaView>

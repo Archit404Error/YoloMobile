@@ -26,6 +26,8 @@ import EventNotifScreen from './CoreScreens/eventNotifications';
 import EventStatScreen from './Notifications/eventStats';
 import UserNotifScreen from './CoreScreens/userNotifications';
 import FriendList from './Components/Lists/friendList';
+import EventList from './Components/Lists/eventList';
+
 import GlobalState from './Context/globalState';
 
 import firebaseInit from './Context/firebaseInit';
@@ -119,6 +121,11 @@ function FriendStack() {
         options={{ headerBackTitle: 'Back' }}
         component={FriendList}
       />
+      <Stack.Screen
+        name="View events"
+        options={{ headerBackTitle: 'Back' }}
+        component={EventList}
+      />
     </Stack.Navigator>
   )
 }
@@ -159,6 +166,11 @@ return (
         name="View friends"
         options={{ headerBackTitle: 'Back' }}
         component={FriendList}
+      />
+       <Stack.Screen
+        name="View events"
+        options={{ headerBackTitle: 'Back' }}
+        component={EventList}
       />
 
   </Stack.Navigator>

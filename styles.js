@@ -1,6 +1,7 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
 import { StyleSheet } from "react-native";
+import friendList from './Components/Lists/friendList';
 
 // Height of the entire phone window
 export const windowWidth = Dimensions.get('window').width;
@@ -374,5 +375,13 @@ export const styles = StyleSheet.create({
     storyContent: {
         width: windowWidth,
         height: windowHeight - 10
+    },
+    listHead : { 
+        marginTop:-20,
+        color:"orange",
+        marginBottom:20,
+        fontWeight:"700",
+        fontSize:20,
+        marginLeft: 10
     }
 })

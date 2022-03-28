@@ -80,7 +80,6 @@ export default class extends React.Component {
                     <Text style={styles.profTitle}>{this.props.name}</Text>
                     <View style={{ flexDirection: 'row', backgroundColor: 'white' }}>
                         <TouchableOpacity style={styles.paddedFlexContainer} onPress = { () => {
-                            console.log(this.props.navigation)                            
                             this.props.navigation.navigate("View friends", {
                                 friends:this.props.friends
                             })
@@ -92,7 +91,11 @@ export default class extends React.Component {
                             </Text>
                             <Text style={{ alignSelf: 'center', fontSize: 18 }}>Friends</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.paddedFlexContainer}>
+                        <TouchableOpacity style={styles.paddedFlexContainer} onPress = {()=>{
+                            this.props.navigation.navigate("View events", {
+                                events:this.props.events
+                            })
+                        }}> 
                             <Text style={styles.centeredSubHeader}>
                                 {this.props.events.length}
                             </Text>

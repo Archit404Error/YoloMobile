@@ -14,6 +14,7 @@ export default class extends React.Component {
         name: "Loading...",
         profPic: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png",
         friended: false,
+        isUser: false,
     }
 
     constructor(props) {
@@ -63,16 +64,22 @@ export default class extends React.Component {
                         {this.state.name}
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ marginTop: 5 }} onPress={() => {
-                    const action = !this.state.friended ? `sent to ${this.state.name}` : `to ${this.state.name} unsent`;
-                    showMessage({
-                        message: `Friend request ${action}`,
-                        type: 'info'
-                    });
-                    this.setFriended(!this.state.friended)
-                }}>
-                    <Feather name={iconName} size={25} />
-                </TouchableOpacity>
+
+                
+                {!this.state.isUser &&
+                    <TouchableOpacity style={{ marginTop: 5}} 
+                    onPress={() => {
+                        const action = !this.state.friended ? `sent to ${this.state.name}` : `to ${this.state.name} unsent`;
+                        showMessage({
+                            message: `Friend request ${action}`,
+                            type: 'info'
+                        });
+                        this.setFriended(!this.state.friended)
+                    }}>
+                        <Feather name={iconName} size={25} />
+                    </TouchableOpacity>
+                }
+                
             </View>
         );
     }
