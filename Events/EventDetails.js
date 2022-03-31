@@ -6,7 +6,7 @@ import * as Linking from 'expo-linking';
 import { MaterialIcons, Feather } from '@expo/vector-icons';
 
 import Context from "../Context/context";
-import { acceptedFlow, rejectionFlow } from "./eventHelperFuncs";
+import { acceptedFlow, rejectionFlow } from "../Helpers/eventHelperFuncs";
 import { styles, windowWidth } from "../styles";
 
 export default class extends React.Component {

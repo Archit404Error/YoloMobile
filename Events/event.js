@@ -4,7 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 import Context from "../Context/context";
 import { styles } from "../styles";
 import { scheduleEvent } from "../Notifications/calendarNotif";
-import { eventInteraction, rejectionFlow } from "./eventHelperFuncs";
+import { eventInteraction, rejectionFlow } from "../Helpers/eventHelperFuncs";
 import RBSheet from "react-native-raw-bottom-sheet";
 import FriendInvitation from '../Friends/friendInvitation';
 

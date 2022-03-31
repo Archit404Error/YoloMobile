@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { View, Text, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity, Alert } from 'react-native';
 import * as Location from 'expo-location';
 import { styles } from '../styles';
 import { Input, Button } from 'react-native-elements/';
@@ -8,12 +8,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Context from '../Context/context';
 import { useFonts } from 'expo-font';
 import { showMessage } from 'react-native-flash-message';
-import { Linking } from 'react-native'
-
+import { handleLocRejection } from '../Helpers/permissionHelperFuncs';
 
 export default ({ navigation }) => {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [initDenied, setInitDenied] = useState(false);
     const [loc, setLoc] = useState({});
     const [loading, setLoading] = useState(false);
     const context = useContext(Context);
@@ -21,18 +21,21 @@ export default ({ navigation }) => {
         Fredoka: require('../assets/fonts/FredokaOne-Regular.ttf'),
     });
 
+    const setLocation = async () => {
+        let location = await Location.getCurrentPositionAsync({});
+        context.setLocation(location.coords.latitude, location.coords.longitude);
+        setLoc(location);
+    }
+
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
-                setErrorMsg('Permission to access location was denied');
-                showMessage({message:"We need access to your location to find events near you.", type:'danger'})
-                Linking.openURL('app-settings:')
+                handleLocRejection()
+                setInitDenied(true);
                 return;
             }
-            let location = await Location.getCurrentPositionAsync({});
-            context.setLocation(location.coords.latitude, location.coords.longitude);
-            setLoc(location);
+            setLocation()
         })();
     }, []);
 
@@ -92,8 +95,8 @@ export default ({ navigation }) => {
                         buttonStyle={styles.confirmButton}
                         disabledStyle={styles.confirmButtonDisabled}
                         disabled={disabled}
-                        onPress={() => {
-                            fetch(`http://yolo-backend.herokuapp.com/auth?`, {
+                        onPress={async () => {
+                            const res = await fetch(`http://yolo-backend.herokuapp.com/auth?`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -103,16 +106,21 @@ export default ({ navigation }) => {
                                     password: password
                                 })
                             })
-                                .then(res => res.json())
-                                .then(resJson => {
-                                    if (JSON.stringify(resJson) != "{}") {
-                                        context.setCredentials(resJson);
-                                        context.storeCreds();
-                                        setLoading(true);
-                                    } else {
-                                        // Show error message upon failure
-                                    }
-                                })
+                            const resJson = await res.json()
+
+                            if (JSON.stringify(await resJson) != "{}") {
+                                let { status } = await Location.requestForegroundPermissionsAsync()
+                                if (status !== 'granted') {
+                                    handleLocRejection()
+                                    return;
+                                }
+                                else if (initDenied) setLocation()
+
+                                context.setCredentials(resJson);
+                                context.storeCreds();
+                                setLoading(true);
+                            }
+                            else showMessage({ message: "Invalid username or password", type: 'danger' })
                         }}
                     />
                 </View>

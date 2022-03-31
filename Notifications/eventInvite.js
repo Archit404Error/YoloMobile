@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { View, Text, Image } from "react-native";
-import { eventInteraction } from "../Events/eventHelperFuncs";
+import { eventInteraction } from "../Helpers/eventHelperFuncs";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Feather } from '@expo/vector-icons';
 import Context from "../Context/context";
