@@ -39,18 +39,17 @@ export default class extends React.Component {
     }
 
     /**
-     * Sets user credentials upon successful login
+     * Sets user credentials upon successful login/register
+     * Side effect: Adds friend and event suggestions
      * @param data the response sent from the server with user info
      */
-    setCreds = (data) => {
+    setCreds = async (data) => {
         this.state.id = data._id;
         this.state.username = data.username;
         this.state.password = data.password;
         this.state.name = data.name;
         this.state.acceptedEvents = data.acceptedEvents
-        this.state.pendingEvents = data.pendingEvents;
         this.state.friendIds = data.friends;
-        this.state.friendSuggs = data.friendRecommendations
         this.state.notifications = data.notifications;
         this.state.chatIds = data.chats;
         this.state.profile = data.profilePic;
@@ -58,6 +57,29 @@ export default class extends React.Component {
             query: `chatList=${data.chats}&user=${data._id}`
         });
 
+        let friendRes = await fetch("http://yolo-backend.herokuapp.com/populateFriends", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                user: data._id
+            })
+        })
+
+        let eventRes = await fetch("http://yolo-backend.herokuapp.com/addEventSuggestions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                user: data._id
+            })
+        })
+
+        this.state.friendSuggs = [data.friendSuggestions, await friendRes.json()]
+            .flat().filter(elem => elem)
+        this.state.pendingEvents = [data.pendingEvents, await eventRes.json()].flat()
         this.state.socket = socket;
         this.setState(this.state);
     }
@@ -69,11 +91,10 @@ export default class extends React.Component {
         // Deep clone state
         let dataStore = {}
         for (const key of Object.keys(this.state)) {
-            if (key === "socket") {
+            if (key === "socket")
                 dataStore[key] = {}
-                continue
-            }
-            dataStore[key] = this.state[key]
+            else
+                dataStore[key] = this.state[key]
         }
 
         try {
@@ -171,10 +192,9 @@ export default class extends React.Component {
                 })
             })
         } catch (error) {
-            showMessage({message:"We need access to your notifications", type:'danger'})
+            showMessage({ message: "We don't have access to your notifications", type: 'danger' })
+            // Linking.openURL('app-settings:')
             return Promise.reject("Couldn't check notifications permissions");
-            Linking.openURL('app-settings:')
-
         }
     }
 

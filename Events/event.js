@@ -74,7 +74,6 @@ export default class extends React.Component {
 
     render() {
         if (!this.state.visible) return <></>
-
         return (
             <SafeAreaView>
                 <RBSheet

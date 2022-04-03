@@ -146,23 +146,23 @@ function AddStack() {
     </Stack.Navigator>
   )
 }
-function ProfileStack(){
-return (
-  <Stack.Navigator
-  screenOptions={{ headerShown: false, headerBackTitleVisible: false, gestureEnabled: false }}>
-    <Stack.Screen
+function ProfileStack() {
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false, headerBackTitleVisible: false, gestureEnabled: false }}>
+      <Stack.Screen
         name="Profile"
         options={{ headerBackTitle: 'Back' }}
         component={ProfileScreen}
       />
-    <Stack.Screen
+      <Stack.Screen
         name="View friends"
         options={{ headerBackTitle: 'Back' }}
         component={FriendList}
       />
 
-  </Stack.Navigator>
-)
+    </Stack.Navigator>
+  )
 }
 
 function ChatStack() {
@@ -217,7 +217,7 @@ export function MainTab() {
       <Tab.Screen name="Create" options={{ headerShown: false, tabBarShowLabel: false }} component={AddStack} />
       <Tab.Screen name="Chats" component={ChatStack} options={{ headerShown: false, tabBarShowLabel: false }} />
       <Tab.Screen name="Profile" component={ProfileStack} options={{ tabBarShowLabel: false }} />
-      
+
     </Tab.Navigator>
   );
 }

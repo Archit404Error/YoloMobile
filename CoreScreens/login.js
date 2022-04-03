@@ -116,7 +116,7 @@ export default ({ navigation }) => {
                                 }
                                 else if (initDenied) setLocation()
 
-                                context.setCredentials(resJson);
+                                await context.setCredentials(resJson);
                                 context.storeCreds();
                                 setLoading(true);
                             }
