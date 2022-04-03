@@ -95,7 +95,7 @@ export default class extends React.Component {
                 {
                     this.state.friendSuggestions.map((id, index) => {
                         return (
-                            <Friend key={index} id={id} navigation={this.props.navigation} />
+                            <Friend isUser={false} key={index} id={id} navigation={this.props.navigation} />
                         );
                     })
                 }

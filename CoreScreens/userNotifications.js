@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { View } from "react-native";
+import { ScrollView, SafeAreaView } from "react-native";
 import Context from "../Context/context";
 import { styles } from "../styles";
 import FriendRequest from "../Notifications/request";
@@ -26,25 +26,27 @@ export default ({ navigation }) => {
     }, [])
 
     return (
-        <View style={styles.container}>
-            {
-                notifObjs.map((notifObject, index) => {
-                    if (notifObject.type === "friend")
-                        return <FriendRequest key={index} id={notifObject.sender} />
-                    else if (notifObject.type === "invite")
-                        return <EventInvite
-                            key={index}
-                            eventId={notifObject.event}
-                            senderId={notifObject.sender}
-                            eventName={notifObject.eventName}
-                            senderName={notifObject.senderName}
-                            navigation={navigation}
-                        />
-                    else if (notifObject.type === "newFriend")
-                        // Create new friend notif and add that here later
-                        return <></>
-                })
-            }
-        </View>
+        <SafeAreaView style={styles.container}>
+            <ScrollView>
+                {
+                    notifObjs.map((notifObject, index) => {
+                        if (notifObject.type === "friend")
+                            return <FriendRequest key={index} id={notifObject.sender} />
+                        else if (notifObject.type === "invite")
+                            return <EventInvite
+                                key={index}
+                                eventId={notifObject.event}
+                                senderId={notifObject.sender}
+                                eventName={notifObject.eventName}
+                                senderName={notifObject.senderName}
+                                navigation={navigation}
+                            />
+                        else if (notifObject.type === "newFriend")
+                            // Create new friend notif and add that here later
+                            return <></>
+                    })
+                }
+            </ScrollView>
+        </SafeAreaView>
     )
 }

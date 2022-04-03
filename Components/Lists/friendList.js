@@ -1,5 +1,5 @@
 import React from "react";
-import { Text} from "react-native";
+import { Text, View, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Friend from "../../Friends/friend";
 import { styles } from "../../styles";

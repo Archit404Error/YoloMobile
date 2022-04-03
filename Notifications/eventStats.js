@@ -61,7 +61,7 @@ export default ({ route }) => {
                     {
                         data.viewers.slice(data.viewers.length > 5 ? -5 : 0)
                             .map((userId, index) =>
-                                <Friend key={index} id={userId} />
+                                <Friend key={index} id={userId} isUser={false} />
                             )
                     }
                 </View>

@@ -119,7 +119,7 @@ export default class extends React.Component {
                     <Text style={styles.title}>Attendees</Text>
                     {
                         this.state.people.map((id) => {
-                            return <Friend key={id} id={id} navigation={this.props.navigation} />
+                            return <Friend isUser={false} key={id} id={id} navigation={this.props.navigation} />
                         })
                     }
                     <View style={{ height: 50 }}></View>

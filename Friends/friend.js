@@ -22,6 +22,7 @@ export default class extends React.Component {
     }
 
     componentDidMount() {
+        this.state.isUser = this.props.isUser
         this.state.id = this.props.id;
         fetch(`http://yolo-backend.herokuapp.com/user/${this.props.id}`)
             .then(res => res.json())

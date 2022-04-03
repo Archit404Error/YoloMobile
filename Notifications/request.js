@@ -78,10 +78,10 @@ export default class extends React.Component {
                         <Text style={{ color: 'gray', fontSize: 10, marginLeft: 10 }}>sent you a friend request</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ marginTop: 5, right: -100 }} onPress={() => this.requestAccepted(true)}>
+                <TouchableOpacity style={{ marginTop: 5, right: -50 }} onPress={() => this.requestAccepted(true)}>
                     <Feather name="check" size={25} />
                 </TouchableOpacity>
-                <TouchableOpacity style={{ marginTop: 5, right: -50 }} onPress={() => this.requestAccepted(false)}>
+                <TouchableOpacity style={{ marginTop: 5, right: -100 }} onPress={() => this.requestAccepted(false)}>
                     <Feather name="x" size={25} />
                 </TouchableOpacity>
             </View>
