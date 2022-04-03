@@ -105,8 +105,8 @@ export default ({ navigation, route }) => {
                     disabledStyle={styles.confirmButtonDisabled}
                     disabled={disabled}
                     onPress={
-                        () => {
-                            fetch("http://yolo-backend.herokuapp.com/register", {
+                        async () => {
+                            const res = await fetch("http://yolo-backend.herokuapp.com/register", {
                                 method: "POST",
                                 headers: {
                                     "Content-Type": "application/json"
@@ -117,12 +117,10 @@ export default ({ navigation, route }) => {
                                     name: name
                                 })
                             })
-                                .then(res => res.json())
-                                .then(resJson => {
-                                    context.setCredentials(resJson);
-                                    context.storeCreds();
-                                    setLoading(true);
-                                })
+                            const resJson = await res.json()
+                            await context.setCredentials(await resJson);
+                            context.storeCreds();
+                            setLoading(true);
                         }
                     }
                 />

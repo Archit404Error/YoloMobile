@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, Image, View, TouchableOpacity } from 'react-native';
 import { Dimensions } from 'react-native';
 import { Camera } from 'expo-camera';
+import { handleImgRejection } from '../Helpers/permissionHelperFuncs';
 import * as ImagePicker from 'expo-image-picker';
 import Context from '../Context/context';
 
@@ -40,7 +41,12 @@ export default () => {
         <View style={{ marginTop: 20, alignItems: 'center', justifyContent: 'center' }}>
           <TouchableOpacity
             style={{ backgroundColor: 'white', width: '100%', alignItems: 'center', padding: 10 }}
-            onPress={() => pickImage(context)}
+            onPress={async () => {
+              if ((await Camera.requestCameraPermissionsAsync()).status !== "denied")
+                pickImage(context)
+              else
+                handleImgRejection()
+            }}
           >
             <Text style={{ color: '#2d6ff4' }}>Add Image</Text>
           </TouchableOpacity>
@@ -49,5 +55,5 @@ export default () => {
       }
     </Context.Consumer>
   );
-  
+
 }

@@ -153,16 +153,16 @@ function AddStack() {
     </Stack.Navigator>
   )
 }
-function ProfileStack(){
-return (
-  <Stack.Navigator
-  screenOptions={{ headerShown: false, headerBackTitleVisible: false, gestureEnabled: false }}>
-    <Stack.Screen
+function ProfileStack() {
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false, headerBackTitleVisible: false, gestureEnabled: false }}>
+      <Stack.Screen
         name="Profile"
         options={{ headerBackTitle: 'Back' }}
         component={ProfileScreen}
       />
-    <Stack.Screen
+      <Stack.Screen
         name="View friends"
         options={{ headerBackTitle: 'Back' }}
         component={FriendList}
@@ -173,8 +173,8 @@ return (
         component={EventList}
       />
 
-  </Stack.Navigator>
-)
+    </Stack.Navigator>
+  )
 }
 
 function ChatStack() {
@@ -229,7 +229,7 @@ export function MainTab() {
       <Tab.Screen name="Create" options={{ headerShown: false, tabBarShowLabel: false }} component={AddStack} />
       <Tab.Screen name="Chats" component={ChatStack} options={{ headerShown: false, tabBarShowLabel: false }} />
       <Tab.Screen name="Profile" component={ProfileStack} options={{ tabBarShowLabel: false }} />
-      
+
     </Tab.Navigator>
   );
 }
@@ -250,8 +250,7 @@ function DetermineScreen() {
   const context = useContext(Context)
   const [loggedIn, setLoggedIn] = useState(false);
 
-  // A test for login stuff: 
-  context.removeCreds()
+  // A test for login stuff: context.removeCreds()
 
   useEffect(() => {
     (async () =>
@@ -269,23 +268,19 @@ function DetermineScreen() {
   )
 }
 
-const deepLinkMapping = {
-  prefixes: [Linking.createURL('/')],
+const config = {
   screens: {
-    Authentication: {
+    Events: {
       screens: {
-        App: {
-          screens: {
-            Events: {
-              screens: {
-                Details: 'event/:id'
-              }
-            }
-          }
-        }
+        Details: 'event/:id'
       }
     }
-  }
+  },
+};
+
+const linkConfig = {
+  prefixes: [Linking.createURL('/')],
+  config,
 }
 
 Notifications.setNotificationHandler({
@@ -298,18 +293,13 @@ Notifications.setNotificationHandler({
 
 export default function App() {
 
-  Linking.addEventListener('url', data => {
-    const url = data.url;
-    const eventId = Linking.parse(url).queryParams.id;
-  })
-
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseInit.firebaseConfig)
   }
 
   return (
     <GlobalState>
-      <NavigationContainer>
+      <NavigationContainer linking={linkConfig}>
         <DetermineScreen />
         <FlashMessage position="bottom" />
       </NavigationContainer>
