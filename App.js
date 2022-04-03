@@ -238,8 +238,7 @@ function DetermineScreen() {
   const context = useContext(Context)
   const [loggedIn, setLoggedIn] = useState(false);
 
-  // A test for login stuff: 
-  context.removeCreds()
+  // A test for login stuff: context.removeCreds()
 
   useEffect(() => {
     (async () =>
@@ -257,23 +256,19 @@ function DetermineScreen() {
   )
 }
 
-const deepLinkMapping = {
-  prefixes: [Linking.createURL('/')],
+const config = {
   screens: {
-    Authentication: {
+    Events: {
       screens: {
-        App: {
-          screens: {
-            Events: {
-              screens: {
-                Details: 'event/:id'
-              }
-            }
-          }
-        }
+        Details: 'event/:id'
       }
     }
-  }
+  },
+};
+
+const linkConfig = {
+  prefixes: [Linking.createURL('/')],
+  config,
 }
 
 Notifications.setNotificationHandler({
@@ -286,18 +281,13 @@ Notifications.setNotificationHandler({
 
 export default function App() {
 
-  Linking.addEventListener('url', data => {
-    const url = data.url;
-    const eventId = Linking.parse(url).queryParams.id;
-  })
-
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseInit.firebaseConfig)
   }
 
   return (
     <GlobalState>
-      <NavigationContainer>
+      <NavigationContainer linking={linkConfig}>
         <DetermineScreen />
         <FlashMessage position="bottom" />
       </NavigationContainer>

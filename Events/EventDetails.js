@@ -15,7 +15,7 @@ export default class extends React.Component {
     state = {
         id: -1,
         title: "Loading...",
-        image: "https://www.usnews.com/dims4/USNEWS/74cbc08/17177859217/resize/800x540%3E/quality/85/?url=https%3A%2F%2Fmedia.beam.usnews.com%2F59%2F0dd395ffda36a08c792a2b32303c7b%2Fcollege-photo_73.jpg",
+        image: "https://www.russorizio.com/wp-content/uploads/2016/07/ef3-placeholder-image.jpg",
         desc: "Loading...",
         startDate: new Date(),
         endDate: new Date(),
@@ -27,16 +27,17 @@ export default class extends React.Component {
         super(props);
     }
 
-    componentDidMount() {
-        this.state.id = this.props.id;
-        this.state.title = this.props.title;
-        this.state.image = this.props.image;
-        this.state.desc = this.props.description;
-        this.state.startDate = this.props.startDate;
-        this.state.endDate = this.props.endDate;
-        this.state.loc = this.props.location;
-        this.state.people = this.props.attendees;
-        this.setState(this.state);
+    static getDerivedStateFromProps(props, state) {
+        const newState = {}
+        newState.id = props.id;
+        newState.title = props.title;
+        newState.image = props.image;
+        newState.desc = props.description;
+        newState.startDate = props.startDate;
+        newState.endDate = props.endDate;
+        newState.loc = props.location;
+        newState.people = props.attendees;
+        return newState
     }
 
     /**
@@ -75,9 +76,7 @@ export default class extends React.Component {
      * Creates an event link for this event and allows user to share it
      */
     shareEventLink() {
-        const eventUrl = Linking.createURL('/event', {
-            queryParams: { id: this.state.id }
-        })
+        const eventUrl = Linking.createURL(`/event/${this.state.id}`)
         try {
             if (Platform.OS == "ios")
                 Share.share({ url: eventUrl })
