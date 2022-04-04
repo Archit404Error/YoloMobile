@@ -383,5 +383,71 @@ export const styles = StyleSheet.create({
         fontWeight:"700",
         fontSize:20,
         marginLeft: 10
-    }
+    },
+    editButton:{
+        fontSize:20,
+        marginTop:5,
+        color:"orange",
+        marginLeft:5,
+    },
+    editIcon:{
+        marginTop:5,
+        marginLeft:10
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems:'center',
+        marginTop: 22,
+      },
+      modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'flex-start',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      button: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+      },
+      buttonOpen: {
+        backgroundColor: '#F194FF',
+      },
+      buttonClose: {
+
+        marginTop:25,
+        backgroundColor: 'orange',
+      },
+      textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+      },
+      modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
+      },
+      modalTitle:{
+          fontWeight:"bold",
+          fontSize:25,
+      },
+      modalTextInput:
+      {
+        padding:5,
+        height: 40,
+        backgroundColor: 'white',
+        borderBottomColor: 'orange',
+        borderBottomWidth: 1,
+      }
+      
 })
