@@ -86,10 +86,6 @@ export default ({ route }) => {
                             clearButtonMode="while-editing"
                             onChangeText={setLocation}
                         />
-                        <LocationChooser
-                            initialLat={context.latitude}
-                            initialLong={context.longitude}
-                        />
                         <TextInput
                             style={styles.titleInput}
                             placeholder="Tags"
@@ -127,7 +123,6 @@ export default ({ route }) => {
                                 />
                             </View>
                         </View>
-                        <ImgScreen />
                         <View style={{ flexDirection: 'column', flex: 1, backgroundColor: 'white', padding: 10 }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <Text style={{ alignSelf: 'center', fontSize: 15 }}>Public Event</Text>
@@ -154,15 +149,12 @@ export default ({ route }) => {
                                     },
                                     body: JSON.stringify({
                                         id:data._id,
-                                        image: image,
                                         title: title,
                                         description: description,
                                         location: location,
                                         startDate: startDate,
                                         endDate: endDate,
                                         tags: tags,
-                                        latitude: latitude,
-                                        longitude: longitude,
                                         other: other,
                                         public: !isPrivate
                                     })
