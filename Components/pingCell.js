@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import Context from "../Context/context";
 import { showMessage, hideMessage } from "react-native-flash-message";
+import ThemedDialog from "react-native-elements/dist/dialog/Dialog";
 
 export default class extends React.Component {
 
@@ -28,6 +29,7 @@ export default class extends React.Component {
         this.state.id = this.props.id;
         this.state.addPing = this.props.addPing;
         this.state.removePing = this.props.removePing;
+        this.state.isChecked = this.props.didCheck;
         fetch(`http://yolo-backend.herokuapp.com/user/${this.props.id}`)
             .then(res => res.json())
             .then(resJson => {
@@ -52,8 +54,6 @@ export default class extends React.Component {
                 backgroundColor: 'white',
                 padding: 15,
                 alignItems:'center',
-                borderBottomColor: '#f2f2f2',
-                borderBottomWidth: 1
             }}>
                 <Image source={{ uri: this.state.profPic }} style={{ width: 40, height: 40, borderRadius: 50 }} />
                 <TouchableOpacity onPress={() => {
