@@ -393,12 +393,6 @@ export const styles = StyleSheet.create({
         marginTop: 5,
         marginLeft: 10
     },
-    container: {
-        padding: 25,
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     button: {
         display: 'flex',
         height: 60,
