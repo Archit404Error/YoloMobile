@@ -98,11 +98,11 @@ export default class extends React.Component {
                             </Text>
                             <Text style={{ alignSelf: 'center', fontSize: 18 }}>Friends</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.paddedFlexContainer} onPress = {()=>{
+                        <TouchableOpacity style={styles.paddedFlexContainer} onPress={() => {
                             this.props.navigation.navigate("View events", {
-                                events:this.props.events
+                                events: this.props.events
                             })
-                        }}> 
+                        }}>
                             <Text style={styles.centeredSubHeader}>
                                 {this.props.events.length}
                             </Text>

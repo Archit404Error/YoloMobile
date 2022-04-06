@@ -102,7 +102,7 @@ export default class extends React.Component {
                     </ScrollView>
                 </RBSheet>
 
-                <View style={styles.flexContainer}>
+                <View style={{ height: this.props.cardHeight, backgroundColor: 'white' }}>
                     <TouchableWithoutFeedback
                         onLongPress={() => this.displayDetails()}
                     >
