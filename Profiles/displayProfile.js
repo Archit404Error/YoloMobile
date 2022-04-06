@@ -11,7 +11,6 @@ import * as ImagePicker from 'expo-image-picker';
 import { uploadImageAsync } from "../Events/previewEvent";
 import { Camera } from "expo-camera";
 import { handleImgRejection } from "../Helpers/permissionHelperFuncs";
-import FriendList from '../Components/Lists/friendList'
 
 export default class extends React.Component {
     state = {

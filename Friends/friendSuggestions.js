@@ -6,19 +6,25 @@ import { SearchBar } from "react-native-elements";
 import { SuggestionCell } from "../Components/suggestionCell";
 
 import Friend from './friend';
+import PingCell from "../Components/pingCell";
 
 import Story from './storyPreview';
 import UploadStory from "./uploadStory";
 import { styles } from "../styles";
-
+import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import {FriendList} from "../Components/Lists/friendList";
 
 
 export default class extends React.Component {
     static contextType = Context;
 
     state = {
+        toPing: new Set(),
         friendSuggestions: [],
         stories: [],
+        friends:new Set(),
+        pingMode: false,
+        pingMessage:"",
         searchSuggestions: new Set()
     }
 
@@ -30,7 +36,22 @@ export default class extends React.Component {
         this.state.searchSuggestions = new Set()
         this.setState(this.state)
     }
-
+    fetchFriends = () => {
+        fetch(`http://yolo-backend.herokuapp.com/user/${this.context.id}`)
+        .then(resp => resp.json())
+        .then(res => {
+            for (const elem of res.friends) {
+                this.state.friends.add(elem)
+            }
+            this.setState(this.state)
+        })
+    }
+    addPing = (id) => {
+        this.state.toPing.add(id)
+    }
+    removePing = (id) => {
+        this.state.toPing.delete(id)
+    }
     fetchSuggestions = (query) => {
         fetch(`http://yolo-backend.herokuapp.com/searchSuggestions/${query}`)
             .then(resp => resp.json())
@@ -40,10 +61,12 @@ export default class extends React.Component {
                 }
                 this.setState(this.state)
             })
+            console.log(this.state.friends)
     }
 
     componentDidMount() {
         this.setState({ friendSuggestions: this.context.friendSuggs })
+        this.fetchFriends()
         fetch(`http://yolo-backend.herokuapp.com/storyIds/${this.context.id}`)
             .then(resp => resp.json())
             .then(res => {
@@ -65,8 +88,9 @@ export default class extends React.Component {
                         }
                     </ScrollView>
                 </SafeAreaView>
+               
                 <SearchBar
-                    placeholder="Search for people and events..."
+                    placeholder= "Search for people and events..."
                     lightTheme={true}
                     value={this.state.filtered}
                     platform={Platform.OS}
@@ -80,12 +104,56 @@ export default class extends React.Component {
                     }}
                     style={{ fontSize: 15 }}
                 />
+                
                 {
                     Array.from(this.state.searchSuggestions).map(res =>
                         <SuggestionCell data={res} navigation={this.props.navigation} />
                     )
                 }
-
+                <TouchableOpacity onPress={()=>{
+                    this.state.pingMode = !this.state.pingMode;
+                    this.setState(this.state);
+                }}>
+                    <Text style={{
+                        fontFamily: 'Arial',
+                        fontSize: 22,
+                        fontWeight: 'bold',
+                        color:"orange",
+                        margin: 20,
+                    }}>Ping your friends</Text>
+                </TouchableOpacity>
+                
+                {this.state.pingMode && 
+                Array.from(this.state.friends).map(res =>
+                    <PingCell addPing={this.addPing} removePing ={this.removePing} key={res} id={res} isUser={true} navigation={this.props.navigation} />
+                )} 
+                {this.state.pingMode && 
+                    <TextInput
+                    onChangeText={text => {
+                        this.state.pingMessage = text;
+                        this.setState(this.state)
+                    }}
+                    placeholder="Enter ping message"
+                    style={{
+                        marginLeft:20,
+                        marginTop:10,
+                        paddingVertical:5
+                    }}></TextInput>
+                }
+                {this.state.pingMode && 
+                <TouchableOpacity onPress={()=>{
+                    console.log(this.state.toPing)
+                }}>
+                    <Text style={{
+                        fontFamily: 'Arial',
+                        fontSize: 18,
+                        fontWeight: 'bold',
+                        color:"orange",
+                        margin: 20,
+                    }}>Send ping</Text>
+                </TouchableOpacity>
+            }
+                
                 <Text style={{
                     fontFamily: 'Arial',
                     fontSize: 25,
