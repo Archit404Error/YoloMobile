@@ -393,60 +393,80 @@ export const styles = StyleSheet.create({
         marginTop: 5,
         marginLeft: 10
     },
-    centeredView: {
+    container: {
+        padding: 25,
         flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    button: {
+        display: 'flex',
+        height: 60,
+        borderRadius: 6,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 22,
+        width: '100%',
+        backgroundColor: '#2AC062',
+        shadowColor: '#2AC062',
+        shadowOpacity: 0.5,
+        shadowOffset: {
+            height: 10,
+            width: 0
+        },
+        shadowRadius: 25,
+    },
+    closeButton: {
+        display: 'flex',
+        height: 60,
+        borderRadius: 6,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#FF3974',
+        shadowColor: '#2AC062',
+        shadowOpacity: 0.5,
+        shadowOffset: {
+            height: 10,
+            width: 0
+        },
+        shadowRadius: 25,
+    },
+    buttonText: {
+        color: '#FFFFFF',
+        fontSize: 22,
+    },
+    image: {
+        marginTop: 150,
+        marginBottom: 10,
+        width: '100%',
+        height: 350,
+    },
+    text: {
+        fontSize: 24,
+        marginBottom: 30,
+        padding: 40,
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
     },
     modalView: {
         margin: 20,
-        backgroundColor: 'white',
+        backgroundColor: "white",
         borderRadius: 20,
         padding: 35,
-        alignItems: 'flex-start',
-        shadowColor: '#000',
+        alignItems: "flex-start",
+        justifyContent: "flex-start",
+        shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 2,
+            height: 2
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5,
-    },
-    button: {
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2,
-    },
-    buttonOpen: {
-        backgroundColor: '#F194FF',
-    },
-    buttonClose: {
-
-        marginTop: 25,
-        backgroundColor: 'orange',
-    },
-    textStyle: {
-        color: 'white',
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: 'center',
-    },
-    modalTitle: {
-        fontWeight: "bold",
-        fontSize: 25,
-    },
-    modalTextInput:
-    {
-        padding: 5,
-        height: 40,
-        backgroundColor: 'white',
-        borderBottomColor: 'orange',
-        borderBottomWidth: 1,
+        elevation: 5
     }
+
 
 })
