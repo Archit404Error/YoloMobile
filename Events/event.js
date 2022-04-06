@@ -4,7 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 import Context from "../Context/context";
 import { styles } from "../styles";
 import { scheduleEvent } from "../Notifications/calendarNotif";
-import { eventInteraction, rejectionFlow } from "../Helpers/eventHelperFuncs";
+import { acceptedFlow, eventInteraction, rejectionFlow } from "../Helpers/eventHelperFuncs";
 import RBSheet from "react-native-raw-bottom-sheet";
 import FriendInvitation from '../Friends/friendInvitation';
 
@@ -150,8 +150,12 @@ export default class extends React.Component {
                         <TouchableOpacity style={styles.rsvpYesContainer} onPress={
                             () => {
                                 this.sendModal.open();
-                                this.context.socket.emit("eventsUpdated");
-                                eventInteraction("accepted", this.context.id, this.state.id);
+                                acceptedFlow(
+                                    this.context.id,
+                                    this.state.id,
+                                    this.state.title,
+                                    this.context.socket
+                                )
                             }
                         }>
                             <View style={styles.iconBg}>

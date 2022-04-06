@@ -133,7 +133,14 @@ export default class extends React.Component {
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.rsvpYesBlock}
-                            onPress={() => acceptedFlow(this.context.id, this.state.id, this.state.title)}
+                            onPress={
+                                () => acceptedFlow(
+                                    this.context.id,
+                                    this.state.id,
+                                    this.state.title,
+                                    this.context.socket
+                                )
+                            }
                         >
                             <Text style={{ color: 'green' }}>Interested</Text>
                         </TouchableOpacity>

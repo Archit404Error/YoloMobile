@@ -32,7 +32,8 @@ export function rejectionFlow(userId, eventId, title) {
 /**
  * Performs all actions that must occur when an event is accepted
  */
-export function acceptedFlow(userId, eventId, title) {
+export function acceptedFlow(userId, eventId, title, socket) {
+    socket.emit("eventsUpdated")
     eventInteraction("accepted", userId, eventId)
     showMessage({
         message: `${title} was accepted`,

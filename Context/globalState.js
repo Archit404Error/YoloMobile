@@ -36,6 +36,7 @@ export default class extends React.Component {
         notifications: [],
         profile: "",
         socket: {},
+        lastUpdate: new Date()
     }
 
     /**
@@ -90,6 +91,7 @@ export default class extends React.Component {
     storeCreds = async () => {
         // Deep clone state
         let dataStore = {}
+        this.state.lastUpdate = new Date();
         for (const key of Object.keys(this.state)) {
             if (key === "socket")
                 dataStore[key] = {}
@@ -136,6 +138,9 @@ export default class extends React.Component {
         }
     }
 
+    /** 
+     * Allows the user to begin receiving notifications for all chats they're in 
+     */
     joinChatRooms = () =>
         this.state.socket.emit("joinRooms", this.state.chatIds)
 
@@ -167,6 +172,11 @@ export default class extends React.Component {
         this.state.eventCreationDetails = details;
         this.setState(this.state);
     }
+
+    /**
+     * Returns how much time has passed since last update (hours)
+     */
+    timeSinceUpdate = () => ((new Date() - this.state.lastUpdate) / (1000 * 60 * 60))
 
     /**
      * Registers device for push notifications if permission is granted and it's a new device
@@ -201,12 +211,12 @@ export default class extends React.Component {
      * General purpose function to modify portions of state without exposing state
      * @param {String[]} keyList an array of key values
      * @param {String[]} dataList an array of data values
-     * Requires: keyList.length == dataList.length
+     * @requires keyList.length == dataList.length
      */
     modifyState = (keyList, dataList) => {
         for (let i = 0; i < keyList.length; i++)
             this.state[keyList[i]] = dataList[i];
-
+        this.storeCreds()
         this.setState(this.state);
     }
 
@@ -259,6 +269,7 @@ export default class extends React.Component {
                     storeCreds: this.storeCreds,
                     removeCreds: this.removeCreds,
                     fetchCreds: this.fetchCreds,
+                    timeSinceUpdate: this.timeSinceUpdate,
                     modifyState: this.modifyState,
                 }}
             >
