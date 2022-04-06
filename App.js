@@ -153,6 +153,7 @@ function AddStack() {
     </Stack.Navigator>
   )
 }
+
 function ProfileStack() {
   return (
     <Stack.Navigator
@@ -167,7 +168,7 @@ function ProfileStack() {
         options={{ headerBackTitle: 'Back' }}
         component={FriendList}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="View events"
         options={{ headerBackTitle: 'Back' }}
         component={EventList}
@@ -250,7 +251,8 @@ function DetermineScreen() {
   const context = useContext(Context)
   const [loggedIn, setLoggedIn] = useState(false);
 
-  // A test for login stuff: context.removeCreds()
+  // A test for login stuff: 
+  context.removeCreds()
 
   useEffect(() => {
     (async () =>

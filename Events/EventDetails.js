@@ -28,7 +28,7 @@ export default class extends React.Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        const newState = {}
+        let newState = {}
         newState.id = props.id;
         newState.title = props.title;
         newState.image = props.image;

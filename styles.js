@@ -1,7 +1,6 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
 import { StyleSheet } from "react-native";
-import friendList from './Components/Lists/friendList';
 
 // Height of the entire phone window
 export const windowWidth = Dimensions.get('window').width;
@@ -90,10 +89,10 @@ export const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     rsvpNoBlock: {
-        color:'red',
+        color: 'red',
         width: windowWidth / 2,
-        borderTopColor:'red',
-        borderTopWidth:2,
+        borderTopColor: 'red',
+        borderTopWidth: 2,
         alignItems: 'center',
         backgroundColor: 'white',
         padding: 10,
@@ -111,9 +110,9 @@ export const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     rsvpYesBlock: {
-        color:'green',
-        borderTopColor:'green',
-        borderTopWidth:2,
+        color: 'green',
+        borderTopColor: 'green',
+        borderTopWidth: 2,
         width: windowWidth / 2,
         alignItems: 'center',
         backgroundColor: 'white',
@@ -312,7 +311,7 @@ export const styles = StyleSheet.create({
     profImg: {
         marginTop: 10,
         borderColor: "orange",
-        borderWidth:2,
+        borderWidth: 2,
         borderRadius: 500,
         width: windowWidth / 3,
         height: windowWidth / 3,
@@ -357,7 +356,7 @@ export const styles = StyleSheet.create({
     profTitle: {
         fontSize: 30,
         fontWeight: 'bold',
-        marginTop:10,
+        marginTop: 10,
         alignSelf: 'center'
     },
     postStoryContainer: {
@@ -376,31 +375,31 @@ export const styles = StyleSheet.create({
         width: windowWidth,
         height: windowHeight - 10
     },
-    listHead : { 
-        marginTop:-20,
-        color:"orange",
-        marginBottom:20,
-        fontWeight:"700",
-        fontSize:20,
+    listHead: {
+        marginTop: -20,
+        color: "orange",
+        marginBottom: 20,
+        fontWeight: "700",
+        fontSize: 20,
         marginLeft: 10
     },
-    editButton:{
-        fontSize:20,
-        marginTop:5,
-        color:"orange",
-        marginLeft:5,
+    editButton: {
+        fontSize: 20,
+        marginTop: 5,
+        color: "orange",
+        marginLeft: 5,
     },
-    editIcon:{
-        marginTop:5,
-        marginLeft:10
+    editIcon: {
+        marginTop: 5,
+        marginLeft: 10
     },
     centeredView: {
         flex: 1,
         justifyContent: 'center',
-        alignItems:'center',
+        alignItems: 'center',
         marginTop: 22,
-      },
-      modalView: {
+    },
+    modalView: {
         margin: 20,
         backgroundColor: 'white',
         borderRadius: 20,
@@ -408,46 +407,46 @@ export const styles = StyleSheet.create({
         alignItems: 'flex-start',
         shadowColor: '#000',
         shadowOffset: {
-          width: 0,
-          height: 2,
+            width: 0,
+            height: 2,
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
-      },
-      button: {
+    },
+    button: {
         borderRadius: 20,
         padding: 10,
         elevation: 2,
-      },
-      buttonOpen: {
+    },
+    buttonOpen: {
         backgroundColor: '#F194FF',
-      },
-      buttonClose: {
+    },
+    buttonClose: {
 
-        marginTop:25,
+        marginTop: 25,
         backgroundColor: 'orange',
-      },
-      textStyle: {
+    },
+    textStyle: {
         color: 'white',
         fontWeight: 'bold',
         textAlign: 'center',
-      },
-      modalText: {
+    },
+    modalText: {
         marginBottom: 15,
         textAlign: 'center',
-      },
-      modalTitle:{
-          fontWeight:"bold",
-          fontSize:25,
-      },
-      modalTextInput:
-      {
-        padding:5,
+    },
+    modalTitle: {
+        fontWeight: "bold",
+        fontSize: 25,
+    },
+    modalTextInput:
+    {
+        padding: 5,
         height: 40,
         backgroundColor: 'white',
         borderBottomColor: 'orange',
         borderBottomWidth: 1,
-      }
-      
+    }
+
 })
