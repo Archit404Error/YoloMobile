@@ -22,7 +22,8 @@ export function eventInteraction(action, userId, eventId) {
  * Handles global state updates of pending and accepted events and updates cache
  */
 function rsvpFlow(eventId, ctx, accepted) {
-    ctx.modifyState(["pendingEvents"], [ctx.pendingEvents.filter(e => e === eventId)])
+    // Keep all pending events except current one
+    ctx.modifyState(["pendingEvents"], [ctx.pendingEvents.filter(e => e !== eventId)])
     if (accepted)
         ctx.acceptedEvents.push({ _id: eventId })
     ctx.storeCreds()
