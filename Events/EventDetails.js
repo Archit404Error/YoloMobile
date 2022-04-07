@@ -127,7 +127,7 @@ export default class extends React.Component {
                     <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity
                             style={styles.rsvpNoBlock}
-                            onPress={() => rejectionFlow(this.context.id, this.state.id, this.state.title)}
+                            onPress={() => rejectionFlow(this.context.id, this.state.id, this.state.title, this.context)}
                         >
                             <Text style={{ color: 'red' }}>No thanks</Text>
                         </TouchableOpacity>
@@ -138,7 +138,7 @@ export default class extends React.Component {
                                     this.context.id,
                                     this.state.id,
                                     this.state.title,
-                                    this.context.socket
+                                    this.context
                                 )
                             }
                         >

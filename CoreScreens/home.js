@@ -39,7 +39,9 @@ export default ({ navigation }) => {
       .then(res => res.json())
       .then(json => {
         setIds(json.pendingEvents);
-        if (refreshing)
+        context.modifyState(["pendingEvents"], [ids])
+        context.storeCreds()
+        if (showUpdate)
           setRefreshing(false);
       })
   }

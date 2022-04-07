@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { View, Text, Image } from "react-native";
-import { eventInteraction } from "../Helpers/eventHelperFuncs";
+import { acceptedFlow, eventInteraction, rejectionFlow } from "../Helpers/eventHelperFuncs";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Feather } from '@expo/vector-icons';
 import Context from "../Context/context";
@@ -75,13 +75,13 @@ export default ({ navigation, eventId, senderId, eventName, senderName }) => {
                 </TouchableOpacity>
             </View>
             <TouchableOpacity style={{ marginLeft: 60, marginTop: 5 }} onPress={() => {
-                eventInteraction('accepted', context.id, eventId);
+                acceptedFlow(context.id, eventId, eventData.title, context)
                 setRSVP(true)
             }}>
                 <Feather name="check" size={25} />
             </TouchableOpacity>
             <TouchableOpacity style={{ marginLeft: 30, marginTop: 5 }} onPress={() => {
-                eventInteraction('rejected', context.id, eventId);
+                rejectionFlow(context.id, eventId, eventData.title, context)
                 setRSVP(true)
             }}>
                 <Feather name="x" size={25} />

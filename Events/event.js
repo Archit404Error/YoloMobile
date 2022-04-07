@@ -129,7 +129,7 @@ export default class extends React.Component {
                     </TouchableOpacity>
                     <View style={styles.rsvpContainer}>
                         <TouchableOpacity style={styles.rsvpNoContainer} onPress={() => {
-                            rejectionFlow(this.context.id, this.state.id, this.state.title);
+                            rejectionFlow(this.context.id, this.state.id, this.state.title, this.context);
                             this.state.visible = false;
                             this.setState(this.state);
                         }}>
@@ -154,7 +154,7 @@ export default class extends React.Component {
                                     this.context.id,
                                     this.state.id,
                                     this.state.title,
-                                    this.context.socket
+                                    this.context
                                 )
                             }
                         }>
