@@ -6,7 +6,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import uuid from 'uuid';
 
 /**
- * It takes a URL, downloads the image, and uploads it to Firebase Storage
+ * Takes a URL, downloads the image, and uploads it to Firebase Storage
  * @param uri - The URI of the image you want to upload.
  * @returns A promise that resolves to a URL.
  */
@@ -33,11 +33,11 @@ export const uploadImageAsync = async (uri) => {
 }
 
 /**
- * This function takes in an event object and a user id and sends a POST request to the backend to
+ * Takes in an event object and a user id and sends a POST request to the backend to
  * create a new event
  * @param eventDetails - The event details that were entered by the user (pulled from context).
  * @param creatorId - The id of the user who created the event.
- * @returns A promise that resolves to the response from the server.
+ * @returns the created event's id.
  */
 const submitEventAsync = async (eventDetails, creatorId) => {
     eventDetails["creator"] = creatorId;
@@ -78,8 +78,11 @@ export default ({ navigation }) => {
                                 async () => {
                                     const resUrl = await uploadImageAsync(context.eventDetails.image)
                                     context.createEventImage(await resUrl)
-                                    submitEventAsync(context.eventDetails, context.id)
-                                    navigation.navigate("Submit Event")
+                                    const id = await submitEventAsync(context.eventDetails, context.id)
+                                    navigation.navigate("Submit Event", {
+                                        id: await id.json(),
+                                        title: context.eventDetails.title
+                                    })
                                 }
                             }
                         />

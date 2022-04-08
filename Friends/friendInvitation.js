@@ -5,8 +5,8 @@ import { Feather } from '@expo/vector-icons';
 import Context from '../Context/context';
 
 export default ({ id, eventId, eventName }) => {
-    const [profile, setProfile] = useState("");
-    const [name, setName] = useState("");
+    const [profile, setProfile] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png");
+    const [name, setName] = useState("Loading...");
     const [invited, setInvited] = useState(false);
     const context = useContext(Context);
 
@@ -20,6 +20,7 @@ export default ({ id, eventId, eventName }) => {
     }
 
     const sendInvite = () => {
+        console.log(JSON.stringify(eventId))
         fetch(`http://yolo-backend.herokuapp.com/inviteFriend`, {
             method: "POST",
             headers: {

@@ -1,12 +1,11 @@
 import React from "react";
-import { Text, View, SafeAreaView, Image, TouchableOpacity, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import { Text, View, SafeAreaView, Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import Context from "../Context/context";
 import { styles } from "../styles";
 import { scheduleEvent } from "../Notifications/calendarNotif";
 import { acceptedFlow, eventInteraction, rejectionFlow } from "../Helpers/eventHelperFuncs";
-import RBSheet from "react-native-raw-bottom-sheet";
-import FriendInvitation from '../Friends/friendInvitation';
+import InviteModal from "../Components/sendInviteModal";
 
 export default class extends React.Component {
 
@@ -29,6 +28,7 @@ export default class extends React.Component {
 
     constructor(props) {
         super(props);
+        this.handleAccept = this.handleAccept.bind(this)
     }
 
     componentDidMount() {
@@ -72,35 +72,24 @@ export default class extends React.Component {
         })
     }
 
+    handleAccept() {
+        this.state.visible = false;
+        this.setState(this.state);
+        scheduleEvent(this.state.startDate, this.state.endDate, this.state.title);
+    }
+
     render() {
         if (!this.state.visible) return <></>
         return (
             <SafeAreaView>
-                <RBSheet
+                <InviteModal
                     ref={ref => this.sendModal = ref}
-                    height={300}
-                    openDuration={250}
-                    closeOnDragDown={true}
-                    onClose={() => {
-                        this.state.visible = false;
-                        this.setState(this.state);
-                        scheduleEvent(this.state.startDate, this.state.endDate, this.state.title);
-                    }}
-                >
-                    <Text style={styles.title}>Invite Your Friends</Text>
-                    <ScrollView>
-                        {
-                            this.context.friends.map(friendId =>
-                                <FriendInvitation
-                                    key={friendId}
-                                    id={friendId}
-                                    eventId={this.state.id}
-                                    eventName={this.state.title}
-                                />
-                            )
-                        }
-                    </ScrollView>
-                </RBSheet>
+                    id={this.state.id}
+                    title={this.state.title}
+                    message={"Invite your friends!"}
+                    listData={this.context.friends}
+                    closeFunc={this.handleAccept}
+                />
 
                 <View style={{ height: this.props.cardHeight, backgroundColor: 'white' }}>
                     <TouchableWithoutFeedback
