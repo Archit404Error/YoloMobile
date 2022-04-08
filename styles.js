@@ -203,7 +203,6 @@ export const styles = StyleSheet.create({
         marginBottom: -5,
         fontWeight: 'bold',
     },
-
     subText: {
         fontFamily: 'Arial',
         color: "grey",

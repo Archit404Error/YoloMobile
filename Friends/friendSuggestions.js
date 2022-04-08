@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, SafeAreaView, ScrollView, View,KeyboardAvoidingView, Modal } from "react-native";
+import { Text, SafeAreaView, ScrollView, View, KeyboardAvoidingView, Modal } from "react-native";
 import Context from "../Context/context";
 import { SearchBar } from "react-native-elements";
 import { Ionicons } from '@expo/vector-icons';
@@ -13,7 +13,7 @@ import Story from './storyPreview';
 import UploadStory from "./uploadStory";
 import { styles } from "../styles";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import {FriendList} from "../Components/Lists/friendList";
+import { FriendList } from "../Components/Lists/friendList";
 
 
 export default class extends React.Component {
@@ -23,13 +23,13 @@ export default class extends React.Component {
         toPing: new Set(),
         friendSuggestions: [],
         stories: [],
-        friendIds:new Set(),
+        friendIds: new Set(),
         friendRes: new Set(),
         filteredFriends: new Set(),
         pingMode: false,
-        pingMessage:"",
-        friendText:"",
-        modalVisible:false,
+        pingMessage: "",
+        friendText: "",
+        modalVisible: false,
         searchSuggestions: new Set()
     }
 
@@ -48,56 +48,57 @@ export default class extends React.Component {
     }
     fetchFriends = () => {
         fetch(`http://yolo-backend.herokuapp.com/user/${this.context.id}`)
-        .then(resp => resp.json())
-        .then(res => {
-            for (const elem of res.friends) {
-                this.state.friendIds.add(elem)
-            }
-            this.setState(this.state)
-            this.state.friendIds.forEach(elem => {
-                fetch(`http://yolo-backend.herokuapp.com/user/${elem}`)
-                .then(resp => resp.json())
-                .then(res => {
-                    this.state.friendRes.add({
-                        name:res.name, 
-                        id:res._id,
-                        didCheck:false
-                    })
-                    this.setState(this.state)
+            .then(resp => resp.json())
+            .then(res => {
+                for (const elem of res.friends) {
+                    this.state.friendIds.add(elem)
+                }
+                this.setState(this.state)
+                this.state.friendIds.forEach(elem => {
+                    fetch(`http://yolo-backend.herokuapp.com/user/${elem}`)
+                        .then(resp => resp.json())
+                        .then(res => {
+                            this.state.friendRes.add({
+                                name: res.name,
+                                id: res._id,
+                                didCheck: false
+                            })
+                            this.setState(this.state)
+                        })
                 })
             })
-        })
     }
 
     filterFriends = (query) => {
         query = query.toLowerCase();
-        for(const friend of this.state.friendRes){
-            if(friend.name.toLowerCase().includes(query)){
+        for (const friend of this.state.friendRes) {
+            if (friend.name.toLowerCase().includes(query)) {
                 this.state.filteredFriends.add(friend)
                 this.setState(this.state)
-              
+
             }
         }
     }
 
-    
     addPing = (id) => {
         this.state.toPing.add(id)
 
-        for(const elem of this.state.friendRes){
-            if(elem.id===id){
+        for (const elem of this.state.friendRes) {
+            if (elem.id === id) {
                 elem.didCheck = true
             }
         }
     }
+
     removePing = (id) => {
         this.state.toPing.delete(id)
-        for(const elem of this.state.friendRes){
-            if(elem.id===id){
+        for (const elem of this.state.friendRes) {
+            if (elem.id === id) {
                 elem.didCheck = false
             }
         }
     }
+
     fetchSuggestions = (query) => {
         fetch(`http://yolo-backend.herokuapp.com/searchSuggestions/${query}`)
             .then(resp => resp.json())
@@ -111,7 +112,7 @@ export default class extends React.Component {
 
     componentDidMount() {
         this.fetchFriends()
-        
+
         this.setState({ friendSuggestions: this.context.friendSuggs })
         fetch(`http://yolo-backend.herokuapp.com/storyIds/${this.context.id}`)
             .then(resp => resp.json())
@@ -134,22 +135,22 @@ export default class extends React.Component {
                         }
                     </ScrollView>
                 </SafeAreaView>
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={this.state.modalVisible}>
-                    
-                        <View style={styles.centeredView}>
-                            <View style={styles.modalView}>
-                            <TouchableOpacity onPress={()=>{
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={this.state.modalVisible}>
+
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <TouchableOpacity onPress={() => {
                                 this.state.modalVisible = false;
                                 this.setState(this.state);
                             }}>
                                 <Ionicons name="close" size={30} color="orange"></Ionicons>
-                             </TouchableOpacity>
+                            </TouchableOpacity>
 
-                             <SearchBar
-                                placeholder= "Search for your friends"
+                            <SearchBar
+                                placeholder="Search for your friends"
                                 lightTheme={true}
                                 value={this.state.friendText}
                                 platform={Platform.OS}
@@ -161,41 +162,41 @@ export default class extends React.Component {
                                     this.filterFriends(text)
                                     this.state.friendText = text
                                 }}
-                                style={{ fontSize: 15 }}/>
-                            { 
-                            Array.from(this.state.filteredFriends).map(res =>
-                                <PingCell addPing={this.addPing} removePing ={this.removePing} didCheck={res.didCheck} key={res.id} id={res.id}/>
-                            )
-                            }                
+                                style={{ fontSize: 15 }} />
+                            {
+                                Array.from(this.state.filteredFriends).map(res =>
+                                    <PingCell addPing={this.addPing} removePing={this.removePing} didCheck={res.didCheck} key={res.id} id={res.id} />
+                                )
+                            }
                             <TextInput
-                            onChangeText={text => {
-                                this.state.pingMessage = text;
-                                this.setState(this.state)
-                            }}
-                            placeholderTextColor="grey"
-                            placeholder="Enter ping message"
-                            style={{
-                                marginLeft:20,
-                                paddingVertical:5
-                            }}></TextInput>
-                       
-                        <TouchableOpacity onPress={()=>{
-                            console.log(this.state.toPing)
-                        }}>
-                            <Text style={{
-                                fontFamily: 'Arial',
-                                fontSize: 18,
-                                fontWeight: 'bold',
-                                color:"orange",
-                                margin: 20,
-                            }}>Send ping</Text>
-                        </TouchableOpacity>
+                                onChangeText={text => {
+                                    this.state.pingMessage = text;
+                                    this.setState(this.state)
+                                }}
+                                placeholderTextColor="grey"
+                                placeholder="Enter ping message"
+                                style={{
+                                    marginLeft: 20,
+                                    paddingVertical: 5
+                                }}></TextInput>
+
+                            <TouchableOpacity onPress={() => {
+                                console.log(this.state.toPing)
+                            }}>
+                                <Text style={{
+                                    fontFamily: 'Arial',
+                                    fontSize: 18,
+                                    fontWeight: 'bold',
+                                    color: "orange",
+                                    margin: 20,
+                                }}>Send ping</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
                 </Modal>
-               
+
                 <SearchBar
-                    placeholder= "Search for people and events..."
+                    placeholder="Search for people and events..."
                     lightTheme={true}
                     value={this.state.filtered}
                     platform={Platform.OS}
@@ -209,13 +210,13 @@ export default class extends React.Component {
                     }}
                     style={{ fontSize: 15 }}
                 />
-                
+
                 {
                     Array.from(this.state.searchSuggestions).map(res =>
                         <SuggestionCell data={res} navigation={this.props.navigation} />
                     )
                 }
-                <TouchableOpacity onPress={()=>{
+                <TouchableOpacity onPress={() => {
                     this.state.modalVisible = !this.state.modalVisible;
                     this.setState(this.state);
                 }}>
@@ -223,12 +224,12 @@ export default class extends React.Component {
                         fontFamily: 'Arial',
                         fontSize: 22,
                         fontWeight: 'bold',
-                        color:"orange",
+                        color: "orange",
                         margin: 20,
                     }}>Ping your friends</Text>
                 </TouchableOpacity>
-               
-               
+
+
                 <Text style={{
                     fontFamily: 'Arial',
                     fontSize: 25,

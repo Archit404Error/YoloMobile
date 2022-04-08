@@ -44,16 +44,12 @@ function HomeStack({ navigation }) {
         name="Explore"
         component={HomeScreen}
         options={{
-          headerLeft: () => {
-            return <></>
-          },
-          headerRight: () => {
-            return (
-              <TouchableOpacity onPress={() => navigation.navigate("Updates")}>
-                <Ionicons name={"notifications-outline"} size={25} style={{ marginRight: 15 }} />
-              </TouchableOpacity>
-            )
-          }
+          headerLeft: () => <></>,
+          headerRight: () => (
+            <TouchableOpacity onPress={() => navigation.navigate("Updates")}>
+              <Ionicons name={"notifications-outline"} size={25} style={{ marginRight: 15 }} />
+            </TouchableOpacity>
+          )
         }}
       />
       <Stack.Screen
