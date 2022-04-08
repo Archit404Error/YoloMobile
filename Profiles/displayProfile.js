@@ -19,8 +19,6 @@ export default class extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props.profilePic);
-
     }
     componentDidMount() {
         this.setState({
@@ -86,7 +84,6 @@ export default class extends React.Component {
                     <View style={{ flexDirection: 'row', backgroundColor: 'white' }}>
 
                         <TouchableOpacity style={styles.paddedFlexContainer} onPress={() => {
-                            console.log(this.props.navigation)
                             this.props.navigation.navigate("View friends", {
                                 friends: this.props.friends
                             })

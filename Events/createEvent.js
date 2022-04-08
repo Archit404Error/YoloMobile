@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, View, TextInput, TouchableOpacity, Text, Switch } from 'react-native';
+import { Alert, SafeAreaView, ScrollView, View, TextInput, TouchableOpacity, Text, Switch } from 'react-native';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { styles } from '../styles';
 import ImgScreen from './imgChoose';
@@ -107,16 +107,27 @@ export default ({ navigation }) => {
                         <TouchableOpacity
                             style={{ backgroundColor: 'white', width: '100%', alignItems: 'center', marginTop: 10, padding: 10 }}
                             onPress={() => {
-                                context.createEventDetails(
-                                    title, description,
-                                    location,
-                                    startDate,
-                                    endDate,
-                                    tags,
-                                    other,
-                                    isPrivate
-                                );
-                                navigation.navigate("Preview Event")
+                                const strValidate = [title, description, location, tags]
+                                const valid = strValidate
+                                    .map(str => str !== "")
+                                    .reduce(
+                                        (prev, curr) => prev && curr,
+                                        true
+                                    )
+                                if (valid) {
+                                    context.createEventDetails(
+                                        title, description,
+                                        location,
+                                        startDate,
+                                        endDate,
+                                        tags,
+                                        other,
+                                        isPrivate
+                                    );
+                                    navigation.navigate("Preview Event")
+                                } else {
+                                    Alert.alert("You must enter information into every field before creating the event!")
+                                }
                             }}
                         >
                             <Text style={{ color: '#2d6ff4' }}>Preview Event</Text>

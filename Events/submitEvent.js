@@ -20,7 +20,7 @@ export default class extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={styles.flexContainer}>
                 <InviteModal
                     ref={ref => this.sendModal = ref}
                     id={this.props.route.params.id}
