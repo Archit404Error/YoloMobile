@@ -48,21 +48,9 @@ export default ({ id, eventId, eventName }) => {
             borderBottomWidth: 1
         }}>
             <Image source={{ uri: profile }} style={{ width: 40, height: 40, borderRadius: 50 }} />
-            <TouchableOpacity onPress={() => {
-                this.props.navigation.navigate(
-                    "Friends",
-                    {
-                        screen: "View Profile",
-                        params: {
-                            id: id
-                        }
-                    },
-                )
-            }}>
-                <Text style={{ color: 'black', marginTop: 5, marginLeft: 10, marginRight: 10, fontSize: 20 }}>
-                    {name}
-                </Text>
-            </TouchableOpacity>
+            <Text style={{ color: 'black', marginTop: 5, marginLeft: 10, marginRight: 10, fontSize: 20 }}>
+                {name}
+            </Text>
             <TouchableOpacity style={{ marginTop: 5 }} onPress={() => {
                 if (!invited) {
                     sendInvite();

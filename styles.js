@@ -67,6 +67,28 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 1,
         padding: 0,
     },
+    eventCard: {
+        width: screenWidth,
+        marginLeft: 10,
+        backgroundColor: "white",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: -2,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        borderRadius: 10,
+        marginBottom: 10
+    },
+    eventCardImg: {
+        width: '100%',
+        height: windowHeight / 5,
+        alignSelf: 'center',
+        marginBottom: -20,
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10
+    },
     rsvpContainer: {
         position: 'absolute',
         top: windowHeight / 1.85,
@@ -427,17 +449,6 @@ export const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 22,
     },
-    image: {
-        marginTop: 150,
-        marginBottom: 10,
-        width: '100%',
-        height: 350,
-    },
-    text: {
-        fontSize: 24,
-        marginBottom: 30,
-        padding: 40,
-    },
     centeredView: {
         flex: 1,
         justifyContent: "center",
@@ -459,7 +470,5 @@ export const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5
-    }
-
-
+    },
 })

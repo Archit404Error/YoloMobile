@@ -13,7 +13,7 @@ import Story from './storyPreview';
 import UploadStory from "./uploadStory";
 import { styles } from "../styles";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import { FriendList } from "../Components/Lists/friendList";
+import UpcomingEvents from "../Components/upcomingEvents";
 
 
 export default class extends React.Component {
@@ -46,6 +46,7 @@ export default class extends React.Component {
         this.state.searchSuggestions = new Set()
         this.setState(this.state)
     }
+
     fetchFriends = () => {
         fetch(`http://yolo-backend.herokuapp.com/user/${this.context.id}`)
             .then(resp => resp.json())
@@ -124,9 +125,9 @@ export default class extends React.Component {
 
     render() {
         return (
-            <KeyboardAvoidingView style={{ flex: 1, backgroundColor: 'white' }}>
+            <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
                 <SafeAreaView>
-                    <ScrollView horizontal={true} style={{ padding: 20 }}>
+                    <ScrollView horizontal style={{ padding: 20 }}>
                         <UploadStory />
                         {
                             this.state.stories.map((storyObj, index) => {
@@ -178,7 +179,8 @@ export default class extends React.Component {
                                 style={{
                                     marginLeft: 20,
                                     paddingVertical: 5
-                                }}></TextInput>
+                                }}
+                            />
 
                             <TouchableOpacity onPress={() => {
                                 console.log(this.state.toPing)
@@ -229,21 +231,30 @@ export default class extends React.Component {
                     }}>Ping your friends</Text>
                 </TouchableOpacity>
 
+                <Text style={{
+                    fontFamily: 'Arial',
+                    fontSize: 25,
+                    fontWeight: 'bold',
+                    margin: 20,
+                }}>
+                    Friend Suggestions
+                </Text>
+
+                {
+                    this.state.friendSuggestions.map((id, index) =>
+                        <Friend isUser={false} key={index} id={id} navigation={this.props.navigation} />
+                    )
+                }
 
                 <Text style={{
                     fontFamily: 'Arial',
                     fontSize: 25,
                     fontWeight: 'bold',
                     margin: 20,
-                }}>Friend Suggestions</Text>
-                {
-                    this.state.friendSuggestions.map((id, index) => {
-                        return (
-                            <Friend isUser={false} key={index} id={id} navigation={this.props.navigation} />
-                        );
-                    })
-                }
-            </KeyboardAvoidingView>
+                }}>Your Upcoming Events</Text>
+
+                <UpcomingEvents id={this.context.id} navigation={this.props.navigation} />
+            </ScrollView>
         );
     }
 }

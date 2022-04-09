@@ -200,7 +200,7 @@ export default ({ route }) => {
                     {
                         data.attendees.slice(data.attendees.length > 5 ? -5 : 0)
                             .map((userId, index) =>
-                                <Friend key={index} id={userId} />
+                                <Friend key={index} id={userId} isUser={false} />
                             )
                     }
                 </View>
