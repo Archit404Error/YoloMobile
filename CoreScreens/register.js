@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity } from "react-native";
+import { View, Text, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity, Alert } from "react-native";
 import { Input, Button } from "react-native-elements";
 import { styles } from "../styles";
 import { Ionicons } from '@expo/vector-icons';
@@ -117,10 +117,14 @@ export default ({ navigation, route }) => {
                                     name: name
                                 })
                             })
-                            const resJson = await res.json()
-                            await context.setCredentials(await resJson);
-                            context.storeCreds();
-                            setLoading(true);
+                            try {
+                                const resJson = await res.json()
+                                await context.setCredentials(await resJson);
+                                context.storeCreds();
+                                setLoading(true);
+                            } catch (err) {
+                                Alert.alert("That username already exists!")
+                            }
                         }
                     }
                 />

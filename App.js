@@ -3,12 +3,12 @@ import firebase from "firebase/compat/app";
 import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
 import FlashMessage from 'react-native-flash-message';
-import { TouchableOpacity } from 'react-native';
+import { Alert, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
 import HomeScreen from './CoreScreens/home';
 import DetailsScreen from './Events/DetailsContainer';
@@ -198,7 +198,8 @@ function ChatStack() {
   )
 }
 
-export function MainTab() {
+export function MainTab({ navigation, setLoggedIn }) {
+  const context = useContext(Context)
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -225,7 +226,37 @@ export function MainTab() {
       <Tab.Screen name="Friends" component={FriendStack} options={{ tabBarShowLabel: false }} />
       <Tab.Screen name="Create" options={{ headerShown: false, tabBarShowLabel: false }} component={AddStack} />
       <Tab.Screen name="Chats" component={ChatStack} options={{ headerShown: false, tabBarShowLabel: false }} />
-      <Tab.Screen name="Profile" component={ProfileStack} options={{ tabBarShowLabel: false }} />
+      <Tab.Screen name="Profile" component={ProfileStack} options={{
+        tabBarShowLabel: false,
+        headerRight: () => (
+          <TouchableOpacity onPress={() => {
+            Alert.alert(
+              "Log out",
+              "Are you sure you would like to log out?",
+              [
+                {
+                  text: "No",
+                },
+                {
+                  text: "Yes",
+                  onPress: () => {
+                    context.removeCreds();
+                    if (setLoggedIn)
+                      setLoggedIn(false)
+                    else
+                      navigation.navigate("Login", {
+                        username: "",
+                        password: ""
+                      })
+                  }
+                }
+              ]
+            )
+          }}>
+            <MaterialIcons name={"logout"} size={25} style={{ marginRight: 15 }} />
+          </TouchableOpacity>
+        )
+      }} />
 
     </Tab.Navigator>
   );
@@ -258,7 +289,7 @@ function DetermineScreen() {
   return (
     <>
       {loggedIn ?
-        <MainTab /> :
+        <MainTab setLoggedIn={setLoggedIn} /> :
         <Authentication />
       }
     </>

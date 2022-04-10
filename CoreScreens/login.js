@@ -40,11 +40,17 @@ export default ({ navigation }) => {
     }, []);
 
     useEffect(() => {
-        if (loading) navigation.navigate("App");
+        if (loading) {
+            setLoading(false)
+            navigation.navigate("App");
+        }
     }, [loc]);
 
     useEffect(() => {
-        if (JSON.stringify(loc) != "{}") navigation.navigate("App");
+        if (JSON.stringify(loc) != "{}") {
+            setLoading(false)
+            navigation.navigate("App");
+        }
     }, [loading]);
 
     if (!loaded) {
