@@ -107,7 +107,7 @@ export default ({ navigation }) => {
                         <TouchableOpacity
                             style={{ backgroundColor: 'white', width: '100%', alignItems: 'center', marginTop: 10, padding: 10 }}
                             onPress={() => {
-                                const strValidate = [title, description, location, tags]
+                                const strValidate = [title, description, location, tags, context.eventDetails.image]
                                 const valid = strValidate
                                     .map(str => str !== "")
                                     .reduce(
@@ -126,7 +126,7 @@ export default ({ navigation }) => {
                                     );
                                     navigation.navigate("Preview Event")
                                 } else {
-                                    Alert.alert("You must enter information into every field before creating the event!")
+                                    Alert.alert("You must enter information into every field (and select an image) before creating the event!")
                                 }
                             }}
                         >

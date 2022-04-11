@@ -107,7 +107,7 @@ export default class extends React.Component {
                         </TouchableOpacity>
                     </View>
                     <View style={{ padding: 10, marginTop: 10 }}>
-                        <Text style={styles.boldSubHeader}>Upcoming Events</Text>
+                        <Text style={styles.boldSubHeader}>Attended Events</Text>
                         {
                             this.props.events.map(event =>
                                 <CondensedEvent key={event._id} id={event._id} navigation={this.props.navigation} />

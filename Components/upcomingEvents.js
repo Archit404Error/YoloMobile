@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Image, Text, TouchableOpacity, SafeAreaView, ScrollView } from "react-native";
 import { styles } from "../styles";
+import Context from "../Context/context";
 
 export const SquareEvent = ({ eventObj, navigation }) => (
     <TouchableOpacity
@@ -24,12 +25,19 @@ export const SquareEvent = ({ eventObj, navigation }) => (
 )
 
 export default ({ id, navigation }) => {
+    const context = useContext(Context)
     const [upcoming, setUpcoming] = useState([])
 
-    useState(() => {
+    const fetchUpcoming = () => {
         fetch(`http://yolo-backend.herokuapp.com/upcomingEvents/${id}`)
             .then(res => res.json())
             .then(resJson => setUpcoming(resJson))
+    }
+
+    useEffect(() => {
+        fetchUpcoming()
+        context.socket.on("eventsUpdated", () => fetchUpcoming())
+        return () => context.socket.off("eventsUpdated", () => fetchUpcoming())
     }, [])
 
     return (
