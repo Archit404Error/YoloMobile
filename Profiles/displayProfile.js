@@ -36,7 +36,7 @@ export default class extends React.Component {
         if (!result.cancelled) {
             return result.uri;
         }
-    };
+    }
 
     refreshProfilePic = async (url, uid) => {
         fetch("http://yolo-backend.herokuapp.com/updateProfilePic/", {

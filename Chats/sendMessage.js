@@ -1,10 +1,14 @@
 import React, { useContext, useState } from "react";
-import { View, TextInput, TouchableOpacity } from "react-native";
+import { View, TextInput, TouchableOpacity, Alert } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from "../styles";
 import Context from "../Context/context";
 
 async function sendMessage(message, chatId, chatName, sender, socket) {
+    if (message.trim() == "") {
+        Alert.alert("You cannot send empty messages!")
+        return;
+    }
     const messageData = {
         sender: sender,
         chat: chatId,
@@ -46,6 +50,7 @@ export default ({ chatId, chatName, sender }) => {
                 style={styles.chatInput}
                 placeholder={"Send Message..."}
                 returnKeyType={"send"}
+                enablesReturnKeyAutomatically
                 onChangeText={text => setMessage(text)}
                 onSubmitEditing={() => {
                     sendMessage(message, chatId, chatName, sender, context.socket);
