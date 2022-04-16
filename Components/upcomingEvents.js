@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Image, Text, TouchableOpacity, SafeAreaView, ScrollView } from "react-native";
-import { styles } from "../styles";
+import { styles, screenWidth } from "../styles";
 import Context from "../Context/context";
 
 export const SquareEvent = ({ eventObj, navigation }) => (
@@ -42,7 +42,7 @@ export default ({ id, navigation }) => {
 
     return (
         <SafeAreaView>
-            <ScrollView horizontal>
+            <ScrollView horizontal snapToAlignment="start" snapToInterval={screenWidth + 45} decelerationRate={0}>
                 {upcoming.map(event => <SquareEvent eventObj={event} navigation={navigation} />)}
             </ScrollView>
         </SafeAreaView>

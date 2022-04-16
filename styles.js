@@ -68,8 +68,9 @@ export const styles = StyleSheet.create({
         padding: 0,
     },
     eventCard: {
-        width: screenWidth,
-        marginLeft: 10,
+        width: screenWidth - 20,
+        marginLeft: 5,
+        marginRight: 5,
         backgroundColor: "white",
         shadowColor: "#000",
         shadowOffset: {

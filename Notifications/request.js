@@ -40,7 +40,7 @@ export default class extends React.Component {
                 accepted: accepted,
                 sender: this.props.id,
                 receiver: this.context.id,
-                name: this.context.name
+                name: this.context.fullName
             })
         })
             .then(res => {
