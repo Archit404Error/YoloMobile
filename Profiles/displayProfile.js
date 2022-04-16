@@ -66,20 +66,21 @@ export default class extends React.Component {
                     {this.props.editable ?
                         <TouchableOpacity onPress={async () => {
                             if ((await Camera.getCameraPermissionsAsync()).status !== "denied") {
-                                var uri = await this.pickImage();
-                                var downloadURL = await uploadImageAsync(uri);
+                                let uri = await this.pickImage();
+                                let downloadURL = await uploadImageAsync(uri);
                                 await this.refreshProfilePic(downloadURL, this.props.id);
+                                console.log(await downloadURL)
                                 this.setState({
-                                    url: downloadURL
+                                    url: await downloadURL
                                 })
                             }
                             else
                                 handleImgRejection()
                         }
                         }>
-                            <Image style={styles.profImg} source={{ uri: this.props.profilePic }} />
+                            <Image style={styles.profImg} source={{ uri: this.state.url }} />
                         </TouchableOpacity>
-                        : <Image style={styles.profImg} source={{ uri: this.props.profilePic }} />
+                        : <Image style={styles.profImg} source={{ uri: this.props.profilePIc }} />
                     }
 
                     <Text style={styles.profTitle}>{this.props.name}</Text>
