@@ -18,7 +18,7 @@ async function sendMessage(message, chatId, chatName, sender, socket) {
         },
         body: JSON.stringify(messageData)
     })
-        .then(res => {
+        .then(_ => {
             socket.emit("messageSent", messageData)
         })
 }

@@ -5,7 +5,6 @@
 import React from "react";
 import { SafeAreaView, ScrollView, Text, Image, View, TouchableOpacity } from "react-native"
 import { styles } from "../styles";
-import { state, useState } from "react";
 import CondensedEvent from "../Events/condensedEvent";
 import * as ImagePicker from 'expo-image-picker';
 import { uploadImageAsync } from "../Events/previewEvent";
@@ -20,6 +19,7 @@ export default class extends React.Component {
     constructor(props) {
         super(props);
     }
+
     componentDidMount() {
         this.setState({
             url: this.props.profilePic
@@ -63,22 +63,24 @@ export default class extends React.Component {
         return (
             <SafeAreaView style={{ flex: 1 }}>
                 <ScrollView style={styles.container}>
-                    <TouchableOpacity onPress={async () => {
-                        if ((await Camera.getCameraPermissionsAsync()).status !== "denied") {
-                            var uri = await this.pickImage();
-                            var downloadURL = await uploadImageAsync(uri);
-                            await this.refreshProfilePic(downloadURL, this.props.id);
-                            this.setState({
-                                url: downloadURL
-                            })
+                    {this.props.editable ?
+                        <TouchableOpacity onPress={async () => {
+                            if ((await Camera.getCameraPermissionsAsync()).status !== "denied") {
+                                var uri = await this.pickImage();
+                                var downloadURL = await uploadImageAsync(uri);
+                                await this.refreshProfilePic(downloadURL, this.props.id);
+                                this.setState({
+                                    url: downloadURL
+                                })
+                            }
+                            else
+                                handleImgRejection()
                         }
-                        else
-                            handleImgRejection()
+                        }>
+                            <Image style={styles.profImg} source={{ uri: this.props.profilePic }} />
+                        </TouchableOpacity>
+                        : <Image style={styles.profImg} source={{ uri: this.props.profilePic }} />
                     }
-                    }>
-                        <Image style={styles.profImg} source={{ uri: this.props.profilePic }} />
-                    </TouchableOpacity>
-
 
                     <Text style={styles.profTitle}>{this.props.name}</Text>
                     <View style={{ flexDirection: 'row', backgroundColor: 'white' }}>

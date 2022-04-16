@@ -37,6 +37,7 @@ export default class extends React.Component {
                 friends={this.state.friends}
                 profilePic={this.state.profPic}
                 navigation={this.props.navigation}
+                editable={true}
             />
         );
     }

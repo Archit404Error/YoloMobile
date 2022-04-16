@@ -39,6 +39,7 @@ export default class extends React.Component {
                 events={this.state.events}
                 profilePic={this.state.profPic}
                 navigation={this.props.navigation}
+                editable={false}
             />
         );
     }
