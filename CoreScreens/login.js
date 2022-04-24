@@ -17,7 +17,7 @@ export default ({ navigation }) => {
     const [loc, setLoc] = useState({});
     const [loading, setLoading] = useState(false);
     const context = useContext(Context);
-    const [loaded] = useFonts({
+    const [fontLoaded] = useFonts({
         Fredoka: require('../assets/fonts/FredokaOne-Regular.ttf'),
     });
 
@@ -53,9 +53,8 @@ export default ({ navigation }) => {
         }
     }, [loading]);
 
-    if (!loaded) {
+    if (!fontLoaded)
         return <></>;
-    }
 
     const disabled = loading || userName == '' || password == '';
 

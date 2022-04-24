@@ -1,7 +1,7 @@
-import React from 'react';
-import { SafeAreaView, ScrollView, View, Text, Image, Button } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, ScrollView, View, Text, Image, Button, Modal, ActivityIndicator } from 'react-native';
 import Context from '../Context/context';
-import { styles } from '../styles';
+import { styles, screenHeight } from '../styles';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import uuid from 'uuid';
 
@@ -53,44 +53,55 @@ const submitEventAsync = async (eventDetails, creatorId) => {
 }
 
 export default ({ navigation }) => {
+    const [submitted, setSubmitted] = useState(false)
     return (
-        <Context.Consumer>
-            {context =>
-                <SafeAreaView>
-                    <ScrollView style={styles.container}>
-                        <Image style={styles.eventImg} source={{ uri: context.eventDetails.image }} />
-                        <Text style={styles.title}>{context.eventDetails.title}</Text>
-                        <Text style={styles.addressText}>{context.eventDetails.location}</Text>
-                        <View style={{ flex: 1, flexDirection: 'row', marginLeft: 10, }}>
-                            {
-                                context.eventDetails.tags.split("|").map((tag, index) => {
-                                    return (
-                                        <View key={index} style={styles.tag}>
-                                            <Text>{tag}</Text>
-                                        </View>
-                                    )
-                                })
-                            }
-                        </View>
-                        <Text style={styles.subText}>{context.eventDetails.description}</Text>
-                        <Button title={"Add Event!"}
-                            onPress={
-                                async () => {
-                                    const resUrl = await uploadImageAsync(context.eventDetails.image)
-                                    context.createEventImage(await resUrl)
-                                    console.log(resUrl)
-                                    const id = await submitEventAsync(context.eventDetails, context.id)
-                                    console.log(id)
-                                    navigation.navigate("Submit Event", {
-                                        id: await id.json(),
-                                        title: context.eventDetails.title
+        <>
+            <Modal visible={submitted}>
+                <View style={{ padding: 20, marginTop: 40, alignItems: 'center' }}>
+                    <Text style={{ fontSize: 20, marginBottom: 50 }}>Submitting Event...</Text>
+                    <ActivityIndicator size={"large"} />
+                </View>
+            </Modal>
+            <Context.Consumer>
+                {context =>
+                    <SafeAreaView>
+                        <ScrollView style={styles.container}>
+                            <Image style={styles.eventImg} source={{ uri: context.eventDetails.image }} />
+                            <Text style={styles.title}>{context.eventDetails.title}</Text>
+                            <Text style={styles.addressText}>{context.eventDetails.location}</Text>
+                            <View style={{ flex: 1, flexDirection: 'row', marginLeft: 10, }}>
+                                {
+                                    context.eventDetails.tags.split("|").map((tag, index) => {
+                                        return (
+                                            <View key={index} style={styles.tag}>
+                                                <Text>{tag}</Text>
+                                            </View>
+                                        )
                                     })
                                 }
-                            }
-                        />
-                    </ScrollView>
-                </SafeAreaView>
-            }
-        </Context.Consumer>
+                            </View>
+                            <Text style={styles.subText}>{context.eventDetails.description}</Text>
+                            <Button title={"Add Event!"}
+                                disabled={submitted}
+                                onPress={
+                                    async () => {
+                                        setSubmitted(true)
+                                        const resUrl = await uploadImageAsync(context.eventDetails.image)
+                                        context.createEventImage(await resUrl)
+                                        console.log(resUrl)
+                                        const id = await submitEventAsync(context.eventDetails, context.id)
+                                        setSubmitted(false)
+                                        navigation.navigate("Submit Event", {
+                                            id: await id.json(),
+                                            title: context.eventDetails.title
+                                        })
+                                    }
+                                }
+                            />
+                        </ScrollView>
+                    </SafeAreaView>
+                }
+            </Context.Consumer>
+        </>
     )
 }

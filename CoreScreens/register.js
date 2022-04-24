@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Location from 'expo-location';
 import { useFonts } from 'expo-font';
-
+import { handleLocRejection } from '../Helpers/permissionHelperFuncs';
 
 import Context from '../Context/context';
 
@@ -20,7 +20,7 @@ export default ({ navigation, route }) => {
 
     const context = useContext(Context);
 
-    const [loaded] = useFonts({
+    const [_] = useFonts({
         Fredoka: require('../assets/fonts/FredokaOne-Regular.ttf'),
     });
 
@@ -28,7 +28,7 @@ export default ({ navigation, route }) => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
-                setErrorMsg('Permission to access location was denied');
+                handleLocRejection();
                 return;
             }
             let location = await Location.getCurrentPositionAsync({});
@@ -106,6 +106,18 @@ export default ({ navigation, route }) => {
                     disabled={disabled}
                     onPress={
                         async () => {
+                            let { status } = await Location.requestForegroundPermissionsAsync();
+                            if (status !== 'granted') {
+                                handleLocRejection();
+                                return;
+                            }
+
+                            const valRegex = /^[A-Za-z]+$/
+                            if (!(valRegex.test(username) && valRegex.test(password))) {
+                                Alert.alert("Usernames and passwords can only contain letters")
+                                return
+                            }
+
                             const res = await fetch("http://yolo-backend.herokuapp.com/register", {
                                 method: "POST",
                                 headers: {
