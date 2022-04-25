@@ -209,6 +209,7 @@ export default class extends React.Component {
 
     /**
      * General purpose function to modify portions of state without exposing state
+     * Side effect: stores creds in cache and sets last updated time on call
      * @param {String[]} keyList an array of key values
      * @param {String[]} dataList an array of data values
      * @requires keyList.length == dataList.length

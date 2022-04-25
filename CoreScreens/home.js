@@ -21,14 +21,12 @@ export default ({ navigation }) => {
 
   useFocusEffect(
     useCallback(() => {
-      const updateEventList = () => {
-        if (context.timeSinceUpdate() >= 3.) {
-          scrollRef.current.scrollTo({ y: 0, animated: true })
-          refreshEvents(false)
-          context.modifyState(["pendingEvents"], [ids])
-        }
+      console.log("focus occurred")
+      if (context.timeSinceUpdate() >= 3.) {
+        scrollRef.current.scrollTo({ y: 0, animated: true })
+        refreshEvents(false)
+        context.modifyState(["pendingEvents"], [ids])
       }
-      return () => updateEventList()
     }, [navigation])
   )
 
