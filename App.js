@@ -3,7 +3,7 @@ import firebase from "firebase/compat/app";
 import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
 import FlashMessage from 'react-native-flash-message';
-import { Alert, TouchableOpacity } from 'react-native';
+import { Alert, TouchableOpacity, AppState } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -200,6 +200,20 @@ function ChatStack() {
 
 export function MainTab({ navigation, setLoggedIn }) {
   const context = useContext(Context)
+
+  const handleAppState = newState => {
+    if (newState === "active") {
+      context.socket.emit("appOpened")
+      context.socket.emit("notificationsUpdated")
+    }
+  }
+
+  useEffect(() => {
+    AppState.addEventListener("change", handleAppState)
+    // Need to use deprecated method for now because of expo RN version
+    return () => AppState.removeEventListener(handleAppState)
+  }, [])
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({

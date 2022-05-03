@@ -17,11 +17,14 @@ export default ({ navigation }) => {
   const scrollRef = useRef(null);
   useScrollToTop(scrollRef)
 
-  useEffect(context.registerTokenAsync, [])
+  useEffect(() => {
+    context.registerTokenAsync();
+    context.socket.on("appOpened", refreshEvents)
+    return () => context.socket.off("appOpened", refreshEvents)
+  }, [])
 
   useFocusEffect(
     useCallback(() => {
-      console.log("focus occurred")
       if (context.timeSinceUpdate() >= 3.) {
         scrollRef.current.scrollTo({ y: 0, animated: true })
         refreshEvents(false)

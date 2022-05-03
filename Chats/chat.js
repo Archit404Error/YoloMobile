@@ -50,10 +50,12 @@ export default class extends React.Component {
         this.state.name = this.context.username;
         this.setState(this.state);
         this.context.socket.on("messageSent", this.handleChatUpdate);
+        this.context.socket.on("appOpened", this.handleChatUpdate);
     }
 
     componentWillUnmount() {
         this.context.socket.off("messageSent", this.handleChatUpdate);
+        this.context.socket.off("appOpened", this.handleChatUpdate);
     }
 
     render() {
