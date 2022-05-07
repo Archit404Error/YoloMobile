@@ -31,8 +31,7 @@ export default class extends React.Component {
         this.handleAccept = this.handleAccept.bind(this)
     }
 
-    componentDidMount() {
-        this.state.id = this.props.id;
+    updateSelf() {
         fetch(`http://yolo-backend.herokuapp.com/event/${this.props.id}`)
             .then(response => response.json())
             .then(res => {
@@ -58,7 +57,13 @@ export default class extends React.Component {
             })
     }
 
+    componentDidMount() {
+        this.state.id = this.props.id;
+        this.updateSelf()
+    }
+
     displayDetails() {
+        this.updateSelf()
         this.props.navigation.navigate("Details", {
             id: this.state.id,
             title: this.state.title,

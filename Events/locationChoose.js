@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Text } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { windowHeight, windowWidth } from "../styles";
 
