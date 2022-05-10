@@ -11,7 +11,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
 import HomeScreen from './CoreScreens/home';
-import DetailsScreen from './Events/DetailsContainer';
+import DetailsScreen from './Events/detailsContainer';
 import FriendScreen from './Friends/friendSuggestions';
 import CreateScreen from './Events/createEvent';
 import ChatScreen from './Chats/userChats';

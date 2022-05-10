@@ -7,7 +7,7 @@ import { scheduleEvent } from "../Notifications/calendarNotif";
 import { acceptedFlow, eventInteraction, rejectionFlow } from "../Helpers/eventHelperFuncs";
 import InviteModal from "../Components/sendInviteModal";
 
-export default class extends React.Component {
+export default class Event extends React.Component {
 
     static contextType = Context;
 

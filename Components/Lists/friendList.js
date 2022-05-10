@@ -5,26 +5,19 @@ import Friend from "../../Friends/friend";
 import { styles } from "../../styles";
 
 export default class extends React.Component {
-
-    
     constructor(props) {
         super(props);
     }
 
     render() {
-      
-        console.log(this.props)
         return (
-           
-           <SafeAreaView>
+            <SafeAreaView>
                 <Text style={styles.listHead}> Friends </Text>
-            
-            {
-
-                this.props.route.params.friends.map(key =>
-                <Friend key={key} id={key} isUser={true} navigation={this.props.navigation} />
-                )
-             }
+                {
+                    this.props.route.params.friends.map(key =>
+                        <Friend key={key} id={key} isUser={true} navigation={this.props.navigation} />
+                    )
+                }
             </SafeAreaView>
         );
     }

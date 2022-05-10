@@ -2,7 +2,7 @@
  * General component for rendering user or friend profiles
  */
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView, ScrollView, Text, Image, View, TouchableOpacity } from "react-native"
 import { styles } from "../styles";
 import CondensedEvent from "../Events/condensedEvent";
@@ -11,20 +11,25 @@ import { uploadImageAsync } from "../Events/previewEvent";
 import { Camera } from "expo-camera";
 import { handleImgRejection } from "../Helpers/permissionHelperFuncs";
 
-export default class extends React.Component {
-    state = {
-        url: ""
+export default (props) => {
+    const [id, setId] = useState(props.id)
+    const [name, setName] = useState(props.name)
+    const [events, setEvents] = useState(props.events)
+    const [friends, setFriends] = useState(props.friends)
+    const [profilePic, setProfPic] = useState(props.profilePic)
+    const [editable, setEditable] = useState(props.editable)
+
+    const dataFromProps = () => {
+        setId(props.id)
+        setName(props.name)
+        setEvents(props.events)
+        setFriends(props.friends)
+        setEditable(props.editable)
     }
 
-    constructor(props) {
-        super(props);
-    }
-
-    componentDidMount() {
-        this.setState({
-            url: this.props.profilePic
-        })
-    }
+    useEffect(dataFromProps, [])
+    useEffect(() => setProfPic(props.profilePic), [props.profilePic])
+    useEffect(dataFromProps, [props])
 
     pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -49,76 +54,60 @@ export default class extends React.Component {
                 imgUrl: url
             })
         })
-
-    }
-    componentDidUpdate(prevProps) {
-        if (this.props.profilePic != prevProps.profilePic) {
-            this.setState({
-                url: this.props.profilePic
-            })
-        }
     }
 
-    render() {
-        return (
-            <SafeAreaView style={{ flex: 1 }}>
-                <ScrollView style={styles.container}>
-                    {this.props.editable ?
-                        <TouchableOpacity onPress={async () => {
-                            if ((await Camera.getCameraPermissionsAsync()).status !== "denied") {
-                                let uri = await this.pickImage();
-                                let downloadURL = await uploadImageAsync(uri);
-                                await this.refreshProfilePic(downloadURL, this.props.id);
-                                console.log(await downloadURL)
-                                this.setState({
-                                    url: await downloadURL
-                                })
-                            }
-                            else
-                                handleImgRejection()
+    return (
+        <SafeAreaView style={{ flex: 1 }}>
+            <ScrollView style={styles.container}>
+                {editable ?
+                    <TouchableOpacity onPress={async () => {
+                        if ((await Camera.getCameraPermissionsAsync()).status !== "denied") {
+                            let uri = await this.pickImage();
+                            let downloadURL = await uploadImageAsync(uri);
+                            await this.refreshProfilePic(downloadURL, id);
+                            this.setState({
+                                url: await downloadURL
+                            })
                         }
-                        }>
-                            <Image style={styles.profImg} source={{ uri: this.state.url }} />
-                        </TouchableOpacity>
-                        : <Image style={styles.profImg} source={{ uri: this.props.profilePIc }} />
+                        else
+                            handleImgRejection()
+                    }}>
+                        <Image style={styles.profImg} source={{ uri: profilePic }} />
+                    </TouchableOpacity>
+                    : <Image style={styles.profImg} source={{ uri: profilePic }} />
+                }
+                <Text style={styles.profTitle}>{name}</Text>
+                <View style={{ flexDirection: 'row', backgroundColor: 'white' }}>
+                    <TouchableOpacity style={styles.paddedFlexContainer} onPress={() => {
+                        props.navigation.navigate("View friends", {
+                            friends: friends
+                        })
+                    }}>
+                        <Text style={styles.centeredSubHeader}>
+                            {friends.length}
+                        </Text>
+                        <Text style={{ alignSelf: 'center', fontSize: 18 }}>Friends</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.paddedFlexContainer} onPress={() => {
+                        props.navigation.navigate("View events", {
+                            events: events
+                        })
+                    }}>
+                        <Text style={styles.centeredSubHeader}>
+                            {events.length}
+                        </Text>
+                        <Text style={{ alignSelf: 'center', fontSize: 18 }}>Attended</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={{ padding: 10, marginTop: 10 }}>
+                    <Text style={styles.boldSubHeader}>Attended Events</Text>
+                    {
+                        events.map(event =>
+                            <CondensedEvent key={event._id} id={event._id} navigation={props.navigation} />
+                        )
                     }
-
-                    <Text style={styles.profTitle}>{this.props.name}</Text>
-                    <View style={{ flexDirection: 'row', backgroundColor: 'white' }}>
-
-                        <TouchableOpacity style={styles.paddedFlexContainer} onPress={() => {
-                            this.props.navigation.navigate("View friends", {
-                                friends: this.props.friends
-                            })
-
-
-                        }}>
-                            <Text style={styles.centeredSubHeader}>
-                                {this.props.friends.length}
-                            </Text>
-                            <Text style={{ alignSelf: 'center', fontSize: 18 }}>Friends</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.paddedFlexContainer} onPress={() => {
-                            this.props.navigation.navigate("View events", {
-                                events: this.props.events
-                            })
-                        }}>
-                            <Text style={styles.centeredSubHeader}>
-                                {this.props.events.length}
-                            </Text>
-                            <Text style={{ alignSelf: 'center', fontSize: 18 }}>Attended</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ padding: 10, marginTop: 10 }}>
-                        <Text style={styles.boldSubHeader}>Attended Events</Text>
-                        {
-                            this.props.events.map(event =>
-                                <CondensedEvent key={event._id} id={event._id} navigation={this.props.navigation} />
-                            )
-                        }
-                    </View>
-                </ScrollView>
-            </SafeAreaView>
-        );
-    }
+                </View>
+            </ScrollView>
+        </SafeAreaView>
+    );
 }

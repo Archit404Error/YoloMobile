@@ -12,7 +12,7 @@ export default ({ navigation, route }) => {
     const [endDate, setEnd] = useState(new Date())
     const [attendees, setAttendees] = useState([])
 
-    useEffect(() => {
+    const setEventData = () => {
         if (route.params.title) {
             setId(route.params.id)
             setTitle(route.params.title)
@@ -36,7 +36,9 @@ export default ({ navigation, route }) => {
                     setAttendees(json.attendees)
                 })
         }
-    }, [])
+    }
+
+    useEffect(setEventData, [route.params])
 
     return (
         <Details
