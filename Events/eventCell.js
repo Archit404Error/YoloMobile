@@ -5,13 +5,13 @@ import { styles } from "../styles";
 export default function EventCell({ id, navigation }) {
     const [res, setRes] = useState({})
 
-    useEffect(() => {
+    const updateSelf = () => {
         fetch(`http://yolo-backend.herokuapp.com/event/${id}`)
             .then(res => res.json())
-            .then(json => {
-                setRes(json)
-            })
-    }, [])
+            .then(setRes)
+    }
+
+    useEffect(updateSelf, [])
 
     return (
         <TouchableOpacity
@@ -19,6 +19,7 @@ export default function EventCell({ id, navigation }) {
                 flexDirection: 'row'
             }}
             onPress={() => {
+                updateSelf();
                 navigation.navigate("Details", {
                     id: res._id,
                     title: res.title,
