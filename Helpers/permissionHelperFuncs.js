@@ -10,3 +10,15 @@ const permissionRejection = (type, action) => {
 
 export const handleLocRejection = () => permissionRejection("location", "location tracking")
 export const handleImgRejection = () => permissionRejection("image", "image picking")
+
+/**
+ * Newer permission rejection funcs (phase out old ones gradually)
+ */
+const permissionWarning = (perm) => {
+    Alert.alert(`${perm} was rejected`,
+        `We recommend that you enable ${perm} for the best experience. You can enable ${perm} any time in YOLO > Settings`,
+        [{ text: "Ok" }]
+    )
+}
+
+export const locWarning = () => permissionWarning("Location access")

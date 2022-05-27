@@ -144,11 +144,22 @@ export default class extends React.Component {
     joinChatRooms = () =>
         this.state.socket.emit("joinRooms", this.state.chatIds)
 
+    /**
+     * Stores the user's location in latitude and longitude
+     * @param lat the user's latitude
+     * @param long the user's longitude
+     */
     setLoc = (lat, long) => {
         this.state.location.latitude = lat;
         this.state.location.longitude = long;
         this.setState(this.state);
     }
+
+    /**
+     * Returns whether or not the user's location has been set
+     */
+    locationEnabled = () =>
+        this.state.location.latitude != 0 && this.state.location.longitude != 0
 
     setEventImage = (imageUrl) => {
         this.state.eventCreationDetails.image = imageUrl;
@@ -262,6 +273,7 @@ export default class extends React.Component {
                     socket: this.state.socket,
                     setCredentials: this.setCreds,
                     setLocation: this.setLoc,
+                    locationEnabled: this.locationEnabled,
                     createEventDetails: this.setEventDetails,
                     createEventImage: this.setEventImage,
                     joinChatRooms: this.joinChatRooms,

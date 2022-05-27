@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import * as Location from 'expo-location';
 import { styles } from '../styles';
 import { Input, Button } from 'react-native-elements/';
@@ -8,7 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Context from '../Context/context';
 import { useFonts } from 'expo-font';
 import { showMessage } from 'react-native-flash-message';
-import { handleLocRejection } from '../Helpers/permissionHelperFuncs';
+import { locWarning } from '../Helpers/permissionHelperFuncs';
 
 export default ({ navigation }) => {
     const [userName, setUserName] = useState("");
@@ -31,7 +31,6 @@ export default ({ navigation }) => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
-                handleLocRejection()
                 setInitDenied(true);
                 return;
             }
@@ -47,7 +46,7 @@ export default ({ navigation }) => {
     }, [loc]);
 
     useEffect(() => {
-        if (JSON.stringify(loc) != "{}") {
+        if (JSON.stringify(loc) != "{}" || initDenied) {
             setLoading(false)
             navigation.navigate("App");
         }
@@ -113,14 +112,15 @@ export default ({ navigation }) => {
                             })
                             const resJson = await res.json()
 
-                            if (JSON.stringify(await resJson) != "{}") {
-                                let { status } = await Location.requestForegroundPermissionsAsync()
-                                if (status !== 'granted') {
-                                    handleLocRejection()
-                                    return;
-                                }
-                                else if (initDenied) setLocation()
+                            const { status } = await Location.requestForegroundPermissionsAsync();
+                            if (status === "granted") {
+                                setInitDenied(false)
+                                setLocation()
+                            }
+                            else
+                                locWarning()
 
+                            if (JSON.stringify(await resJson) != "{}") {
                                 await context.setCredentials(resJson);
                                 context.storeCreds();
                                 setLoading(true);

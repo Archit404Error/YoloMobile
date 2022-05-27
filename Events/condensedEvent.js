@@ -15,9 +15,7 @@ export default function CondensedEvent({ id, navigation }) {
 
     return (
         <TouchableOpacity
-            style={{
-                flexDirection: 'row'
-            }}
+            style={{ flexDirection: 'row' }}
             onPress={() => {
                 navigation.navigate("Details", {
                     id: res._id,

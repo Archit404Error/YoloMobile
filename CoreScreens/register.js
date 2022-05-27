@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Location from 'expo-location';
 import { useFonts } from 'expo-font';
-import { handleLocRejection } from '../Helpers/permissionHelperFuncs';
+import { locWarning } from '../Helpers/permissionHelperFuncs';
 
 import Context from '../Context/context';
 
@@ -14,6 +14,7 @@ export default ({ navigation, route }) => {
     const [name, setName] = useState("");
     const [username, setUsername] = useState(route.params.username);
     const [password, setPassword] = useState(route.params.password);
+    const [initDenied, setInitDenied] = useState(false);
     const [loading, setLoading] = useState(false);
     const [loc, setLoc] = useState({});
     const disabled = loading || name == '' || username == '' || password == '';
@@ -24,29 +25,33 @@ export default ({ navigation, route }) => {
         Fredoka: require('../assets/fonts/FredokaOne-Regular.ttf'),
     });
 
+    const setLocation = async () => {
+        let location = await Location.getCurrentPositionAsync({});
+        context.setLocation(location.coords.latitude, location.coords.longitude);
+        setLoc(location);
+    }
+
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
-                handleLocRejection();
+                setInitDenied(true);
                 return;
             }
-            let location = await Location.getCurrentPositionAsync({});
-            context.setLocation(location.coords.latitude, location.coords.longitude);
-            setLoc(location);
+            setLocation();
         })();
     }, []);
 
     useEffect(() => {
-        (() => {
-            if (loading) navigation.navigate("App");
-        })();
+        if (loading) {
+            setLoading(false);
+            navigation.navigate("App");
+        }
     }, [loc]);
 
     useEffect(() => {
-        (() => {
-            if (JSON.stringify(loc) != "{}") navigation.navigate("App");
-        })();
+        if (JSON.stringify(loc) != "{}" || initDenied)
+            navigation.navigate("App");
     }, [loading]);
 
     return (
@@ -107,10 +112,12 @@ export default ({ navigation, route }) => {
                     onPress={
                         async () => {
                             let { status } = await Location.requestForegroundPermissionsAsync();
-                            if (status !== 'granted') {
-                                handleLocRejection();
-                                return;
+                            if (status === 'granted') {
+                                setInitDenied(false);
+                                setLocation();
                             }
+                            else
+                                locWarning();
 
                             const valRegex = /^[A-Za-z]+$/
                             if (!(valRegex.test(username) && valRegex.test(password))) {
