@@ -72,7 +72,7 @@ export default class extends React.Component {
                 }
                 }>
                 <View style={styles.chatContainer}>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flexDirection: 'row', alignItems: "center" }}>
                         <Image style={styles.chatImg} source={{ uri: this.state.image }} />
                         <View style={{ flexDirection: 'column', padding: 10 }}>
                             <View style={{ flexDirection: 'row' }}>
@@ -92,7 +92,7 @@ export default class extends React.Component {
                                     }
                                 </Text>
                             </View>
-                            <Text style={{ color: 'gray', marginTop: 10 }}>
+                            <Text style={{ color: 'gray', marginTop: 5 }}>
                                 {
                                     `${this.state.recentMsg.sender}: ${this.state.recentMsg.message}`
                                 }
@@ -103,5 +103,4 @@ export default class extends React.Component {
             </TouchableOpacity>
         );
     }
-
 }

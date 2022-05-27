@@ -62,10 +62,9 @@ export const styles = StyleSheet.create({
     },
     chatContainer: {
         width: '100%',
-        height: windowHeight / 8,
         borderBottomColor: '#f2f2f2',
         borderBottomWidth: 1,
-        padding: 0,
+        padding: 10,
     },
     eventCard: {
         width: screenWidth - 20,
@@ -178,6 +177,7 @@ export const styles = StyleSheet.create({
         padding: 10,
         paddingTop: 0,
         marginBottom: -5,
+        flexDirection: "column"
     },
     otherUserChatName: {
         paddingLeft: 10,
@@ -214,9 +214,9 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     chatImg: {
-        width: windowHeight / 8,
-        height: windowHeight / 8,
-        zIndex: 10,
+        width: windowHeight / 15,
+        height: windowHeight / 15,
+        borderRadius: 50,
     },
     title: {
         fontFamily: 'Arial',

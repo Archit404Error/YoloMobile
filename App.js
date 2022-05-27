@@ -49,7 +49,7 @@ function HomeStack({ navigation }) {
             <TouchableOpacity onPress={() => navigation.navigate("Updates")}>
               <Ionicons name={"notifications-outline"} size={25} style={{ marginRight: 15 }} />
             </TouchableOpacity>
-          )
+          ),
         }}
       />
       <Stack.Screen

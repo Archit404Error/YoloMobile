@@ -68,10 +68,15 @@ export default class extends React.Component {
                         style={styles.messageScrollView}>
                         {
                             this.state.messages.map((messageObj, index) => {
-                                let sender = messageObj.sender;
+                                const sender = messageObj.sender;
+                                const isOwn = sender == this.state.name;
                                 return (
-                                    <View style={{ flexDirection: sender == this.state.name ? 'row-reverse' : 'row' }}>
-                                        <View style={{ flex: 1, flexDirection: 'column-reverse' }}>
+                                    <View style={{
+                                        flexDirection: isOwn ? 'row-reverse' : 'row',
+                                        paddingLeft: 5,
+                                        paddingRight: 5
+                                    }}>
+                                        <View style={{ flex: 1, marginTop: 22.5 }}>
                                             {this.state.lastSender != sender &&
                                                 <Image
                                                     source={{ uri: this.getMemberImage(sender) }}
@@ -87,15 +92,15 @@ export default class extends React.Component {
                                                         if (index == this.state.messages.length)
                                                             this.state.lastSender = ""
                                                         return (
-                                                            <View style={sender == this.state.name ? styles.userChatName : styles.otherUserChatName}>
+                                                            <View style={isOwn ? styles.userChatName : styles.otherUserChatName}>
                                                                 <Text>{sender}</Text>
                                                             </View>
                                                         )
                                                     }
                                                 })()
                                             }
-                                            <View style={sender == this.state.name ? styles.userChatMessage : styles.chatMessage}>
-                                                <Text style={sender == this.state.name ? { color: 'white' } : { color: 'black' }}>
+                                            <View style={isOwn ? styles.userChatMessage : styles.chatMessage}>
+                                                <Text style={isOwn ? { color: 'white' } : { color: 'black' }}>
                                                     {messageObj.message}
                                                 </Text>
                                             </View>
