@@ -22,6 +22,8 @@ export default ({ navigation, route }) => {
 
     const [_] = useFonts({
         Fredoka: require('../assets/fonts/FredokaOne-Regular.ttf'),
+        OpenSans: require('../assets/fonts/OpenSans.ttf'),
+        OpenSansItalic: require('../assets/fonts/OpenSansItalic.ttf'),
     });
 
     useEffect(() => {

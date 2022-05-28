@@ -11,7 +11,8 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
 import HomeScreen from './CoreScreens/home';
-import DetailsScreen from './Events/detailsContainer';
+import SplashScreen from './CoreScreens/splashScreen';
+import DetailsScreen from './Events/DetailsContainer';
 import FriendScreen from './Friends/friendSuggestions';
 import CreateScreen from './Events/createEvent';
 import ChatScreen from './Chats/userChats';
@@ -281,6 +282,7 @@ export function Authentication() {
     <Stack.Navigator
       screenOptions={{ headerShown: false, headerBackTitleVisible: false, gestureEnabled: false }}
     >
+      <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="App" component={MainTab} />
@@ -302,10 +304,10 @@ function DetermineScreen() {
 
   return (
     <>
-      {loggedIn ?
-        <MainTab setLoggedIn={setLoggedIn} /> :
-        <Authentication />
-      }
+      {/* {loggedIn ?
+        <MainTab setLoggedIn={setLoggedIn} /> : */}
+      <Authentication />
+      {/* } */}
     </>
   )
 }

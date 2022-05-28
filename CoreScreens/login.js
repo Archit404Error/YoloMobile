@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity, ImageBackground } from 'react-native';
 import * as Location from 'expo-location';
 import { styles } from '../styles';
 import { Input, Button } from 'react-native-elements/';
@@ -19,6 +19,8 @@ export default ({ navigation }) => {
     const context = useContext(Context);
     const [fontLoaded] = useFonts({
         Fredoka: require('../assets/fonts/FredokaOne-Regular.ttf'),
+        OpenSans: require('../assets/fonts/OpenSans.ttf'),
+        OpenSansItalic: require('../assets/fonts/OpenSansItalic.ttf'),
     });
 
     const setLocation = async () => {
@@ -61,32 +63,40 @@ export default ({ navigation }) => {
     return (
         <>
             <KeyboardAvoidingView behavior='padding' style={styles.loginScreenContainer}>
-                <LinearGradient
-                    // Background Linear Gradient
-                    colors={['rgba(236, 99, 94, 1)', 'rgba(245, 192, 106, 1)']}
-                    style={{ position: 'absolute', top: 0, left: 0, width: "100%", height: "100%" }}
-                />
+                <ImageBackground
+
+                    source={{ uri: "https://news.cornell.edu/sites/default/files/styles/full_size/public/UP_2017_0630_051.jpg?itok=MzKRS1G7" }}
+                    style={styles.loginScreenHeroImg} >
+
+                    <View style={styles.yoloPillXL}>
+                        <Text style={{
+                            color: 'white',
+                            fontFamily: 'OpenSansItalic',
+                            fontWeight: "800",
+                            fontSize: 48,
+                        }}>#YOLO</Text>
+                    </View>
+                </ImageBackground>
                 <View style={{ alignItems: 'center' }}>
-                    <Text style={{ color: 'white', fontSize: 100, fontWeight: "900", fontFamily: 'Fredoka' }}>YOLO</Text>
                     <Input
                         placeholder="Username"
-                        placeholderTextColor='rgba(255,255,255,0.6)'
+                        placeholderTextColor='grey'
                         textContentType={'username'}
-                        leftIcon={<Ionicons name="person" size={20} style={styles.loginIcon} />}
+                        leftIcon={<Ionicons name="person" size={18} style={styles.loginIcon} />}
                         onChangeText={t => setUserName(t)}
-                        inputContainerStyle={{ borderBottomColor: 'white', marginLeft: 20, marginRight: 20 }}
+                        inputContainerStyle={{ borderBottomColor: 'grey', marginLeft: 20, marginRight: 20 }}
                         containerStyle={{ marginTop: 20 }}
-                        inputStyle={{ color: 'white', fontSize: 22 }}
+                        inputStyle={{ color: 'grey', fontSize: 18 }}
                     />
                     <Input
                         placeholder="Password"
                         secureTextEntry
-                        placeholderTextColor='rgba(255,255,255,0.6)'
+                        placeholderTextColor='grey'
                         textContentType={'password'}
-                        leftIcon={<Ionicons name="key-outline" size={20} style={styles.loginIcon} />}
+                        leftIcon={<Ionicons name="key-outline" size={18} style={styles.loginIcon} />}
                         onChangeText={t => setPassword(t)}
-                        inputContainerStyle={{ borderBottomColor: 'white', marginLeft: 20, marginRight: 20 }}
-                        inputStyle={{ color: 'white', fontSize: 22 }}
+                        inputContainerStyle={{ borderBottomColor: 'grey', marginLeft: 20, marginRight: 20 }}
+                        inputStyle={{ color: 'grey', fontSize: 18 }}
 
                     />
                     <Button
@@ -138,8 +148,8 @@ export default ({ navigation }) => {
                         password: password
                     });
                 }}>
-                    <Text style={{ color: "white", alignSelf: 'center', marginTop: 30 }}>
-                        Don't have an account? <Text style={{ fontWeight: "bold" }}>Sign up here!</Text>
+                    <Text style={{ color: "grey", alignSelf: 'center', marginTop: 30 }}>
+                        Don't have an account? <Text style={{ fontWeight: "bold", color: "grey" }}>Sign up here!</Text>
                     </Text>
                 </TouchableOpacity>
             </KeyboardAvoidingView>

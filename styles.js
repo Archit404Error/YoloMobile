@@ -1,3 +1,4 @@
+import { AutoFocus } from 'expo-camera/build/Camera.types';
 import React from 'react';
 import { Dimensions } from 'react-native';
 import { StyleSheet } from "react-native";
@@ -9,8 +10,11 @@ export const windowHeight = Dimensions.get('window').height;
 // Height of screen minus nav bar
 export const screenWidth = Dimensions.get('screen').width;
 export const screenHeight = Dimensions.get('screen').height;
+export const yoloColor = "#F2994A"
+
 
 export const styles = StyleSheet.create({
+
     container: {
         backgroundColor: "white",
         borderRadius: 0,
@@ -43,11 +47,16 @@ export const styles = StyleSheet.create({
     loginScreenContainer: {
         borderRadius: 0,
         width: windowWidth,
-        justifyContent: 'center',
+        flex: 1,
+        backgroundColor: 'white'
+    },
+    splashScreenContainer: {
+        borderRadius: 0,
+        width: windowWidth,
         flex: 1
     },
     loginIcon: {
-        color: 'white',
+        color: '#F2994A',
         marginRight: 10,
     },
     alignBottomContainer: {
@@ -472,4 +481,47 @@ export const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5
     },
+
+    splashScreenHeroImage: {
+        height: screenHeight * 0.65,
+        width: windowWidth,
+        opacity: 0.8
+    },
+    loginScreenHeroImg: {
+        height: screenHeight * 0.4,
+        width: windowWidth,
+    },
+    splashScreenBottomContainer: {
+        width: windowWidth,
+        flex: 1,
+        padding: 20,
+
+    },
+    yoloPill: {
+        width: 100,
+        alignItems: 'center',
+        height: 35,
+        borderRadius: 10,
+        backgroundColor: yoloColor,
+    },
+    yoloPillXL: {
+        width: 200,
+        marginLeft: 30,
+        alignItems: 'center',
+        height: 70,
+        borderRadius: 10,
+        marginTop: 75,
+        backgroundColor: yoloColor,
+    },
+    splashButton: {
+        backgroundColor: yoloColor,
+        marginRight: 20,
+        marginLeft: 20,
+        marginTop: 50,
+        height: 50,
+        borderRadius: 12.5,
+        alignItems: 'center',
+
+    }
+
 })
