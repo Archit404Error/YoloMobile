@@ -143,7 +143,10 @@ export default class Event extends React.Component {
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.rsvpYesContainer} onPress={
                             () => {
-                                this.sendModal.open();
+                                // Only show friend inviting if user has friends
+                                if (this.context.friends.length > 0)
+                                    this.sendModal.open();
+
                                 acceptedFlow(
                                     this.context.id,
                                     this.state.id,

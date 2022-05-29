@@ -4,6 +4,7 @@ import Context from "../Context/context";
 import { styles } from "../styles";
 import FriendRequest from "../Notifications/request";
 import EventInvite from "../Notifications/eventInvite";
+import EmptyScreen from "../Components/emptyScreen";
 
 export default ({ navigation }) => {
     const [notifObjs, setNotifObjs] = useState([])
@@ -27,7 +28,11 @@ export default ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView>
+            <ScrollView style={{ minHeight: "100%" }}>
+                {
+                    notifObjs.length == 0 &&
+                    <EmptyScreen header="No notifications right now!" desc="You'll get notifs once friends invite you to events!" />
+                }
                 {
                     notifObjs.map((notifObject, index) => {
                         if (notifObject.type === "friend")

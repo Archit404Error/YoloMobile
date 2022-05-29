@@ -1,12 +1,6 @@
 import React from "react";
-import { View, Text } from "react-native";
-import { styles } from "../styles";
+import EmptyScreen from "../Components/emptyScreen";
 
-export default () => {
-    return (
-        <View style={styles.emptyContainer}>
-            <Text style={styles.title}>No chats right now!</Text>
-            <Text style={styles.subText}>Join events to get started with chats.</Text>
-        </View>
-    )
-}
+export default () => (
+    <EmptyScreen header="No chats right now!" desc="Join events to get started with chats." />
+)

@@ -7,6 +7,7 @@ import { useHeaderHeight } from '@react-navigation/elements';
 import { useFocusEffect, useScrollToTop } from '@react-navigation/native'
 import { windowHeight } from '../styles';
 import Context from '../Context/context';
+import EmptyScreen from "../Components/emptyScreen";
 
 export default ({ navigation }) => {
   const context = useContext(Context);
@@ -63,6 +64,13 @@ export default ({ navigation }) => {
         style={{ height: eventCardHeight * ids.length }}
         ref={scrollRef}
       >
+        {
+          ids.length == 0 &&
+          <EmptyScreen
+            header="No events right now!"
+            desc="Cooking up fresh events for you, check back soon!"
+          />
+        }
         {
           ids.map(id => {
             return (
