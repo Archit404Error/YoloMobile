@@ -34,19 +34,17 @@ export default ({ navigation }) => {
                     }}>Welcome to your next week.</Text>
 
                     <Text style={{
-                        color: 'black',
+                        color: 'gray',
                         fontFamily: 'OpenSans',
                         fontWeight: "bold",
                         fontSize: 17,
                         marginTop: 10
-                    }}>Build out your calendar. Explore, visit, and discover events on your campus, today!</Text>
+                    }}>Build out your calendar. Explore, visit, and discover events on your campus today!</Text>
 
-                    <TouchableOpacity style={styles.splashButton}
-                        onPress={() => {
-                            navigation.navigate("Login", {
-
-                            });
-                        }}>
+                    <TouchableOpacity
+                        style={styles.splashButton}
+                        onPress={() => navigation.navigate("Login")}
+                    >
                         <Text style={{
                             color: 'white',
                             fontFamily: 'OpenSans',
