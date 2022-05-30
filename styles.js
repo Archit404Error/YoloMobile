@@ -295,6 +295,15 @@ export const styles = StyleSheet.create({
         padding: 12,
         marginTop: 50
     },
+    invertedConfirmButton: {
+        backgroundColor: 'orange',
+        borderWidth: 1,
+        borderColor: 'white',
+        borderRadius: 8,
+        width: 300,
+        padding: 12,
+        alignSelf: 'center'
+    },
     buttonDisabledTitle: {
         color: 'white',
         fontSize: 22

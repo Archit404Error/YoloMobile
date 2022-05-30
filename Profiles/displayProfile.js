@@ -2,7 +2,7 @@
  * General component for rendering user or friend profiles
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { SafeAreaView, ScrollView, Text, Image, View, TouchableOpacity } from "react-native"
 import { styles } from "../styles";
 import CondensedEvent from "../Events/condensedEvent";
@@ -10,6 +10,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { uploadImageAsync } from "../Events/previewEvent";
 import { Camera } from "expo-camera";
 import { handleImgRejection } from "../Helpers/permissionHelperFuncs";
+import Context from "../Context/context";
+import { Button } from "react-native-elements";
 
 export default (props) => {
     const [id, setId] = useState(props.id)
@@ -18,6 +20,8 @@ export default (props) => {
     const [friends, setFriends] = useState(props.friends)
     const [profilePic, setProfPic] = useState(props.profilePic)
     const [editable, setEditable] = useState(props.editable)
+    const [isFriend, setFriended] = useState(false)
+    const context = useContext(Context)
 
     const dataFromProps = () => {
         setId(props.id)
@@ -27,11 +31,30 @@ export default (props) => {
         setEditable(props.editable)
     }
 
+    const friendedState = async () => {
+        if (id == -1)
+            return
+        let res = await fetch("http://yolo-backend.herokuapp.com/isFriend", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                user: context.id,
+                toCheck: id
+            })
+        })
+        let json = await res.json()
+        console.log(await json)
+        setFriended(await json)
+    }
+
     useEffect(dataFromProps, [])
+    useEffect(friendedState, [id])
     useEffect(() => setProfPic(props.profilePic), [props.profilePic])
     useEffect(dataFromProps, [props])
 
-    pickImage = async () => {
+    const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
@@ -43,7 +66,7 @@ export default (props) => {
         }
     }
 
-    refreshProfilePic = async (url, uid) => {
+    const refreshProfilePic = async (url, uid) => {
         fetch("http://yolo-backend.herokuapp.com/updateProfilePic/", {
             method: "POST",
             headers: {
@@ -56,22 +79,21 @@ export default (props) => {
         })
     }
 
+    const uploadProfilePic = async () => {
+        if ((await Camera.getCameraPermissionsAsync()).status !== "denied") {
+            let uri = await pickImage();
+            let downloadURL = await uploadImageAsync(uri);
+            await refreshProfilePic(downloadURL, id);
+            setProfPic(downloadURL)
+        }
+        else handleImgRejection()
+    }
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView style={styles.container}>
                 {editable ?
-                    <TouchableOpacity onPress={async () => {
-                        if ((await Camera.getCameraPermissionsAsync()).status !== "denied") {
-                            let uri = await this.pickImage();
-                            let downloadURL = await uploadImageAsync(uri);
-                            await this.refreshProfilePic(downloadURL, id);
-                            this.setState({
-                                url: await downloadURL
-                            })
-                        }
-                        else
-                            handleImgRejection()
-                    }}>
+                    <TouchableOpacity onPress={uploadProfilePic}>
                         <Image style={styles.profImg} source={{ uri: profilePic }} />
                     </TouchableOpacity>
                     : <Image style={styles.profImg} source={{ uri: profilePic }} />
@@ -99,6 +121,13 @@ export default (props) => {
                         <Text style={{ alignSelf: 'center', fontSize: 18 }}>Attended</Text>
                     </TouchableOpacity>
                 </View>
+                {
+                    editable ? <></> :
+                        <Button
+                            title={isFriend ? "Already Friends" : "Send Friend Request"}
+                            buttonStyle={styles.invertedConfirmButton}
+                        />
+                }
                 <View style={{ padding: 10, marginTop: 10 }}>
                     <Text style={styles.boldSubHeader}>Attended Events</Text>
                     {
