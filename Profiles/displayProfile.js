@@ -10,8 +10,10 @@ import * as ImagePicker from 'expo-image-picker';
 import { uploadImageAsync } from "../Events/previewEvent";
 import { Camera } from "expo-camera";
 import { handleImgRejection } from "../Helpers/permissionHelperFuncs";
-import Context from "../Context/context";
 import { Button } from "react-native-elements";
+import { Feather } from '@expo/vector-icons';
+import { showMessage } from "react-native-flash-message";
+import Context from "../Context/context";
 
 export default (props) => {
     const [id, setId] = useState(props.id)
@@ -21,6 +23,7 @@ export default (props) => {
     const [profilePic, setProfPic] = useState(props.profilePic)
     const [editable, setEditable] = useState(props.editable)
     const [isFriend, setFriended] = useState(false)
+    const [isPending, setPending] = useState(false)
     const context = useContext(Context)
 
     const dataFromProps = () => {
@@ -40,13 +43,13 @@ export default (props) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                user: context.id,
-                toCheck: id
+                viewer: context.id,
+                viewed: id
             })
         })
         let json = await res.json()
-        console.log(await json)
-        setFriended(await json)
+        setFriended((await json).friend)
+        setPending((await json).pending)
     }
 
     useEffect(dataFromProps, [])
@@ -89,6 +92,15 @@ export default (props) => {
         else handleImgRejection()
     }
 
+    /**
+     * Helper method to determine the relationship between current user and viewed user
+     * @returns 0 if friends, 1 if user sent friend req, 2 if neither
+     */
+    const friendStatus = () => isFriend ? 0 : (isPending ? 1 : 2)
+
+    /** Chooses a given outcome from an arr of size 3 based on friend status */
+    const detOutcome = outcomeArr => outcomeArr[friendStatus()]
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView style={styles.container}>
@@ -124,8 +136,32 @@ export default (props) => {
                 {
                     editable ? <></> :
                         <Button
-                            title={isFriend ? "Already Friends" : "Send Friend Request"}
+                            title={detOutcome([
+                                "Already Friends",
+                                "Requested",
+                                "Send Request"
+                            ])}
+                            icon={
+                                <Feather
+                                    name={detOutcome(["user-check", "user-check", "user-plus"])}
+                                    size={25}
+                                    color="white"
+                                    style={{ marginRight: 10 }}
+                                />
+                            }
                             buttonStyle={styles.invertedConfirmButton}
+                            onPress={() => {
+                                const friendReq = () => {
+                                    context.sendFriendReq(id, !isPending)
+                                    showMessage({
+                                        message: `Friend Request ${!isPending ? "sent" : "unsent"}`,
+                                        type: "info"
+                                    })
+                                    setPending(!isPending)
+                                }
+
+                                detOutcome([() => { }, friendReq, friendReq])()
+                            }}
                         />
                 }
                 <View style={{ padding: 10, marginTop: 10 }}>

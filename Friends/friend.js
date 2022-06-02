@@ -31,6 +31,22 @@ export default class extends React.Component {
                 this.state.profPic = resJson.profilePic;
                 this.setState(this.state);
             });
+
+        fetch("http://yolo-backend.herokuapp.com/isFriend", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                viewer: this.context.id,
+                viewed: this.props.id
+            })
+        })
+            .then(res => res.json())
+            .then(json => {
+                this.state.friended = json.pending;
+                this.setState(this.state);
+            })
     }
 
     setFriended(friendedState) {
@@ -66,21 +82,21 @@ export default class extends React.Component {
                     </Text>
                 </TouchableOpacity>
 
-                
+
                 {!this.state.isUser &&
-                    <TouchableOpacity style={{ marginTop: 5}} 
-                    onPress={() => {
-                        const action = !this.state.friended ? `sent to ${this.state.name}` : `to ${this.state.name} unsent`;
-                        showMessage({
-                            message: `Friend request ${action}`,
-                            type: 'info'
-                        });
-                        this.setFriended(!this.state.friended)
-                    }}>
+                    <TouchableOpacity style={{ marginTop: 5 }}
+                        onPress={() => {
+                            const action = !this.state.friended ? `sent to ${this.state.name}` : `to ${this.state.name} unsent`;
+                            showMessage({
+                                message: `Friend request ${action}`,
+                                type: 'info'
+                            });
+                            this.setFriended(!this.state.friended)
+                        }}>
                         <Feather name={iconName} size={25} />
                     </TouchableOpacity>
                 }
-                
+
             </View>
         );
     }
