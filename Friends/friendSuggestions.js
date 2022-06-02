@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { SuggestionCell } from "../Components/suggestionCell";
 
 import Friend from './friend';
+import FriendCard from "./friendCard";
 import PingCell from "../Components/pingCell";
 
 import Story from './storyPreview';
@@ -231,12 +232,7 @@ export default class extends React.Component {
                     }}>Ping your friends</Text>
                 </TouchableOpacity>
 
-                <Text style={{
-                    fontFamily: 'Arial',
-                    fontSize: 25,
-                    fontWeight: 'bold',
-                    margin: 20,
-                }}>
+                <Text style={styles.boldSectionHeader}>
                     Friend Suggestions
                 </Text>
 
@@ -246,12 +242,15 @@ export default class extends React.Component {
                     )
                 }
 
-                <Text style={{
-                    fontFamily: 'Arial',
-                    fontSize: 25,
-                    fontWeight: 'bold',
-                    margin: 20,
-                }}>Your Upcoming Events</Text>
+                <ScrollView horizontal>
+                    {
+                        this.state.friendSuggestions.map((id, index) =>
+                            <FriendCard id={id} key={index} navigation={this.props.navigation} />
+                        )
+                    }
+                </ScrollView>
+
+                <Text style={styles.boldSectionHeader}>Your Upcoming Events</Text>
 
                 <UpcomingEvents id={this.context.id} navigation={this.props.navigation} />
             </ScrollView>

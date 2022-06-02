@@ -89,6 +89,21 @@ export const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10
     },
+    friendCard: {
+        width: screenWidth / 2,
+        margin: 5,
+        padding: 5,
+        backgroundColor: "white",
+        borderWidth: 2,
+        borderColor: "#f2f2f2",
+        borderRadius: 10,
+        alignItems: "center"
+    },
+    friendCardImg: {
+        width: windowHeight / 15,
+        height: windowHeight / 15,
+        borderRadius: 50
+    },
     rsvpContainer: {
         position: 'absolute',
         top: windowHeight / 1.85,
@@ -244,6 +259,12 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         textTransform: 'uppercase'
     },
+    boldSectionHeader: {
+        fontFamily: 'Arial',
+        fontSize: 25,
+        fontWeight: 'bold',
+        margin: 20,
+    },
     boldSubHeader: {
         fontFamily: 'Arial',
         fontSize: 20,
@@ -322,22 +343,17 @@ export const styles = StyleSheet.create({
         marginTop: 50
     },
     tag: {
-        paddingLeft: 5,
-        paddingRight: 5,
-        paddingTop: 3,
-        paddingBottom: 3,
-        margin: 5,
-        backgroundColor: '#dedede',
-        borderRadius: 5,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
-
-        elevation: 4,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 5,
+        paddingBottom: 5,
+        marginTop: 5,
+        marginLeft: 5,
+        color: '#eb7b4d',
+        borderColor: '#eb7b4d',
+        borderWidth: 1,
+        borderRadius: 10,
+        fontWeight: "600",
     },
     profImg: {
         marginTop: 10,

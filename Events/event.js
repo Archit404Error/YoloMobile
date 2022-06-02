@@ -107,7 +107,7 @@ export default class Event extends React.Component {
                         <Text style={styles.addressText}>{this.state.location}</Text>
                         <Text style={styles.addressText}>{Math.round(this.state.distance)} mi</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', marginLeft: 8 }}>
+                    <View style={{ flexDirection: 'row', marginLeft: 5 }}>
                         {
                             this.state.tags.map((tag, index) => {
                                 return (

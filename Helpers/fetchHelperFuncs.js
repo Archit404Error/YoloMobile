@@ -7,3 +7,11 @@ export const fetchServerData = async (endpoint) => {
     const res = await fetch(`http://yolo-backend.herokuapp.com/${endpoint}`)
     return await res.json()
 }
+
+/**
+ * Returns json data for a particular user
+ * @param id the user's id
+ */
+export const fetchUserData = async (id) => {
+    return await fetchServerData(`user/${id}`)
+}
