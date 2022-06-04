@@ -211,7 +211,7 @@ export function MainTab({ navigation, setLoggedIn }) {
   useEffect(() => {
     AppState.addEventListener("change", handleAppState)
     // Need to use deprecated method for now because of expo RN version
-    return () => AppState.removeEventListener(handleAppState)
+    return () => AppState.removeEventListener("change", handleAppState)
   }, [])
 
   return (

@@ -14,6 +14,7 @@ import { Button } from "react-native-elements";
 import { Feather } from '@expo/vector-icons';
 import { showMessage } from "react-native-flash-message";
 import Context from "../Context/context";
+import { fetchUserData } from "../Helpers/fetchHelperFuncs";
 
 export default (props) => {
     const [id, setId] = useState(props.id)
@@ -52,7 +53,17 @@ export default (props) => {
         setPending((await json).pending)
     }
 
+    const updateFriendCount = async () => {
+        let data = await fetchUserData(id)
+        setFriends((await data).friends)
+        context.modifyState(["friendIds"], [(await data).friends])
+    }
+
     useEffect(dataFromProps, [])
+    useEffect(() => {
+        context.socket.on("friendChange", updateFriendCount);
+        return () => context.socket.off("friendChange", updateFriendCount);
+    }, [])
     useEffect(friendedState, [id])
     useEffect(() => setProfPic(props.profilePic), [props.profilePic])
     useEffect(dataFromProps, [props])
@@ -88,6 +99,7 @@ export default (props) => {
             let downloadURL = await uploadImageAsync(uri);
             await refreshProfilePic(downloadURL, id);
             setProfPic(downloadURL)
+            context.modifyState(["profile"], [downloadURL])
         }
         else handleImgRejection()
     }

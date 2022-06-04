@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { YoloStylesheet } from './stylesheet';
+import { YoloStylesheet } from './yoloStylesheet';
 
 export class EventStyles extends YoloStylesheet {
     getStyles() {

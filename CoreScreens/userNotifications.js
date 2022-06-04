@@ -5,6 +5,7 @@ import { styles } from "../styles";
 import FriendRequest from "../Notifications/request";
 import EventInvite from "../Notifications/eventInvite";
 import EmptyScreen from "../Components/emptyScreen";
+import NewFriend from "../Notifications/newFriend";
 
 export default ({ navigation }) => {
     const [notifObjs, setNotifObjs] = useState([])
@@ -34,7 +35,7 @@ export default ({ navigation }) => {
                     <EmptyScreen header="No notifications right now!" desc="You'll get notifs once friends invite you to events!" />
                 }
                 {
-                    notifObjs.map((notifObject, index) => {
+                    notifObjs.slice(0).reverse().map((notifObject, index) => {
                         if (notifObject.type === "friend")
                             return <FriendRequest key={index} id={notifObject.sender} />
                         else if (notifObject.type === "invite")
@@ -46,9 +47,8 @@ export default ({ navigation }) => {
                                 senderName={notifObject.senderName}
                                 navigation={navigation}
                             />
-                        else if (notifObject.type === "newFriend")
-                            // Create new friend notif and add that here later
-                            return <></>
+                        else if (notifObject.type === "newfriend")
+                            return <NewFriend id={notifObject.friend} navigation={navigation} />
                     })
                 }
             </ScrollView>
