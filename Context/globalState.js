@@ -1,11 +1,10 @@
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
-import socketio from "socket.io-client";
 import Context from './context';
 import Device from 'expo-device';
 import { showMessage } from 'react-native-flash-message';
-import { fetchServerData } from '../Helpers/fetchHelperFuncs';
+import { openSocket } from '../Helpers/socketHelperFuncs';
 
 export default class extends React.Component {
     state = {
@@ -54,9 +53,6 @@ export default class extends React.Component {
         this.state.notifications = data.notifications;
         this.state.chatIds = data.chats;
         this.state.profile = data.profilePic;
-        let socket = socketio('http://yolo-backend.herokuapp.com/', {
-            query: `chatList=${data.chats}&user=${data._id}`
-        });
 
         let friendRes = await fetch("http://yolo-backend.herokuapp.com/populateFriends", {
             method: "POST",
@@ -81,7 +77,7 @@ export default class extends React.Component {
         this.state.friendSuggs = [data.friendSuggestions, await friendRes.json()]
             .flat().filter(elem => elem)
         this.state.pendingEvents = [data.pendingEvents, await eventRes.json()].flat()
-        this.state.socket = socket;
+        this.state.socket = openSocket(data.chats, data._id)
         this.setState(this.state);
     }
 
@@ -128,9 +124,7 @@ export default class extends React.Component {
             if (!userCreds)
                 return false
             const credentials = await JSON.parse(userCreds);
-            credentials.socket = socketio('http://yolo-backend.herokuapp.com/', {
-                query: `chatList=${await credentials.chatIds}&user=${await credentials.id}`
-            })
+            credentials.socket = openSocket(await credentials.chatIds, await credentials.id)
             this.modifyState(Object.keys(await credentials), Object.values(await credentials))
             return true
         } catch (err) {

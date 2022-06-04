@@ -203,8 +203,8 @@ export function MainTab({ navigation, setLoggedIn }) {
 
   const handleAppState = newState => {
     if (newState === "active") {
-      context.socket.emit("appOpened")
-      context.socket.emit("notificationsUpdated")
+      context.socket.emit("appOpened", context.id)
+      context.socket.emit("notificationsUpdated", context.id)
     }
   }
 

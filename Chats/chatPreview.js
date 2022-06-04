@@ -23,16 +23,20 @@ export default class extends React.Component {
         super(props);
     }
 
-    handlePrevUpdate = (chatId) => {
-        if (chatId == this.state.id) {
-            fetch(`http://yolo-backend.herokuapp.com/chatDetails/${this.state.id}`)
-                .then(response => response.json())
-                .then(res => {
-                    this.state.allMessages = res.messages;
+    updateSelf = () => {
+        fetch(`http://yolo-backend.herokuapp.com/chatDetails/${this.state.id}`)
+            .then(response => response.json())
+            .then(res => {
+                this.state.allMessages = res.messages;
+                if (res.messages.length > 0)
                     this.state.recentMsg = res.messages[res.messages.length - 1];
-                    this.setState(this.state);
-                })
-        }
+                this.setState(this.state);
+            })
+    }
+
+    handlePrevUpdate = (chatId) => {
+        if (chatId == this.state.id)
+            this.updateSelf()
     }
 
     componentDidMount() {
@@ -40,6 +44,7 @@ export default class extends React.Component {
         this.setState(this.state);
 
         this.context.socket.on("messageSent", this.handlePrevUpdate)
+        this.context.socket.on("appOpened", this.updateSelf)
 
         fetch(`http://yolo-backend.herokuapp.com/chatDetails/${this.state.id}`)
             .then(response => response.json())
@@ -52,6 +57,11 @@ export default class extends React.Component {
                 this.state.image = res.eventDetails.image;
                 this.setState(this.state);
             })
+    }
+
+    componentWillUnmount() {
+        this.context.socket.off("messageSent", this.handlePrevUpdate)
+        this.context.socket.off("appOpened", this.updateSelf)
     }
 
     render() {

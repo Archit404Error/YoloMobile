@@ -22,16 +22,19 @@ export default class extends React.Component {
         super(props);
     }
 
+    updateSelf = () => {
+        fetch(`http://yolo-backend.herokuapp.com/chatDetails/${this.state.id}`)
+            .then(response => response.json())
+            .then(res => {
+                this.state.messages = res.messages;
+                this.state.memberDetails = res.members;
+                this.setState(this.state);
+            })
+    }
+
     handleChatUpdate = (chatId) => {
-        if (chatId == this.state.id) {
-            fetch(`http://yolo-backend.herokuapp.com/chatDetails/${this.state.id}`)
-                .then(response => response.json())
-                .then(res => {
-                    this.state.messages = res.messages;
-                    this.state.memberDetails = res.members;
-                    this.setState(this.state);
-                })
-        }
+        if (chatId == this.state.id)
+            this.updateSelf();
     }
 
     getMemberImage = (user) => {
@@ -50,12 +53,12 @@ export default class extends React.Component {
         this.state.name = this.context.username;
         this.setState(this.state);
         this.context.socket.on("messageSent", this.handleChatUpdate);
-        this.context.socket.on("appOpened", this.handleChatUpdate);
+        this.context.socket.on("appOpened", this.updateSelf);
     }
 
     componentWillUnmount() {
         this.context.socket.off("messageSent", this.handleChatUpdate);
-        this.context.socket.off("appOpened", this.handleChatUpdate);
+        this.context.socket.off("appOpened", this.updateSelf);
     }
 
     render() {
