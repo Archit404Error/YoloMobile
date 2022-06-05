@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Story from './storyPreview';
+import Story from './story';
 import Context from "../Context/context";
 import { styles, windowWidth, windowHeight } from "../styles";
 import { uploadImageAsync } from "../Events/previewEvent";
@@ -52,7 +52,7 @@ export default () => {
         <Context.Consumer>
             {context =>
                 <>
-                    <TouchableOpacity onPress={() => chooseStory()}>
+                    <TouchableOpacity onPress={chooseStory}>
                         <Story id={context.id} forUpload={true} />
                         <Badge
                             status="warning"

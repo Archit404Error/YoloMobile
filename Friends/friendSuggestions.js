@@ -10,7 +10,7 @@ import Friend from './friend';
 import FriendCard from "./friendCard";
 import PingCell from "../Components/pingCell";
 
-import Story from './storyPreview';
+import Story from './story';
 import UploadStory from "./uploadStory";
 import { styles } from "../styles";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
@@ -132,7 +132,7 @@ export default class extends React.Component {
                         <UploadStory />
                         {
                             this.state.stories.map((storyObj, index) => {
-                                return < Story key={index} id={storyObj._id} image={storyObj.storyImage} />
+                                return <Story key={index} id={storyObj._id} image={storyObj.storyImage} />
                             })
                         }
                     </ScrollView>
