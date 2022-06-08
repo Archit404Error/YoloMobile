@@ -30,6 +30,7 @@ export default class extends React.Component {
             public: true,
         },
         chatIds: [],
+        chatData: [],
         friendIds: [],
         friendSuggs: [],
         notifications: [],
@@ -52,6 +53,7 @@ export default class extends React.Component {
         this.state.friendIds = data.friends;
         this.state.notifications = data.notifications;
         this.state.chatIds = data.chats;
+        this.state.chatData = (await (await fetch(`http://yolo-backend.herokuapp.com/userChats/${data._id}`)).json());
         this.state.profile = data.profilePic;
 
         let friendRes = await fetch("http://yolo-backend.herokuapp.com/populateFriends", {
@@ -256,7 +258,8 @@ export default class extends React.Component {
                     fullName: this.state.name,
                     acceptedEvents: this.state.acceptedEvents,
                     pendingEvents: this.state.pendingEvents,
-                    chats: this.state.chatIds,
+                    chatIds: this.state.chatIds,
+                    chatData: this.state.chatData,
                     latitude: this.state.location.latitude,
                     longitude: this.state.location.longitude,
                     eventDetails: this.state.eventCreationDetails,

@@ -59,6 +59,18 @@ export default class extends React.Component {
     componentWillUnmount() {
         this.context.socket.off("messageSent", this.handleChatUpdate);
         this.context.socket.off("appOpened", this.updateSelf);
+
+        // Mark this chat as read by this user
+        fetch("http://yolo-backend.herokuapp.com/chatRead", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                user: this.context.id,
+                chat: this.state.id
+            })
+        })
     }
 
     render() {

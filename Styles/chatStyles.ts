@@ -53,6 +53,15 @@ export class ChatStyles extends YoloStylesheet {
                 height: this.windowHeight / 15,
                 borderRadius: 50,
             },
+            readChatPrev: {
+                color: "gray",
+                marginTop: 5
+            },
+            unreadChatPrev: {
+                color: "black",
+                fontWeight: "bold",
+                marginTop: 5
+            },
         })
     }
 }

@@ -17,6 +17,7 @@ export default class extends React.Component {
         },
         members: [],
         image: 'Loading...',
+        read: true
     }
 
     constructor(props) {
@@ -41,6 +42,7 @@ export default class extends React.Component {
 
     componentDidMount() {
         this.state.id = this.props.id;
+        this.state.read = this.props.read;
         this.setState(this.state);
 
         this.context.socket.on("messageSent", this.handlePrevUpdate)
@@ -72,6 +74,10 @@ export default class extends React.Component {
         return (
             <TouchableOpacity
                 onPress={() => {
+                    if (!this.state.read) {
+                        this.state.read = true;
+                        this.setState(this.state);
+                    }
                     this.props.navigation.navigate("Messages", {
                         id: this.state.id,
                         title: this.state.title,
@@ -102,7 +108,7 @@ export default class extends React.Component {
                                     }
                                 </Text>
                             </View>
-                            <Text style={{ color: 'gray', marginTop: 5 }}>
+                            <Text style={this.state.read ? styles.readChatPrev : styles.unreadChatPrev}>
                                 {
                                     `${this.state.recentMsg.sender}: ${this.state.recentMsg.message}`
                                 }
@@ -110,7 +116,7 @@ export default class extends React.Component {
                         </View>
                     </View>
                 </View>
-            </TouchableOpacity>
+            </TouchableOpacity >
         );
     }
 }
