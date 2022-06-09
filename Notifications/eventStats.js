@@ -54,7 +54,7 @@ export default ({ route }) => {
                 visible={modalVisible}
             >
 
-                <ScrollView>
+                <ScrollView style={{ marginTop: 70 }}>
                     <TouchableOpacity onPress={() => {
                         setModalVisible(false);
                     }}>
@@ -141,6 +141,7 @@ export default ({ route }) => {
                     <TouchableOpacity
                         style={{ backgroundColor: 'white', width: '100%', alignItems: 'center', marginTop: 10, padding: 10 }}
                         onPress={() => {
+                            console.log('pressed');
                             fetch("http://yolo-backend.herokuapp.com/updateEvent/", {
                                 method: "POST",
                                 headers: {

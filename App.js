@@ -12,7 +12,7 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
 import HomeScreen from './CoreScreens/home';
 import SplashScreen from './CoreScreens/splashScreen';
-import DetailsScreen from './Events/detailsContainer';
+import DetailsScreen from './Events/DetailsContainer';
 import FriendScreen from './Friends/friendSuggestions';
 import CreateScreen from './Events/createEvent';
 import ChatScreen from './Chats/userChats';

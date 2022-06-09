@@ -71,10 +71,10 @@ export default ({ navigation }) => {
                     <View style={styles.yoloPillXL}>
                         <Text style={{
                             color: 'white',
-                            fontFamily: 'OpenSansItalic',
+                            fontFamily: 'OpenSans',
                             fontWeight: "800",
-                            fontSize: 48,
-                        }}>#YOLO</Text>
+                            fontSize: 40,
+                        }}>Login</Text>
                     </View>
                 </ImageBackground>
                 <View style={{ alignItems: 'center' }}>

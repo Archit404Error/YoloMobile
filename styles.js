@@ -305,7 +305,7 @@ export const styles = StyleSheet.create({
         marginTop: 50
     },
     buttonDisabledTitle: {
-        color: 'white',
+        color: 'grey',
         fontSize: 22
     },
     buttonTitle: {
@@ -490,6 +490,8 @@ export const styles = StyleSheet.create({
     loginScreenHeroImg: {
         height: screenHeight * 0.4,
         width: windowWidth,
+        borderBottomWidth: 2,
+        borderBottomColor: yoloColor,
     },
     splashScreenBottomContainer: {
         width: windowWidth,
@@ -508,7 +510,7 @@ export const styles = StyleSheet.create({
         width: 200,
         marginLeft: 30,
         alignItems: 'center',
-        height: 70,
+        height: 65,
         borderRadius: 10,
         marginTop: 75,
         backgroundColor: yoloColor,
