@@ -86,7 +86,7 @@ export default class extends React.Component {
                                 const sender = messageObj.sender;
                                 const isOwn = sender == this.state.name;
                                 return (
-                                    <View style={{
+                                    <View key={index} style={{
                                         flexDirection: isOwn ? 'row-reverse' : 'row',
                                         paddingLeft: 5,
                                         paddingRight: 5
@@ -99,7 +99,7 @@ export default class extends React.Component {
                                                 />
                                             }
                                         </View>
-                                        <View key={index} style={styles.chatMessageContainer}>
+                                        <View style={styles.chatMessageContainer}>
                                             {
                                                 (() => {
                                                     if (this.state.lastSender != sender) {

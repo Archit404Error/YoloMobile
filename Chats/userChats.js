@@ -29,8 +29,11 @@ export default class extends React.Component {
 
         fetch(`http://yolo-backend.herokuapp.com/userChats/${this.context.id}`)
             .then(res => res.json())
-            .then(json => this.context.modifyState(["chatData"], [json]))
-            .then(() => this.setState(this.state))
+            .then(json => {
+                this.context.modifyState(["chatData"], [json])
+                this.state.chatData = json
+                this.setState(this.state)
+            })
     }
 
     componentDidMount() {
@@ -66,14 +69,20 @@ export default class extends React.Component {
                         style={{ fontSize: 15 }}
                     />
                     {
-                        this.context.chatData
+                        this.state.chatData
                             .sort((fst, snd) => snd.lastUpdate - fst.lastUpdate)
                             .map((data, index) => {
                                 return <ChatPreview
-                                    key={index}
+                                    key={data._id}
                                     navigation={this.props.navigation}
                                     id={data._id}
-                                    read={data.members.find(mem => JSON.stringify(mem._id) == JSON.stringify(this.context.id)).read}
+                                    read={(() => {
+                                        try {
+                                            return data.members.find(mem => JSON.stringify(mem._id) == JSON.stringify(this.context.id)).read
+                                        } catch (err) {
+                                            return true
+                                        }
+                                    })()}
                                     display={this.state.filtered}
                                 />
                             })
