@@ -31,6 +31,15 @@ export default class extends React.Component {
                 this.state.allMessages = res.messages;
                 if (res.messages.length > 0)
                     this.state.recentMsg = res.messages[res.messages.length - 1];
+
+                if (this.props.navigation.isFocused()) {
+                    try {
+                        this.state.read = res.read
+                    } catch (err) {
+                        console.log("chat not updated yet")
+                    }
+                }
+
                 this.setState(this.state);
             })
     }
@@ -116,7 +125,7 @@ export default class extends React.Component {
                         </View>
                     </View>
                 </View>
-            </TouchableOpacity >
+            </TouchableOpacity>
         );
     }
 }
