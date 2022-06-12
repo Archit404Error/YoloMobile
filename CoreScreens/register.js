@@ -7,6 +7,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as Location from 'expo-location';
 import { useFonts } from 'expo-font';
 import { locWarning } from '../Helpers/permissionHelperFuncs';
+import { DoneWrapper, doneWrapperId } from "../Components/inputWrappers";
 
 import Context from '../Context/context';
 
@@ -79,6 +80,7 @@ export default ({ navigation, route }) => {
                     onChangeText={currName => setName(currName)}
                     inputContainerStyle={{ borderBottomColor: 'white', marginLeft: 20, marginRight: 20 }}
                     inputStyle={{ color: 'white', fontSize: 22 }}
+                    inputAccessoryViewID={doneWrapperId}
                 />
                 <Input
                     placeholder="Username"
@@ -88,6 +90,7 @@ export default ({ navigation, route }) => {
                     onChangeText={currUser => setUsername(currUser)}
                     inputContainerStyle={{ borderBottomColor: 'white', marginLeft: 20, marginRight: 20 }}
                     inputStyle={{ color: 'white', fontSize: 22 }}
+                    inputAccessoryViewID={doneWrapperId}
                 />
                 <Input
                     placeholder="Password"
@@ -98,6 +101,7 @@ export default ({ navigation, route }) => {
                     onChangeText={currPass => setPassword(currPass)}
                     inputContainerStyle={{ borderBottomColor: 'white', marginLeft: 20, marginRight: 20 }}
                     inputStyle={{ color: 'white', fontSize: 22 }}
+                    inputAccessoryViewID={doneWrapperId}
                 />
                 <Button
                     title={<Text style={
@@ -158,6 +162,7 @@ export default ({ navigation, route }) => {
                     </Text>
                 </TouchableOpacity>
             </View>
+            <DoneWrapper />
         </KeyboardAvoidingView>
     )
 }
