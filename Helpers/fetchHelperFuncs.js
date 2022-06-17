@@ -15,3 +15,11 @@ export const fetchServerData = async (endpoint) => {
 export const fetchUserData = async (id) => {
     return await fetchServerData(`user/${id}`)
 }
+
+/**
+ * Gets json data for a given event by id
+ * @param id the event id
+ */
+export const fetchEventData = async (id) => {
+    return await fetchServerData(`event/${id}`)
+}

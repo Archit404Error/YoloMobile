@@ -116,7 +116,7 @@ export default class extends React.Component {
         this.fetchFriends()
 
         this.setState({ friendSuggestions: this.context.friendSuggs })
-        fetch(`http://yolo-backend.herokuapp.com/storyIds/${this.context.id}`)
+        fetch(`http://yolo-backend.herokuapp.com/eventStories/${this.context.id}`)
             .then(resp => resp.json())
             .then(res => {
                 this.state.stories = res;
@@ -131,9 +131,14 @@ export default class extends React.Component {
                     <ScrollView horizontal style={{ padding: 20 }}>
                         <UploadStory />
                         {
-                            this.state.stories.map((storyObj, index) => {
-                                return <Story key={index} id={storyObj._id} image={storyObj.storyImage} />
-                            })
+                            this.state.stories.map((storyObj, index) =>
+                                <Story
+                                    key={index}
+                                    id={storyObj.id}
+                                    preview={storyObj.preview}
+                                    images={storyObj.storyImages}
+                                />
+                            )
                         }
                     </ScrollView>
                 </SafeAreaView>
@@ -235,12 +240,6 @@ export default class extends React.Component {
                 <Text style={styles.boldSectionHeader}>
                     Friend Suggestions
                 </Text>
-
-                {
-                    this.state.friendSuggestions.map((id, index) =>
-                        <Friend isUser={false} key={index} id={id} navigation={this.props.navigation} />
-                    )
-                }
 
                 <ScrollView horizontal>
                     {

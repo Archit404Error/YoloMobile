@@ -88,7 +88,6 @@ export default ({ navigation }) => {
                                         setSubmitted(true)
                                         const resUrl = await uploadImageAsync(context.eventDetails.image)
                                         context.createEventImage(await resUrl)
-                                        console.log(resUrl)
                                         const id = await submitEventAsync(context.eventDetails, context.id)
                                         setSubmitted(false)
                                         navigation.navigate("Submit Event", {

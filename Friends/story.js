@@ -1,28 +1,34 @@
-import React, { useState, useEffect } from "react";
-import { TouchableOpacity, Image, Modal, View, StatusBar, Text } from "react-native";
+import React, { useState, useEffect, useContext } from "react";
+import { TouchableOpacity, Pressable, Image, Modal, View, StatusBar, Text } from "react-native";
 import { EvilIcons } from '@expo/vector-icons'
 
 import { styles } from "../styles";
-import { fetchUserData } from "../Helpers/fetchHelperFuncs";
+import Context from "../Context/context";
 
-export default ({ id, forUpload, image }) => {
-    const [previewPic, setPreview] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png")
+export default ({ id, preview, forUpload, images }) => {
+    const [imageNum, setImageNum] = useState(0);
     const [visible, setVisible] = useState(false)
     const [viewed, setViewed] = useState(false);
     const [viewDuration, setDuration] = useState(10);
-    const [intervalId, setId] = useState(-1);
+    const [intervalId, setIntervalId] = useState(-1);
+    const context = useContext(Context)
     var storyLen = 10;
 
     useEffect(() => {
-        (async () => {
-            const json = await fetchUserData(id);
-            setPreview((await json).profilePic)
-        })()
+        fetch(`http://yolo-backend.herokuapp.com/storyPosition/${context.id}/${id}`)
+            .then(res => res.json())
+            .then(json => {
+                console.log(json.position)
+                if (json.position == -1)
+                    setViewed(true)
+                else
+                    setImageNum(json.position)
+            })
     }, [])
 
     useEffect(() => {
         if (visible) {
-            setId(setInterval(() => { console.log(storyLen); setDuration(storyLen--) }, 1000))
+            setIntervalId(setInterval(() => { setDuration(storyLen--) }, 1000))
         }
     }, [visible])
 
@@ -35,8 +41,33 @@ export default ({ id, forUpload, image }) => {
     }
 
     useEffect(() => {
-        if (viewDuration <= 0) closeStory()
+        if (viewDuration <= 0)
+            closeStory()
     }, [viewDuration])
+
+    const nextImage = () => {
+        fetch("http://yolo-backend.herokuapp.com/viewStoryImage", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                user: context.id,
+                event: id,
+                image: images[imageNum]._id
+            })
+        })
+
+        if (imageNum === images.length - 1) {
+            setImageNum(0)
+            closeStory()
+        }
+        else {
+            storyLen = 10
+            setDuration(storyLen)
+            setImageNum(imageNum + 1)
+        }
+    }
 
 
     return (
@@ -44,7 +75,7 @@ export default ({ id, forUpload, image }) => {
             <TouchableOpacity onPress={() => setVisible(true && !forUpload)}>
                 <Image
                     style={viewed ? styles.storyImg : styles.storyImgNew}
-                    source={{ uri: previewPic }}
+                    source={{ uri: preview }}
                 />
             </TouchableOpacity>
             <Modal
@@ -59,7 +90,11 @@ export default ({ id, forUpload, image }) => {
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.boldSubHeader}>{viewDuration}</Text>
-                <Image source={{ uri: image }} style={styles.storyContent} />
+                {typeof images != "undefined" &&
+                    <Pressable onPress={nextImage}>
+                        <Image source={{ uri: images[imageNum].image }} style={styles.storyContent} />
+                    </Pressable>
+                }
             </Modal>
         </>
     )
