@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import Story from './story';
 import Context from "../Context/context";
 import { styles, windowWidth, windowHeight } from "../styles";
@@ -9,11 +9,15 @@ import { Badge } from "react-native-elements";
 import { EvilIcons, Ionicons } from "@expo/vector-icons"
 import { Camera } from "expo-camera";
 import * as ImagePicker from 'expo-image-picker';
+import UploadStoryModal from "../Components/uploadStoryModal";
 
 export default () => {
-
     const [image, setImage] = useState('');
+    const [uploadUrl, setUploadUrl] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+
+    const eventUploadModal = useRef();
+    const context = useContext(Context);
 
     useEffect(() => {
         (async () => {
@@ -35,17 +39,20 @@ export default () => {
         }
     }
 
-    const uploadStory = (id, imgUrl) => {
+    const uploadStory = (event) => {
         fetch(`http://yolo-backend.herokuapp.com/uploadStory`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                user: id,
-                image: imgUrl
+                user: context.id,
+                image: uploadUrl,
+                event: event
             })
         })
+        eventUploadModal.close()
+        setModalVisible(false)
     }
 
     return (
@@ -85,10 +92,11 @@ export default () => {
                             onPress={() => setModalVisible(false)}
                         />
                         <Image source={{ uri: image }} style={{ height: windowHeight, width: windowWidth }} />
-                        <TouchableOpacity onPress={() => {
-                            uploadImageAsync(image)
-                                .then(resUrl => uploadStory(context.id, resUrl))
-                            setModalVisible(false);
+                        <TouchableOpacity onPress={async () => {
+                            const resUrl = await uploadImageAsync(image)
+                            // setUploadUrl(resUrl)
+                            eventUploadModal.current.open()
+                            setModalVisible(false)
                         }}>
                             <View style={styles.postStoryContainer}>
                                 <Text style={{ fontSize: 15 }}>Post Story</Text>
@@ -96,6 +104,11 @@ export default () => {
                             </View>
                         </TouchableOpacity>
                     </Modal>
+                    <UploadStoryModal
+                        ref={eventUploadModal}
+                        listData={context.acceptedEvents.map(event => event._id)}
+                        upload={uploadStory}
+                    />
                 </>
             }
         </Context.Consumer>

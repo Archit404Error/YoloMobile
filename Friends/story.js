@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { TouchableOpacity, Pressable, Image, Modal, View, StatusBar, Text } from "react-native";
-import { EvilIcons } from '@expo/vector-icons'
+import { EvilIcons } from '@expo/vector-icons';
 
 import { styles } from "../styles";
 import Context from "../Context/context";
@@ -15,15 +15,17 @@ export default ({ id, preview, forUpload, images }) => {
     var storyLen = 10;
 
     useEffect(() => {
-        fetch(`http://yolo-backend.herokuapp.com/storyPosition/${context.id}/${id}`)
-            .then(res => res.json())
-            .then(json => {
-                console.log(json.position)
-                if (json.position == -1)
-                    setViewed(true)
-                else
-                    setImageNum(json.position)
-            })
+        if (!forUpload) {
+            fetch(`http://yolo-backend.herokuapp.com/storyPosition/${context.id}/${id}`)
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json.position)
+                    if (json.position == -1)
+                        setViewed(true)
+                    else
+                        setImageNum(json.position)
+                })
+        }
     }, [])
 
     useEffect(() => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { TouchableOpacity, Image, Text } from "react-native";
 import { styles } from "../styles";
 
-export default function CondensedEvent({ id, navigation }) {
+export default function CondensedEvent({ id, navigation, customPressFunc }) {
     const [res, setRes] = useState({})
 
     const updateSelf = () => {
@@ -16,7 +16,7 @@ export default function CondensedEvent({ id, navigation }) {
     return (
         <TouchableOpacity
             style={{ flexDirection: 'row' }}
-            onPress={() => {
+            onPress={customPressFunc ? customPressFunc : () => {
                 navigation.navigate("Details", {
                     id: res._id,
                     title: res.title,
