@@ -30,7 +30,7 @@ export default () => {
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             aspect: [3, 4],
-            quality: 1,
+            quality: 0.25,
         });
 
         if (!result.cancelled) {
@@ -51,7 +51,7 @@ export default () => {
                 event: event
             })
         })
-        eventUploadModal.close()
+        eventUploadModal.current.close()
         setModalVisible(false)
     }
 
@@ -94,7 +94,7 @@ export default () => {
                         <Image source={{ uri: image }} style={{ height: windowHeight, width: windowWidth }} />
                         <TouchableOpacity onPress={async () => {
                             const resUrl = await uploadImageAsync(image)
-                            // setUploadUrl(resUrl)
+                            setUploadUrl(resUrl)
                             eventUploadModal.current.open()
                             setModalVisible(false)
                         }}>

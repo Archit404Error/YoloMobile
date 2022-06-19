@@ -6,25 +6,48 @@ import { styles } from "../styles";
 import Context from "../Context/context";
 
 export default ({ id, preview, forUpload, images }) => {
+    const [imageLst, setImageLst] = useState(images);
     const [imageNum, setImageNum] = useState(0);
-    const [visible, setVisible] = useState(false)
-    const [viewed, setViewed] = useState(false);
+    const [visible, setVisible] = useState(false);
+    const [viewed, setViewed] = useState(true);
     const [viewDuration, setDuration] = useState(10);
     const [intervalId, setIntervalId] = useState(-1);
     const context = useContext(Context)
     var storyLen = 10;
 
+    const setViewStatus = () => {
+        fetch(`http://yolo-backend.herokuapp.com/storyPosition/${context.id}/${id}`)
+            .then(res => res.json())
+            .then(json => {
+                if (json.position != -1) {
+                    setViewed(false)
+                    setImageNum(json.position)
+                }
+            })
+    }
+
+    const updateSelf = () => {
+        fetch(`http://yolo-backend.herokuapp.com/eventStory/${id}`)
+            .then(res => res.json())
+            .then(json => {
+                setImageLst(json)
+                setViewStatus()
+            })
+    }
+
     useEffect(() => {
         if (!forUpload) {
-            fetch(`http://yolo-backend.herokuapp.com/storyPosition/${context.id}/${id}`)
-                .then(res => res.json())
-                .then(json => {
-                    console.log(json.position)
-                    if (json.position == -1)
-                        setViewed(true)
-                    else
-                        setImageNum(json.position)
+            setViewStatus()
+            context.socket.on("existingStoryUpdate", storyId => {
+                if (storyId == id)
+                    updateSelf()
+            })
+            return () => {
+                context.socket.off("existingStoryUpdate", storyId => {
+                    if (storyId == id)
+                        updateSelf()
                 })
+            }
         }
     }, [])
 
@@ -56,11 +79,11 @@ export default ({ id, preview, forUpload, images }) => {
             body: JSON.stringify({
                 user: context.id,
                 event: id,
-                image: images[imageNum]._id
+                image: imageLst[imageNum]._id
             })
         })
 
-        if (imageNum === images.length - 1) {
+        if (imageNum === imageLst.length - 1) {
             setImageNum(0)
             closeStory()
         }
@@ -92,9 +115,9 @@ export default ({ id, preview, forUpload, images }) => {
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.boldSubHeader}>{viewDuration}</Text>
-                {typeof images != "undefined" &&
+                {typeof imageLst != "undefined" &&
                     <Pressable onPress={nextImage}>
-                        <Image source={{ uri: images[imageNum].image }} style={styles.storyContent} />
+                        <Image source={{ uri: imageLst[imageNum].image }} style={styles.storyContent} />
                     </Pressable>
                 }
             </Modal>

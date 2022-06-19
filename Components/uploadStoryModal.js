@@ -2,17 +2,18 @@ import React, { forwardRef } from "react";
 import { ScrollView, Text } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import CondensedEvent from "../Events/condensedEvent";
-import { styles } from "../styles";
+import { styles, screenHeight } from "../styles";
 
 export default forwardRef((props, ref) => (
     <RBSheet
         ref={ref}
-        height={300}
+        animationType="slide"
+        height={screenHeight - 100}
         openDuration={250}
         closeOnDragDown={true}
     >
         <Text style={styles.title}>Choose Event Story to add to</Text>
-        <ScrollView>
+        <ScrollView persistentScrollbar>
             {
                 props.listData.map(eventId =>
                     <CondensedEvent
