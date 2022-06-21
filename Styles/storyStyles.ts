@@ -4,6 +4,15 @@ import { YoloStylesheet } from "./yoloStylesheet";
 export class StoryStyles extends YoloStylesheet {
     getStyles() {
         return StyleSheet.create({
+            storyInfoFont: {
+                fontSize: 40, 
+                position: 'absolute', 
+                zIndex: 999, 
+                top: 45,
+                color: "white",
+                textShadowColor: "black",
+                textShadowRadius: 5,
+            },
             storyImg: {
                 borderRadius: 500,
                 width: this.windowWidth / 6,
@@ -28,8 +37,8 @@ export class StoryStyles extends YoloStylesheet {
                 justifyContent: 'center',
                 alignItems: 'center',
                 flexDirection: 'row',
-                bottom: 10,
-                right: 10,
+                bottom: 20,
+                right: 20,
                 zIndex: 999
             },
             storyContent: {

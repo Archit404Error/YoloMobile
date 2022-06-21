@@ -118,8 +118,13 @@ export default ({ id, preview, forUpload, images }) => {
                     </TouchableOpacity>
                 </View>
                 {typeof imageLst != "undefined" &&
-                    <Text style={styles.boldSubHeader}>
-                        {viewDuration + " " + (imageNum + 1) + "/" + imageLst.length}
+                    <Text style={[styles.boldSubHeader, styles.storyInfoFont, { left: 10 }]}>
+                        {viewDuration}
+                    </Text>
+                }
+                {typeof imageLst != "undefined" &&
+                    <Text style={[styles.boldSubHeader, styles.storyInfoFont, { right: 10 }]}>
+                        {(imageNum + 1) + "/" + imageLst.length}
                     </Text>
                 }
                 {typeof imageLst != "undefined" &&

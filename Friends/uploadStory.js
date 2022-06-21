@@ -76,18 +76,11 @@ export default () => {
                         <EvilIcons
                             name="close"
                             size={30}
-                            color="black"
+                            color="white"
                             style={{
                                 position: 'absolute',
                                 top: 40,
                                 left: 10,
-                                shadowColor: "#000",
-                                shadowOffset: {
-                                    width: 10,
-                                    height: 10,
-                                },
-                                shadowOpacity: 1.0,
-                                shadowRadius: 15,
                                 zIndex: 999
                             }}
                             onPress={() => setModalVisible(false)}
