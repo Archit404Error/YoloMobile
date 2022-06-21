@@ -60,12 +60,12 @@ export default () => {
             {context =>
                 <>
                     <TouchableOpacity onPress={chooseStory}>
-                        <Story id={context.id} forUpload={true} />
+                        <Image source={{ uri: context.profilePic }} style={styles.storyImg} />
                         <Badge
                             status="warning"
                             value="+"
-                            containerStyle={{ position: 'absolute', top: 0, left: 0 }}
-                            badgeStyle={styles.storyImg}
+                            containerStyle={{ position: 'absolute', bottom: 0, right: 7.5 }}
+                            badgeStyle={{ height: 20, width: 20, borderRadius: 100, borderColor: "white", borderWidth: 1 }}
                         />
                     </TouchableOpacity>
                     <Modal
@@ -79,7 +79,8 @@ export default () => {
                             color="black"
                             style={{
                                 position: 'absolute',
-                                top: 15,
+                                top: 40,
+                                left: 10,
                                 shadowColor: "#000",
                                 shadowOffset: {
                                     width: 10,

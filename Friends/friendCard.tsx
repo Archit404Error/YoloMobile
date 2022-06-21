@@ -1,7 +1,7 @@
 import React, { useState, useEffect, PropsWithRef } from "react"
 import { TouchableOpacity, Image, Text } from "react-native"
 import { fetchUserData } from "../Helpers/fetchHelperFuncs"
-import {styles} from "../styles"
+import { styles } from "../styles"
 
 interface friendProps {
     id : string,

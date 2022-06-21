@@ -6,7 +6,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { SuggestionCell } from "../Components/suggestionCell";
 
-import Friend from './friend';
 import FriendCard from "./friendCard";
 import PingCell from "../Components/pingCell";
 
@@ -77,7 +76,6 @@ export default class extends React.Component {
             if (friend.name.toLowerCase().includes(query)) {
                 this.state.filteredFriends.add(friend)
                 this.setState(this.state)
-
             }
         }
     }
@@ -95,9 +93,8 @@ export default class extends React.Component {
     removePing = (id) => {
         this.state.toPing.delete(id)
         for (const elem of this.state.friendRes) {
-            if (elem.id === id) {
+            if (elem.id === id)
                 elem.didCheck = false
-            }
         }
     }
 
@@ -112,10 +109,7 @@ export default class extends React.Component {
             })
     }
 
-    componentDidMount() {
-        this.fetchFriends()
-
-        this.setState({ friendSuggestions: this.context.friendSuggs })
+    fetchStories() {
         fetch(`http://yolo-backend.herokuapp.com/eventStories/${this.context.id}`)
             .then(resp => resp.json())
             .then(res => {
@@ -124,22 +118,37 @@ export default class extends React.Component {
             })
     }
 
+    componentDidMount() {
+        this.fetchFriends()
+        this.fetchStories()
+        this.state.friendSuggestions = this.context.friendSuggs
+        this.setState(this.state)
+
+        this.context.socket.on("newStoryUpdate", this.fetchStories)
+    }
+
+    componentWillUnmount() {
+        this.context.socket.off("newStoryUpdate", this.fetchStories)
+    }
+
     render() {
         return (
             <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
                 <SafeAreaView>
-                    <ScrollView horizontal style={{ padding: 20 }}>
-                        <UploadStory />
-                        {
-                            this.state.stories.map((storyObj, index) =>
-                                <Story
-                                    key={index}
-                                    id={storyObj.id}
-                                    preview={storyObj.preview}
-                                    images={storyObj.storyImages}
-                                />
-                            )
-                        }
+                    <ScrollView horizontal>
+                        <View style={{ flexDirection: "row", padding: 20 }}>
+                            <UploadStory />
+                            {
+                                this.state.stories.map((storyObj, index) =>
+                                    <Story
+                                        key={index}
+                                        id={storyObj.id}
+                                        preview={storyObj.preview}
+                                        images={storyObj.storyImages}
+                                    />
+                                )
+                            }
+                        </View>
                     </ScrollView>
                 </SafeAreaView>
                 <Modal

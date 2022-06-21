@@ -32,4 +32,4 @@ const stylesheets = [
     new TextStyles(),
 ]
 
-export const styles = StyleSheet.flatten(stylesheets.map(sheet => sheet.getStyles()))
+export const styles : any = StyleSheet.flatten(stylesheets.map(sheet => sheet.getStyles()))

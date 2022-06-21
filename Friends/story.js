@@ -53,7 +53,7 @@ export default ({ id, preview, forUpload, images }) => {
 
     useEffect(() => {
         if (visible) {
-            setIntervalId(setInterval(() => { setDuration(storyLen--) }, 1000))
+            setIntervalId(setInterval(() => { setDuration(--storyLen) }, 1000))
         }
     }, [visible])
 
@@ -88,6 +88,9 @@ export default ({ id, preview, forUpload, images }) => {
             closeStory()
         }
         else {
+            // reset interval to re-count down from 10
+            clearInterval(intervalId)
+            setIntervalId(setInterval(() => { setDuration(--storyLen) }, 1000))
             storyLen = 10
             setDuration(storyLen)
             setImageNum(imageNum + 1)
@@ -114,7 +117,11 @@ export default ({ id, preview, forUpload, images }) => {
                         <EvilIcons name="close" size={30} color="black" />
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.boldSubHeader}>{viewDuration}</Text>
+                {typeof imageLst != "undefined" &&
+                    <Text style={styles.boldSubHeader}>
+                        {viewDuration + " " + (imageNum + 1) + "/" + imageLst.length}
+                    </Text>
+                }
                 {typeof imageLst != "undefined" &&
                     <Pressable onPress={nextImage}>
                         <Image source={{ uri: imageLst[imageNum].image }} style={styles.storyContent} />
