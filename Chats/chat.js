@@ -1,5 +1,6 @@
 import React from "react";
-import { SafeAreaView, ScrollView, KeyboardAvoidingView, View, Text, Image } from "react-native";
+import { SafeAreaView, ScrollView, KeyboardAvoidingView, View, Text, Image, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons"
 import { styles } from "../styles";
 import SendMessage from "./sendMessage";
 import Context from "../Context/context";
@@ -45,6 +46,14 @@ export default class extends React.Component {
         return membData.profilePic
     }
 
+    viewSettings = () => (
+        <TouchableOpacity onPress={() => this.props.navigation.navigate("Chat Settings", {
+            members: this.state.memberDetails,
+        })}>
+            <Ionicons name={"settings-outline"} size={25} style={{ marginRight: 15 }} />
+        </TouchableOpacity>
+    )
+
     componentDidMount() {
         this.state.id = this.props.route.params.id;
         this.state.title = this.props.route.params.title;
@@ -52,6 +61,10 @@ export default class extends React.Component {
         this.state.memberDetails = this.props.route.params.members;
         this.state.name = this.context.username;
         this.setState(this.state);
+        this.props.navigation.setOptions({
+            headerTitle: this.state.title,
+            headerRight: this.viewSettings
+        })
         this.context.socket.on("messageSent", this.handleChatUpdate);
         this.context.socket.on("appOpened", this.updateSelf);
     }

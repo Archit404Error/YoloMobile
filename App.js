@@ -3,7 +3,7 @@ import firebase from "firebase/compat/app";
 import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
 import FlashMessage from 'react-native-flash-message';
-import { Alert, TouchableOpacity, AppState } from 'react-native';
+import { Alert, TouchableOpacity, AppState, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -15,6 +15,7 @@ import DetailsScreen from './Events/detailsContainer';
 import FriendScreen from './Friends/friendSuggestions';
 import CreateScreen from './Events/createEvent';
 import ChatScreen from './Chats/userChats';
+import ChatSettingsScreen from './Chats/chatSettings';
 import PreviewScreen from './Events/previewEvent';
 import SubmitScreen from './Events/submitEvent';
 import MessageScreen from './Chats/chat';
@@ -174,7 +175,7 @@ function ProfileStack() {
   )
 }
 
-function ChatStack() {
+function ChatStack({ navigation }) {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -193,6 +194,11 @@ function ChatStack() {
       <Stack.Screen
         name="Messages"
         component={MessageScreen}
+        options={{ headerTitle: props => <Text>{props.headerTitle}</Text> }}
+      />
+      <Stack.Screen
+        name="Chat Settings"
+        component={ChatSettingsScreen}
       />
     </Stack.Navigator>
   )
