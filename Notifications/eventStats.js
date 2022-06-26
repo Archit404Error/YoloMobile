@@ -12,7 +12,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { showMessage } from "react-native-flash-message";
 import { Icon } from "react-native-elements/dist/icons/Icon";
 
-export default ({ route }) => {
+export default ({ navigation, route }) => {
     const context = useContext(Context);
     const [data, setData] = useState(route.params.eventData);
     const [modalVisible, setModalVisible] = useState(false);
@@ -200,16 +200,17 @@ export default ({ route }) => {
                     {
                         data.attendees.slice(data.attendees.length > 5 ? -5 : 0)
                             .map((userId, index) =>
-                                <Friend key={index} id={userId} isUser={false} />
+                                <Friend key={index} id={userId} isUser={false} navigation={navigation} />
                             )
                     }
                 </View>
+                <View style={{ height: 20 }}></View>
                 <View>
                     <Text style={styles.subSectionHeading}>Recently Viewed</Text>
                     {
                         data.viewers.slice(data.viewers.length > 5 ? -5 : 0)
                             .map((userId, index) =>
-                                <Friend key={index} id={userId} isUser={false} />
+                                <Friend key={index} id={userId} isUser={false} navigation={navigation} />
                             )
                     }
                 </View>

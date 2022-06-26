@@ -204,7 +204,7 @@ function ChatStack({ navigation }) {
   )
 }
 
-export function MainTab({ navigation, setLoggedIn }) {
+function MainTab({ navigation, setLoggedIn }) {
   const context = useContext(Context)
 
   const handleAppState = newState => {
@@ -282,7 +282,7 @@ export function MainTab({ navigation, setLoggedIn }) {
   );
 }
 
-export function Authentication() {
+function Authentication() {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false, headerBackTitleVisible: false, gestureEnabled: false }}
@@ -297,38 +297,41 @@ export function Authentication() {
 function DetermineScreen() {
   const context = useContext(Context)
   const [loggedIn, setLoggedIn] = useState(false);
+  const [config, setConfig] = useState({ screens: { Events: { screens: { Details: 'event/:id' } } } });
+
+  const linkConfig = {
+    prefixes: [Linking.createURL('/')],
+    config,
+  }
 
   // A test for login stuff: context.removeCreds()
 
   useEffect(() => {
-    (async () =>
-      setLoggedIn(await context.fetchCreds())
-    )()
-  }, [])
+    (async () => {
+      let loginStatus = await context.fetchCreds()
+      setLoggedIn(await loginStatus)
+      console.log("yhurd")
+      console.log(await loginStatus)
+      if (!await loginStatus && context.id !== -1)
+        setConfig({ screens: { App: { screens: { Events: { screens: { Details: 'event/:id' } } } } } })
+    })()
+  }, [context.id])
+
+  useEffect(() => {
+    console.log("long status change")
+    if (!loggedIn)
+      setConfig({ screens: { Events: { screens: { Details: 'event/:id' } } } })
+  }, [loggedIn])
 
   return (
-    <>
+    <NavigationContainer linking={linkConfig}>
       {loggedIn ?
         <MainTab setLoggedIn={setLoggedIn} /> :
         <Authentication />
       }
-    </>
+      <FlashMessage position="bottom" />
+    </NavigationContainer>
   )
-}
-
-const config = {
-  screens: {
-    Events: {
-      screens: {
-        Details: 'event/:id'
-      }
-    }
-  },
-};
-
-const linkConfig = {
-  prefixes: [Linking.createURL('/')],
-  config,
 }
 
 Notifications.setNotificationHandler({
@@ -347,10 +350,7 @@ export default function App() {
 
   return (
     <GlobalState>
-      <NavigationContainer linking={linkConfig}>
-        <DetermineScreen />
-        <FlashMessage position="bottom" />
-      </NavigationContainer>
+      <DetermineScreen />
     </GlobalState>
   );
 }
