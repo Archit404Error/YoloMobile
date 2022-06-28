@@ -132,7 +132,7 @@ export default (props) => {
                         <Text style={styles.centeredSubHeader}>
                             {friends.length}
                         </Text>
-                        <Text style={{ alignSelf: 'center', fontSize: 18 }}>Friends</Text>
+                        <Text style={{ alignSelf: 'center', fontSize: 18, fontFamily: "OpenSans_500Medium" }}>Friends</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.paddedFlexContainer} onPress={() => {
                         props.navigation.navigate("View events", {
@@ -142,7 +142,7 @@ export default (props) => {
                         <Text style={styles.centeredSubHeader}>
                             {events.length}
                         </Text>
-                        <Text style={{ alignSelf: 'center', fontSize: 18 }}>Attended</Text>
+                        <Text style={{ alignSelf: 'center', fontSize: 18, fontFamily: "OpenSans_500Medium" }}>Attended</Text>
                     </TouchableOpacity>
                 </View>
                 {
@@ -176,7 +176,7 @@ export default (props) => {
                             }}
                         />
                 }
-                <View style={{ padding: 10, marginTop: 10 }}>
+                <View style={{ padding: 10 }}>
                     <Text style={styles.boldSubHeader}>Attended Events</Text>
                     {
                         events.map(event =>

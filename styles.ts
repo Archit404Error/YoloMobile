@@ -9,8 +9,9 @@ import { FriendStyles } from './Styles/friendStyles';
 import { ProfileStyles } from './Styles/profileStyles';
 import { StoryStyles } from './Styles/storyStyles';
 import { TextStyles } from './Styles/textStyles';
-import { StyleSheet } from 'react-native';
+import { SplashStyles } from './Styles/splashStyles';
 
+import { StyleSheet } from 'react-native';
 // Height of the entire phone window
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
@@ -30,6 +31,7 @@ const stylesheets = [
     new ProfileStyles(),
     new StoryStyles(),
     new TextStyles(),
+    new SplashStyles()
 ]
 
 export const styles : any = StyleSheet.flatten(stylesheets.map(sheet => sheet.getStyles()))

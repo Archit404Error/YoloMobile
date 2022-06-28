@@ -201,7 +201,7 @@ export default class extends React.Component {
                                 console.log(this.state.toPing)
                             }}>
                                 <Text style={{
-                                    fontFamily: 'Arial',
+                                    fontFamily: 'OpenSans_500Medium',
                                     fontSize: 18,
                                     fontWeight: 'bold',
                                     color: "orange",
@@ -233,18 +233,18 @@ export default class extends React.Component {
                         <SuggestionCell data={res} navigation={this.props.navigation} />
                     )
                 }
-                <TouchableOpacity onPress={() => {
+                {/* <TouchableOpacity onPress={() => {
                     this.state.modalVisible = !this.state.modalVisible;
                     this.setState(this.state);
                 }}>
                     <Text style={{
-                        fontFamily: 'Arial',
+                        fontFamily: 'OpenSans_500Medium',
                         fontSize: 22,
                         fontWeight: 'bold',
                         color: "orange",
                         margin: 20,
                     }}>Ping your friends</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 <Text style={styles.boldSectionHeader}>
                     Friend Suggestions

@@ -5,14 +5,14 @@ export class TextStyles extends YoloStylesheet {
     getStyles() {
         return StyleSheet.create({
             subSectionHeading: {
-                fontFamily: 'Arial',
+                fontFamily: 'OpenSans_500Medium',
                 fontSize: 20,
                 fontWeight: '700',
                 marginBottom: 5,
                 marginLeft: 5
             },
             title: {
-                fontFamily: 'Arial',
+                fontFamily: 'OpenSans_500Medium',
                 fontSize: 25,
                 margin: 10,
                 marginTop: 35,
@@ -20,7 +20,7 @@ export class TextStyles extends YoloStylesheet {
                 fontWeight: 'bold',
             },
             subText: {
-                fontFamily: 'Arial',
+                fontFamily: 'OpenSans_500Medium',
                 color: "grey",
                 fontSize: 15,
                 margin: 10,
@@ -38,26 +38,23 @@ export class TextStyles extends YoloStylesheet {
                 textTransform: 'uppercase'
             },
             boldSectionHeader: {
-                fontFamily: 'Arial',
+                fontFamily: 'OpenSans_600SemiBold',
                 fontSize: 25,
                 fontWeight: 'bold',
                 margin: 20,
             },
             boldSubHeader: {
-                fontFamily: 'Arial',
+                fontFamily: 'OpenSans_600SemiBold',
                 fontSize: 20,
-                fontWeight: 'bold',
             },
             centeredSubHeader: {
                 alignSelf: 'center',
-                fontFamily: 'Arial',
+                fontFamily: 'OpenSans_600SemiBold',
                 fontSize: 20,
-                fontWeight: 'bold',
             },
             matchTitle: {
-                fontFamily: 'Arial',
+                fontFamily: 'OpenSans_600SemiBold',
                 fontSize: 20,
-                fontWeight: 'bold',
                 textDecorationLine: 'underline'
             },
             resTitleText: {
@@ -71,6 +68,7 @@ export class TextStyles extends YoloStylesheet {
                 color: "grey",
             },
             profTitle: {
+                fontFamily:"OpenSans_500Medium",
                 fontSize: 30,
                 fontWeight: 'bold',
                 marginTop: 10,

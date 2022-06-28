@@ -15,7 +15,7 @@ export default function CondensedEvent({ id, navigation, customPressFunc }) {
 
     return (
         <TouchableOpacity
-            style={{ flexDirection: 'row' }}
+            style={{ flexDirection: 'row', marginTop: 10 }}
             onPress={customPressFunc ? customPressFunc : () => {
                 navigation.navigate("Details", {
                     id: res._id,
@@ -30,7 +30,7 @@ export default function CondensedEvent({ id, navigation, customPressFunc }) {
                 })
             }}>
             <Image style={styles.smallProfImg} source={{ uri: res.image }} />
-            <Text style={{ alignSelf: 'center', marginLeft: 10 }}>{res.title}</Text>
+            <Text style={{ alignSelf: 'center', marginLeft: 10, fontFamily: "OpenSans_300Light" }}>{res.title}</Text>
         </TouchableOpacity>
     )
 }

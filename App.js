@@ -29,8 +29,25 @@ import EventStatScreen from './Notifications/eventStats';
 import UserNotifScreen from './CoreScreens/userNotifications';
 import FriendList from './Components/Lists/friendList';
 import EventList from './Components/Lists/eventList';
+import AppLoading from 'expo-app-loading';
+import SplashScreen from './CoreScreens/splashScreen';
 
 import GlobalState from './Context/globalState';
+import {
+  useFonts,
+  OpenSans_300Light,
+  OpenSans_400Regular,
+  OpenSans_500Medium,
+  OpenSans_600SemiBold,
+  OpenSans_700Bold,
+  OpenSans_800ExtraBold,
+  OpenSans_300Light_Italic,
+  OpenSans_400Regular_Italic,
+  OpenSans_500Medium_Italic,
+  OpenSans_600SemiBold_Italic,
+  OpenSans_700Bold_Italic,
+  OpenSans_800ExtraBold_Italic,
+} from '@expo-google-fonts/open-sans';
 
 import firebaseInit from './Context/firebaseInit';
 import Context from './Context/context';
@@ -39,7 +56,10 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
+
+
 function HomeStack() {
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -59,6 +79,7 @@ function HomeStack() {
 }
 
 function updateStack() {
+
   return (
     <TopTab.Navigator
       screenOptions={{
@@ -78,6 +99,7 @@ function updateStack() {
 }
 
 function eventStatStack() {
+
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
@@ -95,6 +117,7 @@ function eventStatStack() {
 }
 
 function FriendStack() {
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
@@ -121,6 +144,7 @@ function FriendStack() {
 }
 
 function AddStack() {
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -145,6 +169,7 @@ function AddStack() {
 }
 
 function ProfileStack() {
+
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false, headerBackTitleVisible: false, gestureEnabled: false }}>
@@ -199,7 +224,6 @@ function ChatStack({ navigation }) {
 
 function MainTab({ navigation, setLoggedIn }) {
   const context = useContext(Context)
-
   const handleAppState = newState => {
     if (newState === "active") {
       context.socket.emit("appOpened", context.id)
@@ -280,6 +304,7 @@ function Authentication() {
     <Stack.Navigator
       screenOptions={{ headerShown: false, headerBackTitleVisible: false, gestureEnabled: false }}
     >
+      <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="App" component={MainTab} />
@@ -338,7 +363,24 @@ export default function App() {
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseInit.firebaseConfig)
   }
+  let [fontsLoaded] = useFonts({
+    OpenSans_300Light,
+    OpenSans_400Regular,
+    OpenSans_500Medium,
+    OpenSans_600SemiBold,
+    OpenSans_700Bold,
+    OpenSans_800ExtraBold,
+    OpenSans_300Light_Italic,
+    OpenSans_400Regular_Italic,
+    OpenSans_500Medium_Italic,
+    OpenSans_600SemiBold_Italic,
+    OpenSans_700Bold_Italic,
+    OpenSans_800ExtraBold_Italic,
+  });
 
+  if (!fontsLoaded) {
+    return (<AppLoading />)
+  }
   return (
     <GlobalState>
       <DetermineScreen />

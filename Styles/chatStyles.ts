@@ -58,8 +58,8 @@ export class ChatStyles extends YoloStylesheet {
                 marginTop: 5
             },
             unreadChatPrev: {
-                color: "black",
-                fontWeight: "bold",
+                color: "#F2994A",
+                fontFamily:"OpenSans_600SemiBold",
                 marginTop: 5
             },
         })

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { View, Text, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity, ImageBackground } from 'react-native';
 import * as Location from 'expo-location';
 import { styles } from '../styles';
 import { Input, Button } from 'react-native-elements/';
@@ -10,7 +10,6 @@ import { useFonts } from 'expo-font';
 import { showMessage } from 'react-native-flash-message';
 import { locWarning } from '../Helpers/permissionHelperFuncs';
 import { DoneWrapper, doneWrapperId } from '../Components/inputWrappers';
-
 export default ({ navigation }) => {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
@@ -60,46 +59,52 @@ export default ({ navigation }) => {
 
     return (
         <>
-            <KeyboardAvoidingView behavior='padding' style={styles.loginScreenContainer}>
-                <LinearGradient
-                    // Background Linear Gradient
-                    colors={['rgba(236, 99, 94, 1)', 'rgba(245, 192, 106, 1)']}
-                    style={{ position: 'absolute', top: 0, left: 0, width: "100%", height: "100%" }}
-                />
-                <View style={{ alignItems: 'center' }}>
-                    <Text style={{ color: 'white', fontSize: 100, fontWeight: "900", fontFamily: 'Fredoka' }}>YOLO</Text>
+            <KeyboardAvoidingView behavior='padding'>
+                <ImageBackground
+
+                    source={{ uri: "https://news.cornell.edu/sites/default/files/styles/full_size/public/UP_2017_0630_051.jpg?itok=MzKRS1G7" }}
+                    style={styles.loginScreenHeroImg} >
+
+                    <View style={styles.yoloPillXL}>
+                        <Text style={{
+                            color: 'white',
+                            fontFamily: 'OpenSans_400Regular',
+                            fontSize: 40,
+                        }}>Login</Text>
+                    </View>
+                </ImageBackground>
+                <View style={{ alignItems: 'center', marginTop: 50 }}>
                     <Input
                         placeholder="Username"
-                        placeholderTextColor='rgba(255,255,255,0.6)'
+                        placeholderTextColor='grey'
                         textContentType={'username'}
-                        leftIcon={<Ionicons name="person" size={20} style={styles.loginIcon} />}
+                        leftIcon={<Ionicons name="person" size={18} style={styles.loginIcon} />}
                         onChangeText={t => setUserName(t)}
-                        inputContainerStyle={{ borderBottomColor: 'white', marginLeft: 20, marginRight: 20 }}
+                        inputContainerStyle={{ borderBottomColor: 'grey', marginLeft: 20, marginRight: 20 }}
                         containerStyle={{ marginTop: 20 }}
-                        inputStyle={{ color: 'white', fontSize: 22 }}
-                        inputAccessoryViewID={doneWrapperId}
+                        inputStyle={{ color: 'grey', fontSize: 18 }}
                     />
                     <Input
                         placeholder="Password"
                         secureTextEntry
-                        placeholderTextColor='rgba(255,255,255,0.6)'
+                        placeholderTextColor='grey'
                         textContentType={'password'}
-                        leftIcon={<Ionicons name="key-outline" size={20} style={styles.loginIcon} />}
+                        leftIcon={<Ionicons name="key-outline" size={18} style={styles.loginIcon} />}
                         onChangeText={t => setPassword(t)}
-                        inputContainerStyle={{ borderBottomColor: 'white', marginLeft: 20, marginRight: 20 }}
-                        inputStyle={{ color: 'white', fontSize: 22 }}
-                        inputAccessoryViewID={doneWrapperId}
+                        inputContainerStyle={{ borderBottomColor: 'grey', marginLeft: 20, marginRight: 20 }}
+                        inputStyle={{ color: 'grey', fontSize: 18 }}
+
                     />
                     <Button
                         title={
                             <Text style={
-                                disabled ? styles.buttonDisabledTitle : styles.buttonTitle
+                                disabled ? styles.buttonDisabledTitleLogin : styles.buttonTitleLogin
                             }>
                                 Login
                             </Text>
                         }
-                        buttonStyle={styles.confirmButton}
-                        disabledStyle={styles.confirmButtonDisabled}
+                        buttonStyle={styles.confirmButtonLogin}
+                        disabledStyle={styles.confirmButtonDisabledLogin}
                         disabled={disabled}
                         onPress={async () => {
                             const res = await fetch(`http://yolo-backend.herokuapp.com/auth?`, {
@@ -114,15 +119,14 @@ export default ({ navigation }) => {
                             })
                             const resJson = await res.json()
 
-                            const { status } = await Location.requestForegroundPermissionsAsync();
-                            if (status === "granted") {
-                                setInitDenied(false)
-                                setLocation()
-                            }
-                            else
-                                locWarning()
-
                             if (JSON.stringify(await resJson) != "{}") {
+                                let { status } = await Location.requestForegroundPermissionsAsync()
+                                if (status !== 'granted') {
+                                    handleLocRejection()
+                                    return;
+                                }
+                                else if (initDenied) setLocation()
+
                                 await context.setCredentials(resJson);
                                 context.storeCreds();
                                 setLoading(true);
@@ -140,12 +144,11 @@ export default ({ navigation }) => {
                         password: password
                     });
                 }}>
-                    <Text style={{ color: "white", alignSelf: 'center', marginTop: 30 }}>
-                        Don't have an account? <Text style={{ fontWeight: "bold" }}>Sign up here!</Text>
+                    <Text style={{ color: "grey", alignSelf: 'center', marginTop: 30 }}>
+                        Don't have an account? <Text style={{ fontWeight: "bold", color: "grey" }}>Sign up here!</Text>
                     </Text>
                 </TouchableOpacity>
             </KeyboardAvoidingView>
-            <DoneWrapper />
         </>
     );
 }

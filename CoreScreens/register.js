@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity, Alert } from "react-native";
+import { View, Text, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity, Alert, ImageBackground } from "react-native";
 import { Input, Button } from "react-native-elements";
 import { styles } from "../styles";
 import { Ionicons } from '@expo/vector-icons';
@@ -56,52 +56,48 @@ export default ({ navigation, route }) => {
     }, [loading]);
 
     return (
-        <KeyboardAvoidingView behavior="padding" style={styles.loginScreenContainer}>
-            <LinearGradient
-                // Background Linear Gradient
-                colors={['rgba(236, 99, 94, 1)', 'rgba(245, 192, 106, 1)']}
-                style={{ position: 'absolute', top: 0, left: 0, width: "100%", height: "100%" }}
-            />
-            <View style={{ alignItems: 'center' }}>
-                <Text style={{
-                    fontFamily: 'Fredoka',
-                    fontSize: 25,
-                    margin: 10,
-                    color: 'white',
-                    marginTop: 35,
-                    marginBottom: 10,
-                    fontWeight: 'bold'
-                }}>Register</Text>
+        <KeyboardAvoidingView behavior='padding' style={styles}>
+            <ImageBackground
+
+                source={{ uri: "https://sce.cornell.edu/img/content/825-inset-full-1.jpg" }}
+                style={styles.loginScreenHeroImg} >
+
+                <View style={styles.yoloPillXL}>
+                    <Text style={{
+                        color: 'white',
+                        fontFamily: 'OpenSans_500Regular',
+                        fontSize: 44,
+                    }}>Register</Text>
+                </View>
+            </ImageBackground>
+            <View style={{ alignItems: 'center', marginTop: 50 }}>
                 <Input
                     placeholder="Name"
-                    placeholderTextColor='rgba(255,255,255,0.6)'
-                    leftIcon={<Ionicons name="person" size={20} style={styles.loginIcon} />}
+                    placeholderTextColor='grey'
+                    leftIcon={<Ionicons name="person" size={18} style={styles.loginIcon} />}
                     value={name}
                     onChangeText={currName => setName(currName)}
-                    inputContainerStyle={{ borderBottomColor: 'white', marginLeft: 20, marginRight: 20 }}
-                    inputStyle={{ color: 'white', fontSize: 22 }}
-                    inputAccessoryViewID={doneWrapperId}
+                    inputContainerStyle={{ borderBottomColor: 'grey', marginLeft: 20, marginRight: 20 }}
+                    inputStyle={{ color: 'grey', fontSize: 18 }}
                 />
                 <Input
                     placeholder="Username"
-                    placeholderTextColor='rgba(255,255,255,0.6)'
-                    leftIcon={<Ionicons name="person-circle-outline" size={20} style={styles.loginIcon} />}
+                    placeholderTextColor='grey'
+                    leftIcon={<Ionicons name="person-circle-outline" size={18} style={styles.loginIcon} />}
                     value={username}
                     onChangeText={currUser => setUsername(currUser)}
-                    inputContainerStyle={{ borderBottomColor: 'white', marginLeft: 20, marginRight: 20 }}
-                    inputStyle={{ color: 'white', fontSize: 22 }}
-                    inputAccessoryViewID={doneWrapperId}
+                    inputContainerStyle={{ borderBottomColor: 'grey', marginLeft: 20, marginRight: 20 }}
+                    inputStyle={{ color: 'grey', fontSize: 18 }}
                 />
                 <Input
                     placeholder="Password"
                     secureTextEntry
-                    placeholderTextColor='rgba(255,255,255,0.6)'
-                    leftIcon={<Ionicons name="key-outline" size={20} style={styles.loginIcon} />}
+                    placeholderTextColor='grey'
+                    leftIcon={<Ionicons name="key-outline" size={18} style={styles.loginIcon} />}
                     value={password}
                     onChangeText={currPass => setPassword(currPass)}
-                    inputContainerStyle={{ borderBottomColor: 'white', marginLeft: 20, marginRight: 20 }}
-                    inputStyle={{ color: 'white', fontSize: 22 }}
-                    inputAccessoryViewID={doneWrapperId}
+                    inputContainerStyle={{ borderBottomColor: 'grey', marginLeft: 20, marginRight: 20 }}
+                    inputStyle={{ color: 'grey', fontSize: 18 }}
                 />
                 <Button
                     title={<Text style={
@@ -116,12 +112,10 @@ export default ({ navigation, route }) => {
                     onPress={
                         async () => {
                             let { status } = await Location.requestForegroundPermissionsAsync();
-                            if (status === 'granted') {
-                                setInitDenied(false);
-                                setLocation();
+                            if (status !== 'granted') {
+                                handleLocRejection();
+                                return;
                             }
-                            else
-                                locWarning();
 
                             const valRegex = /^[A-Za-z]+$/
                             if (!(valRegex.test(username) && valRegex.test(password))) {
@@ -157,12 +151,12 @@ export default ({ navigation, route }) => {
                 <TouchableOpacity onPress={() => {
                     navigation.navigate("Login");
                 }}>
-                    <Text style={{ color: "white", alignSelf: 'center', marginTop: 30, fontWeight: "bold" }}>
+                    <Text style={{ color: "grey", alignSelf: 'center', marginTop: 30, fontWeight: "bold" }}>
                         Go back
                     </Text>
                 </TouchableOpacity>
             </View>
-            <DoneWrapper />
-        </KeyboardAvoidingView>
+        </KeyboardAvoidingView >
+
     )
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import Details from './eventDetails';
+import Details from './EventDetails';
 
 export default ({ navigation, route }) => {
     const [id, setId] = useState("-1")
