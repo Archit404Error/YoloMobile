@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { View } from 'react-native';
 import firebase from "firebase/compat/app";
 import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
@@ -38,20 +39,12 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
-function HomeStack({ navigation }) {
+function HomeStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="Explore"
         component={HomeScreen}
-        options={{
-          headerLeft: () => <></>,
-          headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.navigate("Updates")}>
-              <Ionicons name={"notifications-outline"} size={25} style={{ marginRight: 15 }} />
-            </TouchableOpacity>
-          ),
-        }}
       />
       <Stack.Screen
         name="Details"
@@ -310,7 +303,6 @@ function DetermineScreen() {
     (async () => {
       let loginStatus = await context.fetchCreds()
       setLoggedIn(await loginStatus)
-      console.log("yhurd")
       console.log(await loginStatus)
       if (!await loginStatus && context.id !== -1)
         setConfig({ screens: { App: { screens: { Events: { screens: { Details: 'event/:id' } } } } } })
@@ -318,7 +310,6 @@ function DetermineScreen() {
   }, [context.id])
 
   useEffect(() => {
-    console.log("long status change")
     if (!loggedIn)
       setConfig({ screens: { Events: { screens: { Details: 'event/:id' } } } })
   }, [loggedIn])

@@ -121,6 +121,20 @@ export class EventStyles extends YoloStylesheet {
                 borderRadius: 10,
                 fontWeight: "600",
             },
+            inverseTag: {
+                paddingLeft: 10,
+                paddingRight: 10,
+                paddingTop: 5,
+                paddingBottom: 5,
+                marginTop: 5,
+                marginLeft: 5,
+                color: 'white',
+                borderColor: 'white',
+                backgroundColor: '#eb7b4d',
+                borderWidth: 1,
+                borderRadius: 10,
+                fontWeight: "600",
+            }
         })
     }
 }

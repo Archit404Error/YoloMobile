@@ -10,9 +10,10 @@ export default forwardRef((props, ref) => (
         height={300}
         openDuration={250}
         closeOnDragDown={true}
+        dragFromTopOnly={true}
         onClose={() => props.closeFunc()}
     >
-        <Text style={styles.title}>{props.message}</Text>
+        <Text style={styles.boldSectionHeader}>{props.message}</Text>
         <ScrollView>
             {
                 props.listData.map(friendId =>

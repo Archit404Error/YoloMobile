@@ -11,6 +11,7 @@ export default forwardRef((props, ref) => (
         height={screenHeight - 100}
         openDuration={250}
         closeOnDragDown={true}
+        dragFromTopOnly={true}
     >
         <Text style={styles.title}>Choose Event Story to add to</Text>
         <ScrollView persistentScrollbar>

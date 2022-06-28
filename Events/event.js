@@ -85,6 +85,9 @@ export default class Event extends React.Component {
 
     render() {
         if (!this.state.visible) return <></>
+        if (this.props.filters.length != 0 && !this.state.tags.some(tag => this.props.filters.includes(tag)))
+            return <></>
+
         return (
             <SafeAreaView>
                 <InviteModal
