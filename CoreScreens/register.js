@@ -56,7 +56,7 @@ export default ({ navigation, route }) => {
     }, [loading]);
 
     return (
-        <KeyboardAvoidingView behavior='padding' style={styles}>
+        <KeyboardAvoidingView behavior='padding' style={styles.loginScreenContainer}>
             <ImageBackground
 
                 source={{ uri: "https://sce.cornell.edu/img/content/825-inset-full-1.jpg" }}
@@ -65,7 +65,7 @@ export default ({ navigation, route }) => {
                 <View style={styles.yoloPillXL}>
                     <Text style={{
                         color: 'white',
-                        fontFamily: 'OpenSans_500Regular',
+                        fontFamily: 'OpenSans_500Medium',
                         fontSize: 44,
                     }}>Register</Text>
                 </View>
