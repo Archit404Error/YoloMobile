@@ -10,6 +10,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import AppLoading from 'expo-app-loading';
 
 import HomeScreen from './CoreScreens/home';
 import DetailsScreen from './Events/detailsContainer';
@@ -29,7 +30,6 @@ import EventStatScreen from './Notifications/eventStats';
 import UserNotifScreen from './CoreScreens/userNotifications';
 import FriendList from './Components/Lists/friendList';
 import EventList from './Components/Lists/eventList';
-import AppLoading from 'expo-app-loading';
 import SplashScreen from './CoreScreens/splashScreen';
 
 import GlobalState from './Context/globalState';
@@ -303,6 +303,7 @@ function Authentication() {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false, headerBackTitleVisible: false, gestureEnabled: false }}
+
     >
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
@@ -328,7 +329,6 @@ function DetermineScreen() {
     (async () => {
       let loginStatus = await context.fetchCreds()
       setLoggedIn(await loginStatus)
-      console.log(await loginStatus)
       if (!await loginStatus && context.id !== -1)
         setConfig({ screens: { App: { screens: { Events: { screens: { Details: 'event/:id' } } } } } })
     })()
@@ -377,7 +377,6 @@ export default function App() {
     OpenSans_700Bold_Italic,
     OpenSans_800ExtraBold_Italic,
   });
-
   if (!fontsLoaded) {
     return (<AppLoading />)
   }

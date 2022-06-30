@@ -18,7 +18,7 @@ export default ({ navigation }) => {
                     </View>
                     <Text style={{
                         color: 'black',
-                        fontFamily: 'OpenSans',
+                        fontFamily: 'OpenSans_400Regular',
                         fontSize: 26,
                         marginTop: 10
                     }}>Welcome to your next week.</Text>
@@ -37,7 +37,7 @@ export default ({ navigation }) => {
                     >
                         <Text style={{
                             color: 'white',
-                            fontFamily: 'OpenSans_400Regular ',
+                            fontFamily: 'OpenSans_500Medium ',
                             fontSize: 17,
                             marginTop: 12.5
                         }}>

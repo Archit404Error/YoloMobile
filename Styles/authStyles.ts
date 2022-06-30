@@ -5,23 +5,23 @@ import { YoloStylesheet } from "./yoloStylesheet";
 // Height of the entire phone window
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
-
 // Height of screen minus nav bar
 export const screenWidth = Dimensions.get('screen').width;
 export const screenHeight = Dimensions.get('screen').height;
 export const yoloColor = "#F2994A"
 
 export class AuthStyles extends YoloStylesheet {
+
     getStyles() {
         return StyleSheet.create({
             buttonDisabledTitleLogin: {
                 color: 'grey',
-                fontFamily: 'OpenSans',
+                fontFamily: 'OpenSans_500Medium',
                 fontSize: 22
             },
             buttonTitleLogin: {
                 color: "white",
-                fontFamily: 'OpenSans',
+                fontFamily: 'OpenSans_500Medium',
                 fontSize: 22
             },
             confirmButtonLogin: {
@@ -55,10 +55,11 @@ export class AuthStyles extends YoloStylesheet {
                 borderBottomColor: yoloColor,
             },
             loginScreenContainer: {
+                marginTop:-150,
                 borderRadius: 0,
-                width: windowWidth,
-                flex: 1,
-                backgroundColor: 'white'
+                width: this.windowWidth,
+                justifyContent: 'center',
+                flex: 1
             },
             
             yoloPillXL: {

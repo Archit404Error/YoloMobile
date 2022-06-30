@@ -27,12 +27,6 @@ export class ContainerStyles extends YoloStylesheet {
                 justifyContent: 'center',
                 flex: 1
             },
-            loginScreenContainer: {
-                borderRadius: 0,
-                width: this.windowWidth,
-                justifyContent: 'center',
-                flex: 1
-            },
             alignBottomContainer: {
                 backgroundColor: "white",
                 borderRadius: 0,

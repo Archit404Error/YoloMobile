@@ -59,7 +59,8 @@ export default ({ navigation }) => {
 
     return (
         <>
-            <KeyboardAvoidingView behavior='padding'>
+            <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null} style={styles.loginScreenContainer}>
+                {/* conditional check for future Android build b/c padding should be null on Android builds */}
                 <ImageBackground
 
                     source={{ uri: "https://news.cornell.edu/sites/default/files/styles/full_size/public/UP_2017_0630_051.jpg?itok=MzKRS1G7" }}
@@ -68,7 +69,7 @@ export default ({ navigation }) => {
                     <View style={styles.yoloPillXL}>
                         <Text style={{
                             color: 'white',
-                            fontFamily: 'OpenSans_400Regular',
+                            fontFamily: 'OpenSans_500Medium',
                             fontSize: 40,
                         }}>Login</Text>
                     </View>
