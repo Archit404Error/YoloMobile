@@ -1,4 +1,5 @@
 .expo/
+.idea/
 npm-debug.*
 *.jks
 *.p8
