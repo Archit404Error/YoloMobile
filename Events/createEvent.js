@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import {
     Alert, SafeAreaView, ScrollView, View, TextInput, TouchableOpacity, Text,
     Switch, KeyboardAvoidingView
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { styles } from '../styles';
 import ImgScreen from './imgChoose';
@@ -20,6 +21,27 @@ export default ({ navigation }) => {
     const [tags, setTags] = useState("");
     const [other, setOther] = useState("");
     const [isPrivate, setPrivacy] = useState(false);
+
+    const titleRef = useRef();
+    const descriptionRef = useRef();
+    const locationRef = useRef();
+    const tagsRef = useRef();
+    const otherRef = useRef();
+
+    useFocusEffect(() => {
+        const refFuncMap = {
+            [titleRef]: setTitle,
+            [descriptionRef]: setDescription,
+            [locationRef]: setLocation,
+            [tagsRef]: setTags,
+            [otherRef]: setOther
+        }
+
+        for (const ref of Object.keys(refFuncMap)) {
+            if (ref.current)
+                refFuncMap[ref](ref.current.value);
+        }
+    })
 
     const formatTags = (text) => {
         text = text.replace(" ", "|");

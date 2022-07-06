@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, View, Text, Image, Button, Modal, ActivityIndicator } from 'react-native';
+import { SafeAreaView, ScrollView, View, Text, Image, Button, Modal, ActivityIndicator, Alert } from 'react-native';
 import Context from '../Context/context';
 import { styles, screenHeight } from '../styles';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
@@ -73,8 +73,8 @@ export default ({ navigation }) => {
                                 {
                                     context.eventDetails.tags.split("|").map((tag, index) => {
                                         return (
-                                            <View key={index} style={styles.tag}>
-                                                <Text>{tag}</Text>
+                                            <View key={index}>
+                                                <Text style={styles.tag}>{tag}</Text>
                                             </View>
                                         )
                                     })
@@ -88,12 +88,23 @@ export default ({ navigation }) => {
                                         setSubmitted(true)
                                         const resUrl = await uploadImageAsync(context.eventDetails.image)
                                         context.createEventImage(await resUrl)
-                                        const id = await submitEventAsync(context.eventDetails, context.id)
+                                        const response = await submitEventAsync(context.eventDetails, context.id)
+                                        const result = await response.json()
+                                        let id = {};
                                         setSubmitted(false)
-                                        navigation.navigate("Submit Event", {
-                                            id: await id.json(),
-                                            title: context.eventDetails.title
-                                        })
+                                        if (result.status === "success") {
+                                            id = result.data;
+                                            navigation.navigate("Submit Event", {
+                                                id: id,
+                                                title: context.eventDetails.title
+                                            })
+                                        }
+                                        else {
+                                            Alert.alert(
+                                                "Error Submitting Event",
+                                                `The ${result.data} you entered could not be processed. Please change the value of the ${result.data} field`
+                                            )
+                                        }
                                     }
                                 }
                             />
