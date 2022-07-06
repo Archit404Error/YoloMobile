@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
-import { TouchableOpacity, Pressable, Image, Modal, View, StatusBar, Text } from "react-native";
-import { EvilIcons } from '@expo/vector-icons';
+import React, {useContext, useEffect, useState} from "react";
+import {Image, Modal, Pressable, StatusBar, Text, TouchableOpacity, View} from "react-native";
+import {EvilIcons} from '@expo/vector-icons';
 
-import { styles } from "../styles";
+import {styles} from "../styles";
 import Context from "../Context/context";
 
-export default ({ id, preview, forUpload, images }) => {
+export default ({id, preview, forUpload, images}) => {
     const [imageLst, setImageLst] = useState(images);
     const [imageNum, setImageNum] = useState(0);
     const [visible, setVisible] = useState(false);
@@ -53,7 +53,9 @@ export default ({ id, preview, forUpload, images }) => {
 
     useEffect(() => {
         if (visible) {
-            setIntervalId(setInterval(() => { setDuration(--storyLen) }, 1000))
+            setIntervalId(setInterval(() => {
+                setDuration(--storyLen)
+            }, 1000))
         }
     }, [visible])
 
@@ -86,11 +88,12 @@ export default ({ id, preview, forUpload, images }) => {
         if (imageNum === imageLst.length - 1) {
             setImageNum(0)
             closeStory()
-        }
-        else {
+        } else {
             // reset interval to re-count down from 10
             clearInterval(intervalId)
-            setIntervalId(setInterval(() => { setDuration(--storyLen) }, 1000))
+            setIntervalId(setInterval(() => {
+                setDuration(--storyLen)
+            }, 1000))
             storyLen = 10
             setDuration(storyLen)
             setImageNum(imageNum + 1)
@@ -100,10 +103,10 @@ export default ({ id, preview, forUpload, images }) => {
 
     return (
         <>
-            <TouchableOpacity onPress={() => setVisible(true && !forUpload)}>
+            <TouchableOpacity onPress={() => setVisible(!forUpload)}>
                 <Image
                     style={viewed ? styles.storyImg : styles.storyImgNew}
-                    source={{ uri: preview }}
+                    source={{uri: preview}}
                 />
             </TouchableOpacity>
             <Modal
@@ -111,25 +114,25 @@ export default ({ id, preview, forUpload, images }) => {
                 transparent={false}
                 visible={visible}
             >
-                <StatusBar hidden />
-                <View style={{ alignItems: 'flex-end', marginRight: 10, marginTop: 10 }}>
+                <StatusBar hidden/>
+                <View style={{alignItems: 'flex-end', marginRight: 10, marginTop: 10}}>
                     <TouchableOpacity onPress={closeStory}>
-                        <EvilIcons name="close" size={30} color="black" />
+                        <EvilIcons name="close" size={30} color="black"/>
                     </TouchableOpacity>
                 </View>
                 {typeof imageLst != "undefined" &&
-                    <Text style={[styles.boldSubHeader, styles.storyInfoFont, { left: 10 }]}>
+                    <Text style={[styles.boldSubHeader, styles.storyInfoFont, {left: 10}]}>
                         {viewDuration}
                     </Text>
                 }
                 {typeof imageLst != "undefined" &&
-                    <Text style={[styles.boldSubHeader, styles.storyInfoFont, { right: 10 }]}>
+                    <Text style={[styles.boldSubHeader, styles.storyInfoFont, {right: 10}]}>
                         {(imageNum + 1) + "/" + imageLst.length}
                     </Text>
                 }
                 {typeof imageLst != "undefined" &&
                     <Pressable onPress={nextImage}>
-                        <Image source={{ uri: imageLst[imageNum].image }} style={styles.storyContent} />
+                        <Image source={{uri: imageLst[imageNum].image}} style={styles.storyContent}/>
                     </Pressable>
                 }
             </Modal>

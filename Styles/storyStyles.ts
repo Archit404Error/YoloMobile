@@ -1,13 +1,13 @@
-import { StyleSheet } from "react-native";
-import { YoloStylesheet } from "./yoloStylesheet";
+import {StyleSheet} from "react-native";
+import {YoloStylesheet} from "./yoloStylesheet";
 
 export class StoryStyles extends YoloStylesheet {
     getStyles() {
         return StyleSheet.create({
             storyInfoFont: {
-                fontSize: 40, 
-                position: 'absolute', 
-                zIndex: 999, 
+                fontSize: 40,
+                position: 'absolute',
+                zIndex: 999,
                 top: 45,
                 color: "white",
                 textShadowColor: "black",
@@ -40,6 +40,22 @@ export class StoryStyles extends YoloStylesheet {
                 bottom: 20,
                 right: 20,
                 zIndex: 999
+            },
+            modifyStoryContainer: {
+                position: 'absolute',
+                top: 40,
+                right: 50,
+                flex: 1
+            },
+            modifyStoryIcon: {
+                shadowColor: "#000",
+                shadowOffset: {
+                    width: 0,
+                    height: 2
+                },
+                shadowOpacity: 1,
+                shadowRadius: 4,
+                elevation: 5
             },
             storyContent: {
                 width: this.windowWidth,

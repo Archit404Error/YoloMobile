@@ -112,10 +112,8 @@ export default ({ navigation, route }) => {
                     onPress={
                         async () => {
                             let { status } = await Location.requestForegroundPermissionsAsync();
-                            if (status !== 'granted') {
-                                handleLocRejection();
-                                return;
-                            }
+                            if (status !== 'granted')
+                                locWarning()
 
                             const valRegex = /^[A-Za-z]+$/
                             if (!(valRegex.test(username) && valRegex.test(password))) {
