@@ -30,10 +30,6 @@ export default ({ navigation, route }) => {
         setTags(text);
     }
 
-
-
-
-
     const updateData = () => {
         fetch(`http://yolo-backend.herokuapp.com/events/${data._id}`)
             .then(data => data.json())
@@ -53,7 +49,6 @@ export default ({ navigation, route }) => {
                 transparent={false}
                 visible={modalVisible}
             >
-
                 <ScrollView>
                     <TouchableOpacity onPress={() => {
                         setModalVisible(false);
@@ -162,8 +157,6 @@ export default ({ navigation, route }) => {
                         <Text style={{ color: 'orange' }}>Submit changes</Text>
                     </TouchableOpacity>
                 </ScrollView>
-
-
             </Modal>
             <ScrollView>
                 <Image
