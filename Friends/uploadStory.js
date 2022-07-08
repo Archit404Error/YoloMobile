@@ -1,15 +1,16 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Context from "../Context/context";
-import {styles, windowHeight, windowWidth} from "../styles";
-import {uploadImageAsync} from "../Events/previewEvent";
+import { styles, windowHeight, windowWidth } from "../styles";
+import { uploadImageAsync } from "../Events/previewEvent";
 
-import {Image, Modal, Text, TouchableOpacity, View} from "react-native";
-import {Badge} from "react-native-elements";
-import {EvilIcons, Ionicons} from "@expo/vector-icons"
-import {Camera} from "expo-camera";
+import { Image, Modal, Text, TouchableOpacity, View } from "react-native";
+import { Badge } from "react-native-elements";
+import { EvilIcons, Ionicons } from "@expo/vector-icons"
+import { Camera } from "expo-camera";
 import * as ImagePicker from 'expo-image-picker';
 import UploadStoryModal from "../Components/uploadStoryModal";
-import {DraggableText} from "../Components/draggableText";
+import ViewShot from "react-native-view-shot";
+import { DraggableText } from "../Components/draggableText";
 
 export default () => {
     const [image, setImage] = useState('');
@@ -18,6 +19,7 @@ export default () => {
     const [texts, setTexts] = useState([]);
 
     const eventUploadModal = useRef();
+    const viewShot = useRef();
     const context = useContext(Context);
 
     useEffect(() => {
@@ -61,11 +63,11 @@ export default () => {
             {context =>
                 <>
                     <TouchableOpacity onPress={chooseStory}>
-                        <Image source={{uri: context.profilePic}} style={styles.storyImg}/>
+                        <Image source={{ uri: context.profilePic }} style={styles.storyImg} />
                         <Badge
                             status="warning"
                             value="+"
-                            containerStyle={{position: 'absolute', bottom: 0, right: 7.5}}
+                            containerStyle={{ position: 'absolute', bottom: 0, right: 7.5 }}
                             badgeStyle={{
                                 height: 20,
                                 width: 20,
@@ -92,25 +94,33 @@ export default () => {
                             }}
                             onPress={() => setModalVisible(false)}
                         />
-                        <Image source={{uri: image}} style={{height: windowHeight, width: windowWidth}}/>
-                        <TouchableOpacity onPress={() => {
-                            texts.push(<DraggableText key={texts.length + 1}/>);
-                            setTexts([...texts])
-                        }} style={styles.modifyStoryContainer}>
-                            <Ionicons name={"text"} color={"white"} size={30} style={styles.modifyStoryIcon}/>
-                        </TouchableOpacity>
-                        <>
-                            {texts}
-                        </>
+                        <ViewShot ref={viewShot} options={{ quality: 0.25 }}>
+                            <Image source={{ uri: image }} style={{ height: windowHeight, width: windowWidth }} />
+                            <TouchableOpacity
+                                onPress={() => {
+                                    texts.push(<DraggableText key={texts.length + 1} />);
+                                    setTexts([...texts])
+                                }}
+                                style={styles.modifyStoryContainer}
+                            >
+                                <Ionicons name={"text"} color={"white"} size={30} style={styles.modifyStoryIcon} />
+                            </TouchableOpacity>
+                            <>
+                                {texts}
+                            </>
+                        </ViewShot>
                         <TouchableOpacity onPress={async () => {
+                            const snapshot = (await viewShot.current.capture()).replace('/private/', 'file:///')
+                            console.log(snapshot)
+                            console.log(image)
                             const resUrl = await uploadImageAsync(image)
                             setUploadUrl(resUrl)
                             eventUploadModal.current.open()
                             setModalVisible(false)
                         }}>
                             <View style={styles.postStoryContainer}>
-                                <Text style={{fontSize: 15}}>Post Story</Text>
-                                <Ionicons name={"send-sharp"} size={20} style={{marginLeft: 10}}/>
+                                <Text style={{ fontSize: 15 }}>Post Story</Text>
+                                <Ionicons name={"send-sharp"} size={20} style={{ marginLeft: 10 }} />
                             </View>
                         </TouchableOpacity>
                     </Modal>

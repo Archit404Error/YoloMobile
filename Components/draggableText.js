@@ -1,5 +1,5 @@
-import React, {useRef, useState} from "react";
-import {Animated, PanResponder, Text, TextInput} from "react-native";
+import React, { useRef, useState } from "react";
+import { Animated, PanResponder, Text, TextInput } from "react-native";
 
 export const DraggableText = () => {
     const [isEditing, setIsEditing] = useState(false);
@@ -17,9 +17,9 @@ export const DraggableText = () => {
             onPanResponderMove: Animated.event(
                 [
                     null,
-                    {dx: panHandler.x, dy: panHandler.y}
+                    { dx: panHandler.x, dy: panHandler.y }
                 ],
-                {useNativeDriver: false}
+                { useNativeDriver: false }
             ),
             onPanResponderRelease: () => panHandler.flattenOffset()
         })
@@ -28,7 +28,7 @@ export const DraggableText = () => {
     return (
         <Animated.View
             style={{
-                transform: [{translateX: panHandler.x}, {translateY: panHandler.y}],
+                transform: [{ translateX: panHandler.x }, { translateY: panHandler.y }],
                 position: 'absolute',
                 left: 50,
                 top: 50
@@ -38,9 +38,9 @@ export const DraggableText = () => {
             {
                 isEditing ?
                     <TextInput autoFocus placeholder={text} onChangeText={setText}
-                               onSubmitEditing={() => setIsEditing(false)}
-                               style={{position: 'absolute', fontSize: 40}}/> :
-                    <Text onPress={() => setIsEditing(true)} style={{fontSize: 40}}>{text}</Text>
+                        onSubmitEditing={() => setIsEditing(false)}
+                        style={{ position: 'absolute', fontSize: 40 }} /> :
+                    <Text onPress={() => setIsEditing(true)} style={{ fontSize: 40 }}>{text}</Text>
             }
         </Animated.View>
     )

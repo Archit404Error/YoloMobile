@@ -24,12 +24,12 @@ export const uploadImageAsync = async (uri) => {
         xhr.send(null);
     });
 
-    const fireRef = ref(getStorage(), uuid.v4())
+    const fireRef = ref(getStorage(), uuid.v4());
     const snapshot = await uploadBytes(fireRef, blob);
 
     blob.close();
 
-    return await getDownloadURL(snapshot.ref);
+    return await getDownloadURL(fireRef);
 }
 
 /**

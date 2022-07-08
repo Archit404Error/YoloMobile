@@ -71,13 +71,13 @@ function HomeStack() {
             />
             <Stack.Screen
                 name="Updates"
-                component={updateStack}
+                component={UpdateStack}
             />
         </Stack.Navigator>
     )
 }
 
-function updateStack() {
+function UpdateStack() {
     return (
         <TopTab.Navigator
             screenOptions={{
