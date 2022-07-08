@@ -99,7 +99,7 @@ export default class extends React.Component {
     }
 
     fetchSuggestions = (query) => {
-        fetch(`http://yolo-backend.herokuapp.com/searchSuggestions/${query}`)
+        fetch(`http://yolo-backend.herokuapp.com/searchSuggestions/${context.id}/${query}`)
             .then(resp => resp.json())
             .then(res => {
                 for (const elem of res) {

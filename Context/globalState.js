@@ -34,6 +34,8 @@ export default class extends React.Component {
         friendIds: [],
         friendSuggs: [],
         notifications: [],
+        blockedUsers: [],
+        blockedBy: [],
         profile: "",
         socket: {},
         lastUpdate: new Date()
@@ -54,6 +56,8 @@ export default class extends React.Component {
         this.state.notifications = data.notifications;
         this.state.chatIds = data.chats;
         this.state.chatData = (await (await fetch(`http://yolo-backend.herokuapp.com/userChats/${data._id}`)).json());
+        this.state.blockedUsers = [];
+        this.state.blockedBy = [];
         this.state.profile = data.profilePic;
 
         let friendRes = await fetch("http://yolo-backend.herokuapp.com/populateFriends", {
