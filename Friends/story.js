@@ -1,11 +1,11 @@
-import React, {useContext, useEffect, useState} from "react";
-import {Image, Modal, Pressable, StatusBar, Text, TouchableOpacity, View} from "react-native";
-import {EvilIcons} from '@expo/vector-icons';
+import React, { useContext, useEffect, useState } from "react";
+import { Alert, Image, Modal, Pressable, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { EvilIcons, Ionicons } from '@expo/vector-icons';
 
-import {styles} from "../styles";
+import { styles } from "../styles";
 import Context from "../Context/context";
 
-export default ({id, preview, forUpload, images}) => {
+export default ({ id, preview, forUpload, images }) => {
     const [imageLst, setImageLst] = useState(images);
     const [imageNum, setImageNum] = useState(0);
     const [visible, setVisible] = useState(false);
@@ -100,13 +100,39 @@ export default ({id, preview, forUpload, images}) => {
         }
     }
 
+    const report = () => {
+        Alert.prompt("Report Story", "Enter report reason below", [
+            {
+                text: "Cancel",
+                style: "cancel"
+            },
+            {
+                text: "Report",
+                onPress: (message) => {
+                    fetch("http://yolo-backend.herokuapp.com/report", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            event: id,
+                            user: context.id,
+                            reason: message,
+                            story: imageLst[imageNum]._id
+                        })
+                    })
+                    Alert.alert("Report Submitted")
+                }
+            }
+        ])
+    }
 
     return (
         <>
             <TouchableOpacity onPress={() => setVisible(!forUpload)}>
                 <Image
                     style={viewed ? styles.storyImg : styles.storyImgNew}
-                    source={{uri: preview}}
+                    source={{ uri: preview }}
                 />
             </TouchableOpacity>
             <Modal
@@ -114,25 +140,28 @@ export default ({id, preview, forUpload, images}) => {
                 transparent={false}
                 visible={visible}
             >
-                <StatusBar hidden/>
-                <View style={{alignItems: 'flex-end', marginRight: 10, marginTop: 10}}>
+                <StatusBar hidden />
+                <View style={{ alignSelf: "flex-end", flexDirection: "row", marginRight: 10, marginTop: 10 }}>
+                    <TouchableOpacity onPress={report}>
+                        <Ionicons name="megaphone-outline" size={30} color="black" style={{ marginRight: 5 }} />
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={closeStory}>
-                        <EvilIcons name="close" size={30} color="black"/>
+                        <Ionicons name="close-sharp" size={30} color="black" />
                     </TouchableOpacity>
                 </View>
                 {typeof imageLst != "undefined" &&
-                    <Text style={[styles.boldSubHeader, styles.storyInfoFont, {left: 10}]}>
+                    <Text style={[styles.boldSubHeader, styles.storyInfoFont, { left: 10 }]}>
                         {viewDuration}
                     </Text>
                 }
                 {typeof imageLst != "undefined" &&
-                    <Text style={[styles.boldSubHeader, styles.storyInfoFont, {right: 10}]}>
+                    <Text style={[styles.boldSubHeader, styles.storyInfoFont, { right: 10 }]}>
                         {(imageNum + 1) + "/" + imageLst.length}
                     </Text>
                 }
                 {typeof imageLst != "undefined" &&
                     <Pressable onPress={nextImage}>
-                        <Image source={{uri: imageLst[imageNum].image}} style={styles.storyContent}/>
+                        <Image source={{ uri: imageLst[imageNum].image }} style={styles.storyContent} />
                     </Pressable>
                 }
             </Modal>

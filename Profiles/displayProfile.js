@@ -3,7 +3,7 @@
  */
 
 import React, { useState, useEffect, useContext } from "react";
-import { SafeAreaView, ScrollView, Text, Image, View, TouchableOpacity } from "react-native"
+import { SafeAreaView, ScrollView, Text, Image, View, TouchableOpacity } from "react-native";
 import { styles } from "../styles";
 import CondensedEvent from "../Events/condensedEvent";
 import * as ImagePicker from 'expo-image-picker';

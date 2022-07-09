@@ -11,6 +11,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading';
+import { Settings } from './Profiles/settings';
 
 import HomeScreen from './CoreScreens/home';
 import DetailsScreen from './Events/detailsContainer';
@@ -55,8 +56,6 @@ import Context from './Context/context';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
-
-
 
 function HomeStack() {
     return (
@@ -115,7 +114,7 @@ function eventStatStack() {
 
 function FriendStack() {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator>
             <Stack.Screen
                 name="Friend List"
                 component={FriendScreen}
@@ -254,39 +253,12 @@ function MainTab({ navigation, setLoggedIn }) {
             })}
         >
             <Tab.Screen name="Events" component={HomeStack} options={{ headerShown: false, tabBarShowLabel: false }} />
-            <Tab.Screen name="Friends" component={FriendStack} options={{ tabBarShowLabel: false }} />
+            <Tab.Screen name="Friends" component={FriendStack} options={{ headerShown: false, tabBarShowLabel: false }} />
             <Tab.Screen name="Create" options={{ headerShown: false, tabBarShowLabel: false }} component={AddStack} />
             <Tab.Screen name="Chats" component={ChatStack} options={{ headerShown: false, tabBarShowLabel: false }} />
             <Tab.Screen name="Profile" component={ProfileStack} options={{
                 tabBarShowLabel: false,
-                headerRight: () => (
-                    <TouchableOpacity onPress={() => {
-                        Alert.alert(
-                            "Log out",
-                            "Are you sure you would like to log out?",
-                            [
-                                {
-                                    text: "No",
-                                },
-                                {
-                                    text: "Yes",
-                                    onPress: () => {
-                                        context.removeCreds();
-                                        if (setLoggedIn)
-                                            setLoggedIn(false)
-                                        else
-                                            navigation.navigate("Login", {
-                                                username: "",
-                                                password: ""
-                                            })
-                                    }
-                                }
-                            ]
-                        )
-                    }}>
-                        <MaterialIcons name={"logout"} size={25} style={{ marginRight: 15 }} />
-                    </TouchableOpacity>
-                )
+                headerRight: () => <Settings setLoggedIn={setLoggedIn} navigation={navigation} />
             }} />
 
         </Tab.Navigator>
