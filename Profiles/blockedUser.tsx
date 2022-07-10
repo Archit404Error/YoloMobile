@@ -27,7 +27,7 @@ export const BlockedUser = ({id}) => {
                             isBlocking: false
                         })
                     })
-                    context.modifyState(["blockedUsers"], [context.blockedUsers.filter(blockId => blockId === id)]);
+                        .then(_ => context.refreshState())
                     setVisible(false);
                 }
             }

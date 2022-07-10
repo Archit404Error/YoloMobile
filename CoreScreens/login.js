@@ -128,7 +128,6 @@ export default ({ navigation }) => {
                                     setLocation()
 
                                 await context.setCredentials(resJson);
-                                context.storeCreds();
                                 setLoading(true);
                             }
                             else showMessage({ message: "Invalid username or password", type: 'danger' })

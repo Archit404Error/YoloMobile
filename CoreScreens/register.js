@@ -135,7 +135,6 @@ export default ({ navigation, route }) => {
                             try {
                                 const resJson = await res.json()
                                 await context.setCredentials(await resJson);
-                                context.storeCreds();
                                 setLoading(true);
                             } catch (err) {
                                 Alert.alert("That username already exists!")

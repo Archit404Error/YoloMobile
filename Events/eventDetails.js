@@ -137,7 +137,7 @@ export default class extends React.Component {
                             return <Friend isUser={false} key={id} id={id} navigation={this.props.navigation} />
                         })
                     }
-                    <View style={{ height: 10 }}></View>
+                    <View style={{ height: 50 }}></View>
                     <Button
                         title={<Text style={{ color: "red" }}>Report Event</Text>}
                         onPress={() => this.setReportVisible(true)}

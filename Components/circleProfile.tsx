@@ -20,9 +20,9 @@ export const CircleProfile = ({id, pressHandler}) => {
     return (
         <TouchableOpacity onPress={pressHandler}>
             <View style={{justifyContent: "center"}}>
-                <Image source={{uri: img}} style={styles.smallProfImg}/>
-                <Text style={styles.subSectionHeading}>{name}</Text>
-                <Text style={styles.subSectionHeading}>{username}</Text>
+                <Image source={{uri: img}} style={styles.mediumProfImg}/>
+                <Text style={styles.centeredSubHeader}>{name}</Text>
+                <Text style={styles.centeredSubText}>{username}</Text>
             </View>
         </TouchableOpacity>
     )

@@ -114,7 +114,9 @@ function eventStatStack() {
 
 function FriendStack() {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator
+            screenOptions={{ headerBackTitleVisible: false }}
+        >
             <Stack.Screen
                 name="Friend List"
                 component={FriendScreen}

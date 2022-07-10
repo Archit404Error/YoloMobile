@@ -42,7 +42,6 @@ export default (props) => {
                         {
                             text: "Block",
                             onPress: () => {
-                                context.modifyState(["blockedUsers"], [...context.blockedUsers, id])
                                 fetch('http://yolo-backend.herokuapp.com/blockUser', {
                                     method: "POST",
                                     headers: {
@@ -54,6 +53,7 @@ export default (props) => {
                                         isBlocking: true
                                     })
                                 })
+                                    .then(_ => context.refreshState())
                             }
                         }
                     ]

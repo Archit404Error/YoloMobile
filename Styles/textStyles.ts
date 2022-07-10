@@ -27,6 +27,12 @@ export class TextStyles extends YoloStylesheet {
                 marginLeft: 12.5,
                 marginBottom: 30,
             },
+            centeredSubText: {
+                fontFamily: 'OpenSans_500Medium',
+                color: "grey",
+                fontSize: 15,
+                alignSelf: 'center',
+            },
             addressText: {
                 fontFamily: 'Menlo',
                 color: 'grey',
@@ -68,7 +74,7 @@ export class TextStyles extends YoloStylesheet {
                 color: "grey",
             },
             profTitle: {
-                fontFamily:"OpenSans_500Medium",
+                fontFamily: "OpenSans_500Medium",
                 fontSize: 30,
                 fontWeight: 'bold',
                 marginTop: 10,

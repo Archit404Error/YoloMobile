@@ -9,7 +9,7 @@ import Context from '../Context/context';
 const windowHeight = Dimensions.get('window').height;
 
 export default () => {
-  const [image, setImage] = useState("https://www.russorizio.com/wp-content/uploads/2016/07/ef3-placeholder-image.jpg");
+  const [image, setImage] = useState("https://firebasestorage.googleapis.com/v0/b/eventapp-73ba7.appspot.com/o/image_placeholder.jpg?alt=media&token=6d0dba9a-eae6-41cf-9c38-471521e0d2c2");
   const [imgHt, setImgHt] = useState(300);
 
   useEffect(() => {
