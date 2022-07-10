@@ -1,9 +1,10 @@
-import React, { useRef, useContext } from "react";
-import { Alert, View, Text, TouchableOpacity } from 'react-native';
+import React, { useState, useContext, useRef } from "react";
+import { Alert, Text, TouchableOpacity, View } from 'react-native';
 import { Feather, MaterialIcons } from '@expo/vector-icons'
 import RBSheet from "react-native-raw-bottom-sheet";
 import Context from "../Context/context";
 import { styles } from "../styles";
+import { BlockManager } from "./blockManager";
 
 const MenuItem = ({ pressFunc, text, icon }) => {
     return (
@@ -20,6 +21,7 @@ const MenuItem = ({ pressFunc, text, icon }) => {
 }
 
 export const Settings = ({ setLoggedIn, navigation }) => {
+    const [blockModalVisible, setBlockModalVisible] = useState(false);
     const context = useContext(Context)
     const menu = useRef(null);
 
@@ -62,7 +64,10 @@ export const Settings = ({ setLoggedIn, navigation }) => {
                 <MenuItem
                     icon={<MaterialIcons name={"block"} size={25} style={{ marginRight: 10 }} />}
                     text="Manage Blocks"
-                    pressFunc={() => { }}
+                    pressFunc={() => {
+                        menu.current.close();
+                        setBlockModalVisible(true)
+                    }}
                 />
                 <MenuItem
                     icon={<MaterialIcons name={"logout"} size={25} style={{ marginRight: 10 }} />}
@@ -76,6 +81,7 @@ export const Settings = ({ setLoggedIn, navigation }) => {
                     pressFunc={() => { }}
                 />
             </RBSheet>
+            <BlockManager visible={blockModalVisible} />
         </>
     );
 }

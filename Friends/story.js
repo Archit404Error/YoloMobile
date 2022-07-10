@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Alert, Image, Modal, Pressable, StatusBar, Text, TouchableOpacity, View } from "react-native";
-import { EvilIcons, Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 import { styles } from "../styles";
 import Context from "../Context/context";

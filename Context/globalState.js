@@ -271,6 +271,8 @@ export default class extends React.Component {
                     friendSuggs: this.state.friendSuggs,
                     notifications: this.state.notifications,
                     profilePic: this.state.profile,
+                    blockedUsers: this.state.blockedUsers,
+                    blockedBy: this.state.blockedBy,
                     socket: this.state.socket,
                     setCredentials: this.setCreds,
                     setLocation: this.setLoc,

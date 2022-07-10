@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Context from "../Context/context";
-import { styles, windowHeight, windowWidth } from "../styles";
+import { screenHeight, screenWidth, styles, windowHeight, windowWidth } from "../styles";
 import { uploadImageAsync } from "../Events/previewEvent";
 
 import { Image, Modal, Text, TouchableOpacity, View } from "react-native";
@@ -9,7 +9,7 @@ import { EvilIcons, Ionicons } from "@expo/vector-icons"
 import { Camera } from "expo-camera";
 import * as ImagePicker from 'expo-image-picker';
 import UploadStoryModal from "../Components/uploadStoryModal";
-import ViewShot from "react-native-view-shot";
+import { captureRef } from "react-native-view-shot";
 import { DraggableText } from "../Components/draggableText";
 
 export default () => {
@@ -94,7 +94,7 @@ export default () => {
                             }}
                             onPress={() => setModalVisible(false)}
                         />
-                        <ViewShot ref={viewShot} options={{ quality: 0.25 }}>
+                        <View ref={viewShot}>
                             <Image source={{ uri: image }} style={{ height: windowHeight, width: windowWidth }} />
                             <TouchableOpacity
                                 onPress={() => {
@@ -108,12 +108,16 @@ export default () => {
                             <>
                                 {texts}
                             </>
-                        </ViewShot>
+                        </View>
                         <TouchableOpacity onPress={async () => {
-                            const snapshot = (await viewShot.current.capture()).replace('/private/', 'file:///')
-                            console.log(snapshot)
-                            console.log(image)
-                            const resUrl = await uploadImageAsync(image)
+                            const snapshot = await captureRef(viewShot, {
+                                result: "tmpfile",
+                                height: screenHeight,
+                                width: screenWidth,
+                                quality: 1,
+                                format: "png"
+                            })
+                            const resUrl = await uploadImageAsync(snapshot)
                             setUploadUrl(resUrl)
                             eventUploadModal.current.open()
                             setModalVisible(false)

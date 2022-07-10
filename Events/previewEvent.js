@@ -14,6 +14,7 @@ export const uploadImageAsync = async (uri) => {
     const blob = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.onload = function () {
+            console.log(xhr.response.size)
             resolve(xhr.response);
         };
         xhr.onerror = function (e) {
