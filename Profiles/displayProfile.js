@@ -3,7 +3,7 @@
  */
 
 import React, { useState, useEffect, useContext } from "react";
-import { SafeAreaView, ScrollView, Text, Image, View, TouchableOpacity } from "react-native";
+import { SafeAreaView, ScrollView, Text, Image, View, TouchableOpacity, Alert } from "react-native";
 import { styles } from "../styles";
 import CondensedEvent from "../Events/condensedEvent";
 import * as ImagePicker from 'expo-image-picker';
@@ -172,7 +172,31 @@ export default (props) => {
                                     setPending(!isPending)
                                 }
 
-                                detOutcome([() => { }, friendReq, friendReq])()
+                                const unfriend = () => {
+                                    Alert.alert("Unfriend", `Are you sure you want to unfriend ${name}?`, [
+                                        { text: "Cancel", style: "cancel" },
+                                        {
+                                            text: "Unfriend", onPress: () => {
+                                                fetch("http://yolo-backend.herokuapp.com/unfriend", {
+                                                    method: "POST",
+                                                    headers: {
+                                                        "Content-Type": "application/json"
+                                                    },
+                                                    body: JSON.stringify({
+                                                        user: context.id,
+                                                        friend: id
+                                                    })
+                                                })
+                                                    .then(_ => {
+                                                        context.refreshState()
+                                                        updateFriendCount()
+                                                    })
+                                            }
+                                        }
+                                    ])
+                                }
+
+                                detOutcome([unfriend, friendReq, friendReq])()
                             }}
                         />
                 }
