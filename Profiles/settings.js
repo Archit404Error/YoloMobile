@@ -51,6 +51,41 @@ export const Settings = ({ setLoggedIn, navigation }) => {
         )
     }
 
+    const deleteAcc = () => {
+        Alert.alert(
+            "Delete account",
+            "Are you sure you would like to delete your account? WARNING: This action cannot be undone.",
+            [
+                {
+                    text: "No",
+                },
+                {
+                    text: "Yes",
+                    onPress: () => {
+                        fetch(`http://yolo-backend.herokuapp.com/deleteUser`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                user: context.id
+                            })
+                        })
+
+                        context.removeCreds();
+                        if (setLoggedIn)
+                            setLoggedIn(false)
+                        else
+                            navigation.navigate("Login", {
+                                username: "",
+                                password: ""
+                            })
+                    }
+                }
+            ]
+        )
+    }
+
     return (
         <>
             <TouchableOpacity onPress={() => menu.current.open()}>
@@ -77,7 +112,7 @@ export const Settings = ({ setLoggedIn, navigation }) => {
                 <MenuItem
                     icon={<MaterialIcons name={"delete-forever"} size={25} style={{ marginRight: 10 }} />}
                     text="Delete Profile"
-                    pressFunc={() => { }}
+                    pressFunc={deleteAcc}
                 />
             </RBSheet>
             <RBSheet
