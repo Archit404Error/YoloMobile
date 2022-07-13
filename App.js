@@ -1,15 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View } from 'react-native';
 import firebase from "firebase/compat/app";
 import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
 import FlashMessage from 'react-native-flash-message';
-import { Alert, TouchableOpacity, AppState, Text } from 'react-native';
+import { AppState, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading';
 import { Settings } from './Profiles/settings';
 

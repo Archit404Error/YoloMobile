@@ -2,8 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import DisplayProfile from "./displayProfile";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { Alert } from "react-native";
+import { Alert, TouchableOpacity } from "react-native";
 import Context from "../Context/context";
 
 export default (props) => {
@@ -42,6 +41,7 @@ export default (props) => {
                         {
                             text: "Block",
                             onPress: () => {
+                                console.log(id)
                                 fetch('http://yolo-backend.herokuapp.com/blockUser', {
                                     method: "POST",
                                     headers: {
@@ -53,7 +53,10 @@ export default (props) => {
                                         isBlocking: true
                                     })
                                 })
-                                    .then(_ => context.refreshState())
+                                    .then(_ => {
+                                        context.refreshState()
+                                        props.navigation.navigate("Friend List")
+                                    })
                             }
                         }
                     ]

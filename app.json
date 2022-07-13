@@ -3,7 +3,7 @@
     "name": "Yolo",
     "slug": "Yolo",
     "scheme": "yolo",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -20,6 +20,9 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.4architmehta.Yolo",
+      "associatedDomains": [
+        "applinks:yolonow.net"
+      ],
       "infoPlist": {
         "NSCameraUsageDescription": "Yolo uses the camera to let you post event images and stories.",
         "NSLocationWhenInUseUsageDescription": "Yolo uses your location to recommend events and show event distances."
