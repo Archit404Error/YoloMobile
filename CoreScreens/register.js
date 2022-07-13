@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity, Alert, ImageBackground } from "react-native";
+import { View, Text, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity, Alert, ImageBackground, Linking } from "react-native";
 import { Input, Button } from "react-native-elements";
 import { styles } from "../styles";
 import { Ionicons } from '@expo/vector-icons';
@@ -32,6 +32,15 @@ export default ({ navigation, route }) => {
         setLoc(location);
     }
 
+    const handleClick = () => {
+        Linking.canOpenURL("http://yolonow.net/tos.html").then(supported => {
+            if (supported) {
+                Linking.openURL("http://yolonow.net/tos.html");
+            } else {
+                console.log('err');
+            }
+        });
+    };
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -154,6 +163,12 @@ export default ({ navigation, route }) => {
                     <Text style={{ color: "grey", alignSelf: 'center', marginTop: 30, fontWeight: "bold" }}>
                         Go back
                     </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleClick}>
+
+                    <View>
+                        <Text style={{ color: "grey", alignSelf: 'center', marginTop: 30 }}>  By registering, you agree to our Terms Of Service </Text>
+                    </View>
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView >

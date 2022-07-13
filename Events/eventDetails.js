@@ -40,6 +40,7 @@ export default class extends React.Component {
         return newState
     }
 
+
     /**
      * @returns this component's start and end dates formatted like start-end (or just start date if they're the same)
      */
@@ -123,7 +124,8 @@ export default class extends React.Component {
                     }
                     <View style={{ height: 50 }}></View>
                 </ScrollView>
-                <View>
+                {!(this.state.people.includes(this.context.id)) && <View>
+
                     <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity
                             style={styles.rsvpNoBlock}
@@ -145,7 +147,8 @@ export default class extends React.Component {
                             <Text style={{ color: 'green' }}>Interested</Text>
                         </TouchableOpacity>
                     </View>
-                </View>
+                </View>}
+
             </SafeAreaView>
         )
     }
