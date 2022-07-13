@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
-import { TouchableOpacity, Pressable, Image, Modal, View, StatusBar, Text } from "react-native";
-import { EvilIcons } from '@expo/vector-icons';
+import React, { useContext, useEffect, useState } from "react";
+import { Alert, Image, Modal, Pressable, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
 
 import { styles } from "../styles";
 import Context from "../Context/context";
@@ -53,7 +53,9 @@ export default ({ id, preview, forUpload, images }) => {
 
     useEffect(() => {
         if (visible) {
-            setIntervalId(setInterval(() => { setDuration(--storyLen) }, 1000))
+            setIntervalId(setInterval(() => {
+                setDuration(--storyLen)
+            }, 1000))
         }
     }, [visible])
 
@@ -86,21 +88,48 @@ export default ({ id, preview, forUpload, images }) => {
         if (imageNum === imageLst.length - 1) {
             setImageNum(0)
             closeStory()
-        }
-        else {
+        } else {
             // reset interval to re-count down from 10
             clearInterval(intervalId)
-            setIntervalId(setInterval(() => { setDuration(--storyLen) }, 1000))
+            setIntervalId(setInterval(() => {
+                setDuration(--storyLen)
+            }, 1000))
             storyLen = 10
             setDuration(storyLen)
             setImageNum(imageNum + 1)
         }
     }
 
+    const report = () => {
+        Alert.prompt("Report Story", "Enter report reason below", [
+            {
+                text: "Cancel",
+                style: "cancel"
+            },
+            {
+                text: "Report",
+                onPress: (message) => {
+                    fetch("http://yolo-backend.herokuapp.com/report", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            event: id,
+                            user: context.id,
+                            reason: message,
+                            story: imageLst[imageNum]._id
+                        })
+                    })
+                    Alert.alert("Report Submitted")
+                }
+            }
+        ])
+    }
 
     return (
         <>
-            <TouchableOpacity onPress={() => setVisible(true && !forUpload)}>
+            <TouchableOpacity onPress={() => setVisible(!forUpload)}>
                 <Image
                     style={viewed ? styles.storyImg : styles.storyImgNew}
                     source={{ uri: preview }}
@@ -112,9 +141,12 @@ export default ({ id, preview, forUpload, images }) => {
                 visible={visible}
             >
                 <StatusBar hidden />
-                <View style={{ alignItems: 'flex-end', marginRight: 10, marginTop: 10 }}>
+                <View style={{ alignSelf: "flex-end", flexDirection: "row", marginRight: 10, marginTop: 10 }}>
+                    <TouchableOpacity onPress={report}>
+                        <Ionicons name="megaphone-outline" size={30} color="black" style={{ marginRight: 5 }} />
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={closeStory}>
-                        <EvilIcons name="close" size={30} color="black" />
+                        <Ionicons name="close-sharp" size={30} color="black" />
                     </TouchableOpacity>
                 </View>
                 {typeof imageLst != "undefined" &&

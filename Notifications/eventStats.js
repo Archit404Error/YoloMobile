@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Image, Text, SafeAreaView, ScrollView, View, TextInput, Switch, Modal } from "react-native";
+import { Image, Text, SafeAreaView, ScrollView, View, TextInput, Switch, Modal, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { styles, windowWidth, windowHeight } from "../styles";
 import Friend from "../Friends/friend";
@@ -8,7 +8,6 @@ import ImgScreen from '../Events/imgChoose';
 
 import Context from "../Context/context";
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { showMessage } from "react-native-flash-message";
 import { Icon } from "react-native-elements/dist/icons/Icon";
 
@@ -30,10 +29,6 @@ export default ({ navigation, route }) => {
         setTags(text);
     }
 
-
-
-
-
     const updateData = () => {
         fetch(`http://yolo-backend.herokuapp.com/events/${data._id}`)
             .then(data => data.json())
@@ -53,7 +48,6 @@ export default ({ navigation, route }) => {
                 transparent={false}
                 visible={modalVisible}
             >
-
                 <ScrollView>
                     <TouchableOpacity onPress={() => {
                         setModalVisible(false);
@@ -162,8 +156,6 @@ export default ({ navigation, route }) => {
                         <Text style={{ color: 'orange' }}>Submit changes</Text>
                     </TouchableOpacity>
                 </ScrollView>
-
-
             </Modal>
             <ScrollView>
                 <Image

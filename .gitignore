@@ -1,4 +1,6 @@
 .expo/
+.idea/
+.watchmanconfig
 npm-debug.*
 *.jks
 *.p8

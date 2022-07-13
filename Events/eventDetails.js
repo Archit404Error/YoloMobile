@@ -1,13 +1,15 @@
 import React from "react";
 import Friend from "../Friends/friend"
 
-import { SafeAreaView, ScrollView, View, Image, Text, TouchableOpacity, Share, Platform } from "react-native";
+import { Image, Platform, SafeAreaView, ScrollView, Share, Text, TouchableOpacity, View } from "react-native";
+import { Button } from "react-native-elements";
 import * as Linking from 'expo-linking';
-import { MaterialIcons, Feather } from '@expo/vector-icons';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
 
 import Context from "../Context/context";
 import { acceptedFlow, rejectionFlow } from "../Helpers/eventHelperFuncs";
 import { styles, windowWidth } from "../styles";
+import { ReportModal } from "../Components/reportModal";
 
 export default class extends React.Component {
     static contextType = Context
@@ -20,11 +22,14 @@ export default class extends React.Component {
         startDate: new Date(),
         endDate: new Date(),
         loc: "Loading...",
-        people: []
+        people: [],
+        reporting: false,
+        reportText: "",
     };
 
     constructor(props) {
         super(props);
+        this.setReportVisible = this.setReportVisible.bind(this)
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -88,9 +93,20 @@ export default class extends React.Component {
         }
     }
 
+    setReportVisible(visible) {
+        this.state.reporting = visible;
+        this.setState(this.state);
+    }
+
     render() {
         return (
             <SafeAreaView style={styles.alignBottomContainer}>
+                <ReportModal
+                    eventId={this.state.id}
+                    userId={this.context.id}
+                    visible={this.state.reporting}
+                    setVisible={this.setReportVisible}
+                />
                 <ScrollView>
                     <Image source={{ uri: this.state.image }} style={styles.detailsImg} />
                     <View style={{ flexDirection: 'row', maxWidth: windowWidth - 40 }}>
@@ -122,6 +138,12 @@ export default class extends React.Component {
                             return <Friend isUser={false} key={id} id={id} navigation={this.props.navigation} />
                         })
                     }
+                    <View style={{ height: 50 }}></View>
+                    <Button
+                        title={<Text style={{ color: "red" }}>Report Event</Text>}
+                        onPress={() => this.setReportVisible(true)}
+                        buttonStyle={{ backgroundColor: "white" }}
+                    />
                     <View style={{ height: 50 }}></View>
                 </ScrollView>
                 {!(this.state.people.includes(this.context.id)) && <View>

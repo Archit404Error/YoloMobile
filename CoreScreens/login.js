@@ -122,14 +122,12 @@ export default ({ navigation }) => {
 
                             if (JSON.stringify(await resJson) != "{}") {
                                 let { status } = await Location.requestForegroundPermissionsAsync()
-                                if (status !== 'granted') {
-                                    handleLocRejection()
-                                    return;
-                                }
-                                else if (initDenied) setLocation()
+                                if (status !== 'granted')
+                                    locWarning()
+                                else if (initDenied)
+                                    setLocation()
 
                                 await context.setCredentials(resJson);
-                                context.storeCreds();
                                 setLoading(true);
                             }
                             else showMessage({ message: "Invalid username or password", type: 'danger' })

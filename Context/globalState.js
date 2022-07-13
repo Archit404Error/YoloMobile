@@ -5,6 +5,7 @@ import Context from './context';
 import Device from 'expo-device';
 import { showMessage } from 'react-native-flash-message';
 import { openSocket } from '../Helpers/socketHelperFuncs';
+import { fetchUserData } from '../Helpers/fetchHelperFuncs';
 
 export default class extends React.Component {
     state = {
@@ -34,6 +35,8 @@ export default class extends React.Component {
         friendIds: [],
         friendSuggs: [],
         notifications: [],
+        blockedUsers: [],
+        blockedBy: [],
         profile: "",
         socket: {},
         lastUpdate: new Date()
@@ -54,6 +57,8 @@ export default class extends React.Component {
         this.state.notifications = data.notifications;
         this.state.chatIds = data.chats;
         this.state.chatData = (await (await fetch(`http://yolo-backend.herokuapp.com/userChats/${data._id}`)).json());
+        this.state.blockedUsers = data.blockedUsers;
+        this.state.blockedBy = data.blockedBy;
         this.state.profile = data.profilePic;
 
         let friendRes = await fetch("http://yolo-backend.herokuapp.com/populateFriends", {
@@ -81,6 +86,7 @@ export default class extends React.Component {
         this.state.pendingEvents = [data.pendingEvents, await eventRes.json()].flat()
         this.state.socket = openSocket(data.chats, data._id)
         this.setState(this.state);
+        this.storeCreds();
     }
 
     /**
@@ -229,6 +235,14 @@ export default class extends React.Component {
     }
 
     /**
+     * General purpose function that queries user state from server
+     */
+    refreshState = () => {
+        fetchUserData(this.state.id)
+            .then(json => this.setCreds(json))
+    }
+
+    /**
      * Sends friend request from this user to another user
      * @param friendId the id of the person who is being sent the request
      * @param wantToFriend whether the user wants to send a request or cancel a request
@@ -267,6 +281,8 @@ export default class extends React.Component {
                     friendSuggs: this.state.friendSuggs,
                     notifications: this.state.notifications,
                     profilePic: this.state.profile,
+                    blockedUsers: this.state.blockedUsers,
+                    blockedBy: this.state.blockedBy,
                     socket: this.state.socket,
                     setCredentials: this.setCreds,
                     setLocation: this.setLoc,
@@ -281,6 +297,7 @@ export default class extends React.Component {
                     fetchCreds: this.fetchCreds,
                     timeSinceUpdate: this.timeSinceUpdate,
                     modifyState: this.modifyState,
+                    refreshState: this.refreshState,
                 }}
             >
                 {this.props.children}

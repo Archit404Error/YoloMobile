@@ -13,6 +13,14 @@ export class ProfileStyles extends YoloStylesheet {
                 height: this.windowWidth / 3,
                 alignSelf: 'center'
             },
+            mediumProfImg: {
+                borderColor: "orange",
+                borderWidth: 2,
+                borderRadius: 500,
+                width: this.windowWidth / 5,
+                height: this.windowWidth / 5,
+                alignSelf: 'center'
+            },
             smallProfImg: {
                 marginTop: 10,
                 marginLeft: 10,

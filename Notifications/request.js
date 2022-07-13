@@ -46,6 +46,7 @@ export default class extends React.Component {
             .then(res => {
                 this.state.actionTaken = true;
                 this.setState(this.state);
+                this.context.refreshState();
             })
     }
 

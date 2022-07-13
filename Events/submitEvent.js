@@ -29,7 +29,7 @@ export default class extends React.Component {
                     listData={this.context.friends}
                     closeFunc={this.handleInvitesSent}
                 />
-                <Text style={styles.title}>
+                <Text style={[styles.title, { alignSelf: "center" }]}>
                     Event created!
                 </Text>
                 <Button

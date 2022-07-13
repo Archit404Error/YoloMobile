@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, SafeAreaView, ScrollView, View, KeyboardAvoidingView, Modal } from "react-native";
+import { Text, SafeAreaView, ScrollView, View, KeyboardAvoidingView, Modal, TextInput, TouchableOpacity } from "react-native";
 import Context from "../Context/context";
 import { SearchBar } from "react-native-elements";
 import { Ionicons } from '@expo/vector-icons';
@@ -12,7 +12,6 @@ import PingCell from "../Components/pingCell";
 import Story from './story';
 import UploadStory from "./uploadStory";
 import { styles } from "../styles";
-import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import UpcomingEvents from "../Components/upcomingEvents";
 
 
@@ -21,7 +20,6 @@ export default class extends React.Component {
 
     state = {
         toPing: new Set(),
-        friendSuggestions: [],
         stories: [],
         friendIds: new Set(),
         friendRes: new Set(),
@@ -99,7 +97,7 @@ export default class extends React.Component {
     }
 
     fetchSuggestions = (query) => {
-        fetch(`http://yolo-backend.herokuapp.com/searchSuggestions/${query}`)
+        fetch(`http://yolo-backend.herokuapp.com/searchSuggestions/${context.id}/${query}`)
             .then(resp => resp.json())
             .then(res => {
                 for (const elem of res) {
@@ -121,7 +119,6 @@ export default class extends React.Component {
     componentDidMount() {
         this.fetchFriends()
         this.fetchStories()
-        this.state.friendSuggestions = this.context.friendSuggs
         this.setState(this.state)
 
         this.context.socket.on("newStoryUpdate", this.fetchStories)
@@ -250,13 +247,17 @@ export default class extends React.Component {
                     Friend Suggestions
                 </Text>
 
-                <ScrollView horizontal>
-                    {
-                        this.state.friendSuggestions.map((id, index) =>
-                            <FriendCard id={id} key={index} navigation={this.props.navigation} />
-                        )
+                <Context.Consumer>
+                    {ctx =>
+                        <ScrollView horizontal>
+                            {
+                                ctx.friendSuggs.map((id, index) =>
+                                    <FriendCard id={id} key={index} navigation={this.props.navigation} />
+                                )
+                            }
+                        </ScrollView>
                     }
-                </ScrollView>
+                </Context.Consumer>
 
                 <Text style={styles.boldSectionHeader}>Your Upcoming Events</Text>
 

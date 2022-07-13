@@ -56,7 +56,12 @@ export default class extends React.Component {
     }
 
     render() {
+        if (this.context.blockedUsers.includes(this.state.id)) {
+            return <></>
+        }
+
         const iconName = this.state.friended ? 'user-check' : 'user-plus';
+
         return (
             <View style={{
                 flexDirection: 'row',

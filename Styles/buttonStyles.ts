@@ -84,6 +84,16 @@ export class ButtonStyles extends YoloStylesheet {
                 color: '#FFFFFF',
                 fontSize: 22,
             },
+            menuButtonContainer: {
+                borderBottomColor: '#f2f2f2',
+                padding: 15,
+                alignItems: "center",
+                borderBottomWidth: 1,
+            },
+            menuButton: {
+                fontFamily: 'OpenSans_500Medium',
+                fontSize: 20,
+            }
         })
     }
 }

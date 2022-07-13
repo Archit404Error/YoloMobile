@@ -21,4 +21,12 @@ const permissionWarning = (perm) => {
     )
 }
 
-export const locWarning = () => permissionWarning("Location access")
+export const locWarning = () => {
+    Alert.alert(`Location Access was rejected`,
+        `Event locations will be inaccurate due to the rejection of location permissions. You can enable then any time in settings.`,
+        [
+            { text: "Enable", onPress: () => Linking.openURL('app-settings:') },
+            { text: "Ok" }
+        ]
+    )
+}
