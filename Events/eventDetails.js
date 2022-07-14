@@ -1,13 +1,13 @@
 import React from "react";
 import Friend from "../Friends/friend"
 
-import { Image, Platform, SafeAreaView, ScrollView, Share, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Image, Platform, SafeAreaView, ScrollView, Share, Text, TouchableOpacity, View } from "react-native";
 import { Button } from "react-native-elements";
 import * as Linking from 'expo-linking';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 
 import Context from "../Context/context";
-import { acceptedFlow, rejectionFlow } from "../Helpers/eventHelperFuncs";
+import { acceptedFlow, rejectionFlow, undoAcceptedFlow, undoRejectionFlow } from "../Helpers/eventHelperFuncs";
 import { styles, windowWidth } from "../styles";
 import { ReportModal } from "../Components/reportModal";
 
@@ -15,7 +15,7 @@ export default class extends React.Component {
     static contextType = Context
 
     state = {
-        id: -1,
+        id: "-1",
         title: "Loading...",
         image: "https://www.russorizio.com/wp-content/uploads/2016/07/ef3-placeholder-image.jpg",
         desc: "Loading...",
@@ -98,6 +98,14 @@ export default class extends React.Component {
         this.setState(this.state);
     }
 
+    isRejected() {
+        return this.context.rejectedEvents.some(event => event._id === this.state.id)
+    }
+
+    isAccepted() {
+        return this.context.acceptedEvents.some(event => event._id === this.state.id)
+    }
+
     render() {
         return (
             <SafeAreaView style={styles.alignBottomContainer}>
@@ -146,31 +154,59 @@ export default class extends React.Component {
                     />
                     <View style={{ height: 50 }}></View>
                 </ScrollView>
-                {!(this.state.people.includes(this.context.id)) && <View>
 
+                <View>
                     <View style={{ flexDirection: 'row' }}>
-                        <TouchableOpacity
-                            style={styles.rsvpNoBlock}
-                            onPress={() => rejectionFlow(this.context.id, this.state.id, this.state.title, this.context)}
-                        >
-                            <Text style={{ color: 'red' }}>No thanks</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.rsvpYesBlock}
-                            onPress={
-                                () => acceptedFlow(
-                                    this.context.id,
-                                    this.state.id,
-                                    this.state.title,
-                                    this.context
-                                )
-                            }
-                        >
-                            <Text style={{ color: 'green' }}>Interested</Text>
-                        </TouchableOpacity>
+                        {!this.isAccepted() &&
+                            <TouchableOpacity
+                                style={styles.rsvpNoBlock}
+                                onPress={() => {
+                                    if (!this.isRejected()) {
+                                        rejectionFlow(this.context.id, this.state.id, this.state.title, this.context)
+                                        this.setState(this.state)
+                                    } else {
+                                        Alert.alert("Undo event rejection?",
+                                            "You will be able to RSVP to this event again after undoing your decision, if you wish to do so.", [
+                                            { text: "Cancel", style: "cancel" },
+                                            {
+                                                text: "Confirm", onPress: () => {
+                                                    undoRejectionFlow(this.context.id, this.state.id, this.state.title, this.context)
+                                                    this.setState(this.state)
+                                                }
+                                            }
+                                        ])
+                                    }
+                                }}
+                            >
+                                <Text style={{ color: 'red' }}>No thanks</Text>
+                            </TouchableOpacity>
+                        }
+                        {!this.isRejected() &&
+                            <TouchableOpacity
+                                style={styles.rsvpYesBlock}
+                                onPress={() => {
+                                    if (!this.isAccepted()) {
+                                        acceptedFlow(this.context.id, this.state.id, this.state.title, this.context)
+                                        this.setState(this.state)
+                                    } else {
+                                        Alert.alert("Undo event accept?",
+                                            "You will be able to RSVP to this event again after undoing your decision, if you wish to do so. You will also be removed from this event\'s chat", [
+                                            { text: "Cancel", style: "cancel" },
+                                            {
+                                                text: "Confirm", onPress: () => {
+                                                    undoAcceptedFlow(this.context.id, this.state.id, this.state.title, this.context)
+                                                    this.setState(this.state)
+                                                }
+                                            }
+                                        ])
+                                    }
+                                }}
+                            >
+                                <Text style={{ color: 'green' }}>Interested</Text>
+                            </TouchableOpacity>
+                        }
                     </View>
-                </View>}
-
+                </View>
             </SafeAreaView>
         )
     }

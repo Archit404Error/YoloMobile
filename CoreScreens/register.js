@@ -162,10 +162,7 @@ export default ({ navigation, route }) => {
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleClick}>
-
-                    <View>
-                        <Text style={{ color: "grey", alignSelf: 'center', marginTop: 30 }}>  By registering, you agree to our Terms Of Service </Text>
-                    </View>
+                    <Text style={styles.underlinedParaText}>By registering, you agree to our Terms Of Service</Text>
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView >

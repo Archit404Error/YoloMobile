@@ -189,6 +189,7 @@ export default (props) => {
                                                 })
                                                     .then(_ => {
                                                         context.refreshState()
+                                                        setFriended(false)
                                                         updateFriendCount()
                                                     })
                                             }

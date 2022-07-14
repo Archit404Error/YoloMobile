@@ -88,6 +88,12 @@ export class TextStyles extends YoloStylesheet {
                 fontSize: 20,
                 marginLeft: 10
             },
+            underlinedParaText: {
+                color: "grey",
+                alignSelf: 'center',
+                marginTop: 30,
+                textDecorationLine: 'underline'
+            },
         })
     }
 }

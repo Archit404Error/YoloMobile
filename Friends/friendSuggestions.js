@@ -122,10 +122,12 @@ export default class extends React.Component {
         this.setState(this.state)
 
         this.context.socket.on("newStoryUpdate", this.fetchStories)
+        this.context.socket.on("eventsUpdated", this.fetchStories)
     }
 
     componentWillUnmount() {
         this.context.socket.off("newStoryUpdate", this.fetchStories)
+        this.context.socket.off("eventsUpdated", this.fetchStories)
     }
 
     render() {

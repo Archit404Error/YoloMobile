@@ -50,12 +50,12 @@ export class EventStyles extends YoloStylesheet {
             },
             rsvpNoBlock: {
                 color: 'red',
-                width: this.windowWidth / 2,
                 borderTopColor: 'red',
                 borderTopWidth: 2,
                 alignItems: 'center',
                 backgroundColor: 'white',
                 padding: 10,
+                flex: 1
             },
             rsvpYesContainer: {
                 flex: 1,
@@ -73,10 +73,10 @@ export class EventStyles extends YoloStylesheet {
                 color: 'green',
                 borderTopColor: 'green',
                 borderTopWidth: 2,
-                width: this.windowWidth / 2,
                 alignItems: 'center',
                 backgroundColor: 'white',
                 padding: 10,
+                flex: 1
             },
             infoContainer: {
                 flex: 1,
