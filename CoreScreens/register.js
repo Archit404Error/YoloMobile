@@ -124,9 +124,9 @@ export default ({ navigation, route }) => {
                             if (status !== 'granted')
                                 locWarning()
 
-                            const valRegex = /^[A-Za-z]+$/
-                            if (!(valRegex.test(username) && valRegex.test(password))) {
-                                Alert.alert("Usernames and passwords can only contain letters")
+                            const valRegex = /^[A-Za-z0-9]+$/
+                            if (!valRegex.test(username)) {
+                                Alert.alert("Usernames can only contain letters and numbers")
                                 return
                             }
 

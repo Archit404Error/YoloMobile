@@ -74,7 +74,7 @@ export default ({ navigation, eventId, senderId, eventName, senderName }) => {
                 </TouchableOpacity>
             </View>
             <TouchableOpacity style={{ marginLeft: 60, marginTop: 5 }} onPress={() => {
-                acceptedFlow(context.id, eventId, eventData.title, context)
+                acceptedFlow(context.id, eventData, eventData.title, context)
                 setRSVP(true)
             }}>
                 <Feather name="check" size={25} />

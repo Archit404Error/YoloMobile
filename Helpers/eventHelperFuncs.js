@@ -21,13 +21,16 @@ export function eventInteraction(action, userId, eventId) {
 /**
  * Handles global state updates of pending and accepted events and updates cache
  */
-function rsvpFlow(eventId, ctx, accepted) {
+function rsvpFlow(eventData, ctx, accepted) {
     // Keep all pending events except current one
-    ctx.modifyState(["pendingEvents"], [ctx.pendingEvents.filter(e => e !== eventId)])
-    if (accepted)
-        ctx.modifyState(["acceptedEvents"], [[...ctx.acceptedEvents, eventId]])
-    else
-        ctx.modifyState(["rejectedEvents"], [[...ctx.rejectedEvents, eventId]])
+    if (accepted) {
+        ctx.modifyState(["pendingEvents"], [ctx.pendingEvents.filter(e => e !== eventData._id)])
+        ctx.modifyState(["acceptedEvents"], [[...ctx.acceptedEvents, eventData]])
+    }
+    else {
+        ctx.modifyState(["pendingEvents"], [ctx.pendingEvents.filter(e => e !== eventData)])
+        ctx.modifyState(["rejectedEvents"], [[...ctx.rejectedEvents, eventData]])
+    }
     ctx.storeCreds()
 }
 
@@ -49,10 +52,10 @@ export function rejectionFlow(userId, eventId, title, ctx) {
  * Namely: sends socket update to chat screen, updates and caches user's 
  * accepted and pending events, sends data to server, and shows message to user
  */
-export function acceptedFlow(userId, eventId, title, ctx) {
+export function acceptedFlow(userId, eventData, title, ctx) {
     ctx.socket.emit("eventsUpdated");
-    rsvpFlow(eventId, ctx, true)
-    eventInteraction("accepted", userId, eventId);
+    rsvpFlow(eventData, ctx, true)
+    eventInteraction("accepted", userId, eventData._id);
     showMessage({
         message: `${title} was accepted`,
         type: "success",

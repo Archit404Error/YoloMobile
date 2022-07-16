@@ -10,6 +10,7 @@ import Context from "../Context/context";
 import { acceptedFlow, rejectionFlow, undoAcceptedFlow, undoRejectionFlow } from "../Helpers/eventHelperFuncs";
 import { styles, windowWidth } from "../styles";
 import { ReportModal } from "../Components/reportModal";
+import { scheduleEvent } from "../Notifications/calendarNotif";
 
 export default class extends React.Component {
     static contextType = Context
@@ -25,6 +26,7 @@ export default class extends React.Component {
         people: [],
         reporting: false,
         reportText: "",
+        pulledData: {},
     };
 
     constructor(props) {
@@ -42,6 +44,9 @@ export default class extends React.Component {
         newState.endDate = props.endDate;
         newState.loc = props.location;
         newState.people = props.attendees;
+        newState.pulledData = props.pulledData;
+        if (props.hideParent)
+            newState.hideParent = props.hideParent;
         return newState
     }
 
@@ -99,7 +104,7 @@ export default class extends React.Component {
     }
 
     isRejected() {
-        return this.context.rejectedEvents.some(event => event._id === this.state.id)
+        return this.context.rejectedEvents.some(event => event === this.state.id)
     }
 
     isAccepted() {
@@ -163,6 +168,8 @@ export default class extends React.Component {
                                 onPress={() => {
                                     if (!this.isRejected()) {
                                         rejectionFlow(this.context.id, this.state.id, this.state.title, this.context)
+                                        if (this.state.hideParent)
+                                            this.state.hideParent()
                                         this.setState(this.state)
                                     } else {
                                         Alert.alert("Undo event rejection?",
@@ -186,7 +193,10 @@ export default class extends React.Component {
                                 style={styles.rsvpYesBlock}
                                 onPress={() => {
                                     if (!this.isAccepted()) {
-                                        acceptedFlow(this.context.id, this.state.id, this.state.title, this.context)
+                                        acceptedFlow(this.context.id, this.state.pulledData, this.state.title, this.context)
+                                        scheduleEvent(this.state.startDate, this.state.endDate, this.state.title)
+                                        if (this.state.hideParent)
+                                            this.state.hideParent()
                                         this.setState(this.state)
                                     } else {
                                         Alert.alert("Undo event accept?",

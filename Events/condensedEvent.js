@@ -26,7 +26,8 @@ export default function CondensedEvent({ id, navigation, customPressFunc }) {
                     location: res.location,
                     startDate: new Date(res.startDate),
                     endDate: new Date(res.endDate),
-                    attendees: res.attendees
+                    attendees: res.attendees,
+                    pulledData: res
                 })
             }}>
             <Image style={styles.smallProfImg} source={{ uri: res.image }} />

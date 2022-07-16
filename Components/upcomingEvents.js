@@ -14,13 +14,14 @@ export const SquareEvent = ({ eventObj, navigation }) => (
             location: eventObj.location,
             startDate: new Date(eventObj.startDate),
             endDate: new Date(eventObj.endDate),
-            attendees: eventObj.attendees
+            attendees: eventObj.attendees,
+            pulledData: eventObj
         })}
         style={styles.eventCard}
     >
         <Image style={styles.eventCardImg} source={{ uri: eventObj.image }} />
         <Text style={styles.title}>{eventObj.title}</Text>
-        <Text style={styles.subText}>{eventObj.description}</Text>
+        <Text style={styles.subText}>{eventObj.description.substring(0, 75) + "...(Read More)"}</Text>
     </TouchableOpacity>
 )
 
@@ -42,7 +43,7 @@ export default ({ id, navigation }) => {
 
     return (
         <SafeAreaView>
-            <ScrollView horizontal snapToAlignment="start" snapToInterval={screenWidth + 45} decelerationRate={0}>
+            <ScrollView horizontal snapToAlignment="start" snapToInterval={screenWidth - 10} decelerationRate={0}>
                 {upcoming.map(event => <SquareEvent eventObj={event} navigation={navigation} />)}
             </ScrollView>
         </SafeAreaView>

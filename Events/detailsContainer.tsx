@@ -10,6 +10,8 @@ export default ({ navigation, route }) => {
     const [startDate, setStart] = useState(new Date())
     const [endDate, setEnd] = useState(new Date())
     const [attendees, setAttendees] = useState([])
+    const [pulledData, setPulledData] = useState({})
+    const [hideParent, setHideParent] = useState(null)
 
     const setEventData = () => {
         if (route.params.title) {
@@ -21,6 +23,10 @@ export default ({ navigation, route }) => {
             setStart(route.params.startDate)
             setEnd(route.params.endDate)
             setAttendees(route.params.attendees)
+            setPulledData(route.params.pulledData)
+            // Wrap hideParent in another function because of how useState works
+            if (route.params.hideParent)
+                setHideParent(() => route.params.hideParent)
         } else {
             fetch(`http://yolo-backend.herokuapp.com/event/${route.params.id}`)
                 .then(res => res.json())
@@ -33,6 +39,7 @@ export default ({ navigation, route }) => {
                     setStart(new Date(json.startDate))
                     setEnd(new Date(json.endDate))
                     setAttendees(json.attendees)
+                    setPulledData(json)
                 })
         }
     }
@@ -49,6 +56,8 @@ export default ({ navigation, route }) => {
             startDate={startDate}
             endDate={endDate}
             attendees={attendees}
+            pulledData={pulledData}
+            hideParent={hideParent}
             navigation={navigation}
         />
     )

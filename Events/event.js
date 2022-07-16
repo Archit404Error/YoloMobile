@@ -23,12 +23,14 @@ export default class Event extends React.Component {
         attendees: [],
         distance: 0,
         visible: true,
-        timesPressed: 0
+        timesPressed: 0,
+        pulledData: {}
     }
 
     constructor(props) {
         super(props);
         this.handleAccept = this.handleAccept.bind(this)
+        this.hideSelf = this.hideSelf.bind(this)
     }
 
     updateSelf() {
@@ -43,6 +45,7 @@ export default class Event extends React.Component {
                 this.state.endDate = new Date(res.endDate);
                 this.state.attendees = res.attendees;
                 this.state.tags = res.tags;
+                this.state.pulledData = res;
                 this.setState(this.state);
                 const locUrl =
                     `http://router.project-osrm.org/route/v1/car/${this.context.longitude},${this.context.latitude};${res.longitude},${res.latitude}`;
@@ -73,7 +76,9 @@ export default class Event extends React.Component {
             location: this.state.location,
             startDate: this.state.startDate,
             endDate: this.state.endDate,
-            attendees: this.state.attendees
+            attendees: this.state.attendees,
+            pulledData: this.state.pulledData,
+            hideParent: this.hideSelf
         })
     }
 
@@ -81,6 +86,12 @@ export default class Event extends React.Component {
         this.state.visible = false;
         this.setState(this.state);
         scheduleEvent(this.state.startDate, this.state.endDate, this.state.title);
+    }
+
+    hideSelf() {
+        console.log("Hiding self");
+        this.state.visible = false;
+        this.setState(this.state);
     }
 
     render() {
@@ -152,7 +163,7 @@ export default class Event extends React.Component {
 
                                 acceptedFlow(
                                     this.context.id,
-                                    this.state.id,
+                                    this.state.pulledData,
                                     this.state.title,
                                     this.context
                                 )

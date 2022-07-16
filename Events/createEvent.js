@@ -78,10 +78,13 @@ export default ({ navigation }) => {
                                 onChangeText={setLocation}
                                 inputAccessoryViewID={doneWrapperId}
                             />
-                            <LocationChooser
-                                initialLat={context.latitude}
-                                initialLong={context.longitude}
-                            />
+                            {
+                                /*
+                                <LocationChooser
+                                    initialLat={context.latitude}
+                                    initialLong={context.longitude}
+                                />*/
+                            }
                             <TextInput
                                 style={styles.titleInput}
                                 placeholder="Tags"
