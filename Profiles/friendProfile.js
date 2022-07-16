@@ -2,8 +2,9 @@ import React, { useState, useEffect, useContext } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import DisplayProfile from "./displayProfile";
-import { Alert, TouchableOpacity } from "react-native";
+import { Alert, TouchableOpacity, Text } from "react-native";
 import Context from "../Context/context";
+import { HeaderBackButton } from "@react-navigation/elements";
 
 export default (props) => {
     const [id, setId] = useState(-1);
@@ -28,6 +29,7 @@ export default (props) => {
 
 
     props.navigation.setOptions({
+        headerLeft: () => (<HeaderBackButton onPress={() => props.navigation.navigate("Friend List")} />),
         headerRight: () => (
             <TouchableOpacity onPress={() => {
                 Alert.alert(
@@ -41,7 +43,6 @@ export default (props) => {
                         {
                             text: "Block",
                             onPress: () => {
-                                console.log(id)
                                 fetch('http://yolo-backend.herokuapp.com/blockUser', {
                                     method: "POST",
                                     headers: {

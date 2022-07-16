@@ -121,6 +121,10 @@ export default class extends React.Component {
         this.fetchStories()
         this.setState(this.state)
 
+        this.props.navigation.setOptions({
+            headerLeft: () => (<></>)
+        })
+
         this.context.socket.on("newStoryUpdate", this.fetchStories)
         this.context.socket.on("eventsUpdated", this.fetchStories)
     }
