@@ -25,9 +25,9 @@ function rsvpFlow(eventId, ctx, accepted) {
     // Keep all pending events except current one
     ctx.modifyState(["pendingEvents"], [ctx.pendingEvents.filter(e => e !== eventId)])
     if (accepted)
-        ctx.modifyState(["acceptedEvents"], [...ctx.acceptedEvents, eventId])
+        ctx.modifyState(["acceptedEvents"], [[...ctx.acceptedEvents, eventId]])
     else
-        ctx.modifyState(["rejectedEvents"], [...ctx.rejectedEvents, eventId])
+        ctx.modifyState(["rejectedEvents"], [[...ctx.rejectedEvents, eventId]])
     ctx.storeCreds()
 }
 
@@ -60,7 +60,7 @@ export function acceptedFlow(userId, eventId, title, ctx) {
 }
 
 function undoFlow(eventId, ctx, undoingAccept) {
-    ctx.modifyState(["pendingEvents"], [...ctx.pendingEvents, eventId])
+    ctx.modifyState(["pendingEvents"], [[...ctx.pendingEvents, eventId]])
     if (undoingAccept)
         ctx.modifyState(["acceptedEvents"], [ctx.acceptedEvents.filter(e => e._id !== eventId)])
     else
