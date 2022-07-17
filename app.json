@@ -18,6 +18,7 @@
       "**/*"
     ],
     "ios": {
+      "buildNumber": "1.0.7",
       "supportsTablet": true,
       "bundleIdentifier": "com.4architmehta.Yolo",
       "associatedDomains": [

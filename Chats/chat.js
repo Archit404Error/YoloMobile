@@ -62,7 +62,7 @@ export default class extends React.Component {
         this.state.name = this.context.username;
         this.setState(this.state);
         this.props.navigation.setOptions({
-            headerTitle: this.state.title,
+            headerTitle: this.state.title.length < 30 ? this.state.title : this.state.title.substring(0, 30) + "...",
             headerRight: this.viewSettings
         })
         this.context.socket.on("messageSent", this.handleChatUpdate);

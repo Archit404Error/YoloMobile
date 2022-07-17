@@ -98,8 +98,10 @@ export default class extends React.Component {
                 }>
                 <View style={styles.chatContainer}>
                     <View style={{ flexDirection: 'row', alignItems: "center" }}>
-                        <Image style={styles.chatImg} source={{ uri: this.state.image }} />
-                        <View style={{ flexDirection: 'column', padding: 10 }}>
+                        <View style={{ flex: 1 }}>
+                            <Image style={styles.chatImg} source={{ uri: this.state.image }} />
+                        </View>
+                        <View style={{ flexDirection: 'column', padding: 10, flex: 4 }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <Text style={styles.boldSubHeader}>
                                     {

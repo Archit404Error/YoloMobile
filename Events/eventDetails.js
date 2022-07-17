@@ -87,7 +87,7 @@ export default class extends React.Component {
      * Creates an event link for this event and allows user to share it
      */
     shareEventLink() {
-        const eventUrl = Linking.createURL(`/event/${this.state.id}`)
+        const eventUrl = Linking.createURL(`event/${this.state.id}`)
         try {
             if (Platform.OS == "ios")
                 Share.share({ url: eventUrl })

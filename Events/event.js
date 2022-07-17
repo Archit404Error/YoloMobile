@@ -116,9 +116,9 @@ export default class Event extends React.Component {
                     >
                         <Image style={styles.eventImg} source={{ uri: this.state.image }} />
                     </TouchableWithoutFeedback>
-                    <Text style={styles.title}>{this.state.title}</Text>
+                    <Text numberOfLines={1} style={styles.title}>{this.state.title}</Text>
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.addressText}>{this.state.location}</Text>
+                        <Text style={styles.addressText}>{this.state.location.length > 30 ? this.state.location.substring(0, 30) + "..." : this.state.location}</Text>
                         <Text style={styles.addressText}>{Math.round(this.state.distance)} mi</Text>
                     </View>
                     <View style={{ flexDirection: 'row', marginLeft: 5 }}>
@@ -133,7 +133,7 @@ export default class Event extends React.Component {
                         }
                     </View>
                     <TouchableOpacity onPress={() => this.displayDetails()}>
-                        <Text style={styles.subText}>{this.state.description.substring(0, 75) + "...(Read More)"}</Text>
+                        <Text style={styles.subText}>{this.state.description.replace(/(\r\n|\n|\r)/gm, ' ').substring(0, 75) + "...(Read More)"}</Text>
                     </TouchableOpacity>
                     <View style={styles.rsvpContainer}>
                         <TouchableOpacity style={styles.rsvpNoContainer} onPress={() => {
