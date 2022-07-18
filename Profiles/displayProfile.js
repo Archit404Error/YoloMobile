@@ -3,7 +3,7 @@
  */
 
 import React, { useState, useEffect, useContext } from "react";
-import { SafeAreaView, ScrollView, Text, Image, View, TouchableOpacity, Alert } from "react-native";
+import { SafeAreaView, ScrollView, Text, Image, View, TouchableOpacity, Alert, Modal, ActivityIndicator } from "react-native";
 import { styles } from "../styles";
 import CondensedEvent from "../Events/condensedEvent";
 import * as ImagePicker from 'expo-image-picker';
@@ -25,6 +25,7 @@ export default (props) => {
     const [editable, setEditable] = useState(props.editable)
     const [isFriend, setFriended] = useState(false)
     const [isPending, setPending] = useState(false)
+    const [uploadingProfPic, setUploading] = useState(false);
     const context = useContext(Context)
 
     const dataFromProps = () => {
@@ -96,9 +97,11 @@ export default (props) => {
     const uploadProfilePic = async () => {
         if ((await Camera.getCameraPermissionsAsync()).status !== "denied") {
             let uri = await pickImage();
+            setUploading(true);
             let downloadURL = await uploadImageAsync(uri);
             await refreshProfilePic(downloadURL, id);
             setProfPic(downloadURL)
+            setUploading(false);
             context.modifyState(["profile"], [downloadURL])
         }
         else handleImgRejection()
@@ -115,6 +118,12 @@ export default (props) => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
+            <Modal animationType="slide" transparent visible={uploadingProfPic}>
+                <View style={styles.modalView}>
+                    <Text style={styles.boldSubHeader}>Uploading...</Text>
+                    <ActivityIndicator size="large" color="#0000ff" />
+                </View>
+            </Modal>
             <ScrollView style={styles.container}>
                 {editable ?
                     <TouchableOpacity onPress={uploadProfilePic}>

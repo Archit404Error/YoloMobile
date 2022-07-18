@@ -88,13 +88,13 @@ function UpdateStack() {
             />
             <TopTab.Screen
                 name="Event Updates"
-                component={eventStatStack}
+                component={EventStatStack}
             />
         </TopTab.Navigator>
     )
 }
 
-function eventStatStack() {
+function EventStatStack() {
     return (
         <Stack.Navigator
             screenOptions={{ headerShown: false }}

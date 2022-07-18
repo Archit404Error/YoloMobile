@@ -108,7 +108,11 @@ export default ({ navigation }) => {
                                     <RNDateTimePicker
                                         value={startDate}
                                         mode={"datetime"}
-                                        onChange={(selectEvent, data) => setStartDate(data || startDate)}
+                                        onChange={(selectEvent, data) => {
+                                            setStartDate(data || startDate);
+                                            if (data && data - endDate > 0)
+                                                setEndDate(data);
+                                        }}
                                         style={styles.datePicker}
                                     />
                                 </View>

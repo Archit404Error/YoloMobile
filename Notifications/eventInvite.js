@@ -4,7 +4,7 @@ import { acceptedFlow, eventInteraction, rejectionFlow } from "../Helpers/eventH
 import { Feather } from '@expo/vector-icons';
 import Context from "../Context/context";
 
-export default ({ navigation, eventId, senderId, eventName, senderName }) => {
+export default ({ id, navigation, eventId, senderId, eventName, senderName }) => {
     const context = useContext(Context);
     const [rsvped, setRSVP] = useState(false);
     const [senderData, setSenderData] = useState({});
@@ -70,18 +70,38 @@ export default ({ navigation, eventId, senderId, eventName, senderName }) => {
                         }
                     })
                 }}>
-                    <Text style={{ color: 'gray', fontSize: 10, marginLeft: 10 }}>invited you to {eventName}</Text>
+                    <Text style={{ color: 'gray', fontSize: 10, marginLeft: 10 }}>invited you to {eventName.length > 27 ? eventName.substring(0, 27) + "..." : eventName}</Text>
                 </TouchableOpacity>
             </View>
             <TouchableOpacity style={{ marginLeft: 60, marginTop: 5 }} onPress={() => {
                 acceptedFlow(context.id, eventData, eventData.title, context)
                 setRSVP(true)
+                fetch('http://yolo-backend.herokuapp.com/deleteNotif', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user: context.id,
+                        notif: id
+                    })
+                })
             }}>
                 <Feather name="check" size={25} />
             </TouchableOpacity>
             <TouchableOpacity style={{ marginLeft: 30, marginTop: 5 }} onPress={() => {
                 rejectionFlow(context.id, eventId, eventData.title, context)
                 setRSVP(true)
+                fetch('http://yolo-backend.herokuapp.com/deleteNotif', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user: context.id,
+                        id: id
+                    })
+                })
             }}>
                 <Feather name="x" size={25} />
             </TouchableOpacity>

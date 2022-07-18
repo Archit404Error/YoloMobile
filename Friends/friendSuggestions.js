@@ -97,7 +97,7 @@ export default class extends React.Component {
     }
 
     fetchSuggestions = (query) => {
-        fetch(`http://yolo-backend.herokuapp.com/searchSuggestions/${context.id}/${query}`)
+        fetch(`http://yolo-backend.herokuapp.com/searchSuggestions/${this.context.id}/${query}`)
             .then(resp => resp.json())
             .then(res => {
                 for (const elem of res) {
@@ -169,7 +169,7 @@ export default class extends React.Component {
                             </TouchableOpacity>
 
                             <SearchBar
-                                placeholder="Search for your friends"
+                                placeholder="Search for events and users"
                                 lightTheme={true}
                                 value={this.state.friendText}
                                 platform={Platform.OS}

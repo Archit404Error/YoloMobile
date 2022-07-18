@@ -31,7 +31,7 @@ export default function CondensedEvent({ id, navigation, customPressFunc }) {
                 })
             }}>
             <Image style={styles.smallProfImg} source={{ uri: res.image }} />
-            <Text style={{ alignSelf: 'center', marginLeft: 10, fontFamily: "OpenSans_300Light" }}>{res.title}</Text>
+            <Text style={{ alignSelf: 'center', marginLeft: 10, fontFamily: "OpenSans_300Light" }}>{res.title && res.title.length > 30 ? res.title.substring(0, 27) + "..." : res.title}</Text>
         </TouchableOpacity>
     )
 }

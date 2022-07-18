@@ -9,7 +9,7 @@ export default class extends React.Component {
     static contextType = Context;
 
     state = {
-        id: -1,
+        friendId: -1,
         name: "Loading...",
         profPic: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png",
         actionTaken: false,
@@ -20,8 +20,8 @@ export default class extends React.Component {
     }
 
     componentDidMount() {
-        this.state.id = this.props.id;
-        fetch(`http://yolo-backend.herokuapp.com/user/${this.props.id}`)
+        this.state.friendId = this.props.friendId;
+        fetch(`http://yolo-backend.herokuapp.com/user/${this.props.friendId}`)
             .then(res => res.json())
             .then(resJson => {
                 this.state.name = resJson.name;
@@ -46,7 +46,7 @@ export default class extends React.Component {
                         {
                             screen: "View Profile",
                             params: {
-                                id: this.state.id
+                                id: this.state.friendId
                             }
                         },
                     )

@@ -1,15 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Image, Text, SafeAreaView, ScrollView, View, TextInput, Switch, Modal, TouchableOpacity } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
+import { Image, Text, SafeAreaView, ScrollView, View, TextInput, Switch, Modal, TouchableOpacity, Share, Platform } from "react-native";
+import * as Linking from 'expo-linking';
+import { Ionicons, Feather } from '@expo/vector-icons';
 import { styles, windowWidth, windowHeight } from "../styles";
 import Friend from "../Friends/friend";
-import LocationChooser from '../Events/locationChoose';
-import ImgScreen from '../Events/imgChoose';
 
 import Context from "../Context/context";
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-import { showMessage } from "react-native-flash-message";
-import { Icon } from "react-native-elements/dist/icons/Icon";
 
 export default ({ navigation, route }) => {
     const context = useContext(Context);
@@ -33,6 +30,18 @@ export default ({ navigation, route }) => {
         fetch(`http://yolo-backend.herokuapp.com/events/${data._id}`)
             .then(data => data.json())
             .then(json => setData(json))
+    }
+
+    const shareEventLink = () => {
+        const eventUrl = Linking.createURL(`event/${data._id}`)
+        try {
+            if (Platform.OS == "ios")
+                Share.share({ url: eventUrl })
+            else
+                Share.share({ message: eventUrl })
+        } catch (err) {
+            alert(err.message);
+        }
     }
 
     context.socket.on("RSVPOccurred", updateData)
@@ -162,7 +171,12 @@ export default ({ navigation, route }) => {
                     style={{ width: windowWidth, height: windowHeight / 5 }}
                     source={{ uri: data.image }}
                 />
-                <Text style={styles.title}>{data.title}</Text>
+                <View style={{ flexDirection: 'row', maxWidth: windowWidth - 40 }}>
+                    <Text style={styles.title}>{data.title}</Text>
+                    <TouchableOpacity onPress={shareEventLink} style={{ marginTop: 40 }}>
+                        <Feather name={"external-link"} size={20} color="blue" />
+                    </TouchableOpacity>
+                </View>
                 <TouchableOpacity style={{ flex: 1, flexDirection: 'row', marginTop: 15 }} onPress={() => {
                     setModalVisible(true);
                 }}>
