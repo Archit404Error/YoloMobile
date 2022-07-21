@@ -11,6 +11,7 @@ export default ({ navigation }) => {
                 <DisplayProfile
                     id={context.id}
                     name={context.fullName}
+                    username={context.username}
                     events={context.acceptedEvents}
                     friends={context.friends}
                     profilePic={context.profilePic}

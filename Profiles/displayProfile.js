@@ -19,6 +19,7 @@ import { fetchUserData } from "../Helpers/fetchHelperFuncs";
 export default (props) => {
     const [id, setId] = useState(props.id)
     const [name, setName] = useState(props.name)
+    const [username, setUsername] = useState(props.username)
     const [events, setEvents] = useState(props.events)
     const [friends, setFriends] = useState(props.friends)
     const [profilePic, setProfPic] = useState(props.profilePic)
@@ -31,6 +32,7 @@ export default (props) => {
     const dataFromProps = () => {
         setId(props.id)
         setName(props.name)
+        setUsername(props.username)
         setEvents(props.events)
         setFriends(props.friends)
         setEditable(props.editable)
@@ -132,6 +134,7 @@ export default (props) => {
                     : <Image style={styles.profImg} source={{ uri: profilePic }} />
                 }
                 <Text style={styles.profTitle}>{name}</Text>
+                <Text style={styles.profSubTitle}>@{username}</Text>
                 <View style={{ flexDirection: 'row', backgroundColor: 'white' }}>
                     <TouchableOpacity style={styles.paddedFlexContainer} onPress={() => {
                         props.navigation.navigate("View friends", {
@@ -211,11 +214,13 @@ export default (props) => {
                         />
                 }
                 <View style={{ padding: 10 }}>
-                    <Text style={styles.boldSubHeader}>Attended Events</Text>
+                    <Text style={styles.boldSubHeader}>Upcoming Events</Text>
                     {
-                        events.map(event =>
-                            <CondensedEvent key={event._id} id={event._id} navigation={props.navigation} />
-                        )
+                        events.map(event => {
+                            if (!event || new Date(event.startDate) <= Date.now())
+                                return <></>
+                            return <CondensedEvent key={event._id} id={event._id} navigation={props.navigation} />
+                        })
                     }
                 </View>
             </ScrollView>
