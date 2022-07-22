@@ -12,7 +12,7 @@ export default forwardRef((props, ref) => {
     return (
         <RBSheet
             ref={ref}
-            height={200}
+            height={300}
             openDuration={250}
             closeOnDragDown={true}
             onOpen={() => setChanged(false)}

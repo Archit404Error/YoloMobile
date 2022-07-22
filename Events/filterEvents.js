@@ -14,7 +14,24 @@ export default ({ setFilters }) => {
             <FilterModal
                 ref={filterModal}
                 setFilters={setFilters}
-                tagList={["meetups", "parties", "sports", "clubs", "comedy", "recruiting"]}
+                tagList={[
+                    "music",
+                    "sports",
+                    "art",
+                    "food",
+                    "movies",
+                    "theatre",
+                    "comedy",
+                    "dance",
+                    "literature",
+                    "computer science",
+                    "engineering",
+                    "history",
+                    "geography",
+                    "math",
+                    "research",
+                    "party",
+                ]}
             />
         </>
     )
