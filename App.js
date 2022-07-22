@@ -227,7 +227,7 @@ function MainTab({ navigation, setLoggedIn }) {
                     if (route.name === 'Events') {
                         iconName = focused ? 'compass' : 'compass-outline';
                     } else if (route.name === 'Friends') {
-                        iconName = focused ? 'people-sharp' : 'people-outline';
+                        iconName = focused ? 'ios-search-sharp' : 'ios-search-outline';
                     } else if (route.name === 'Create') {
                         iconName = focused ? 'add-circle' : 'add-circle-outline';
                     } else if (route.name === 'Chats') {

@@ -87,10 +87,10 @@ export default ({ navigation }) => {
           />
         }
         {
-          ids.map(id => {
+          ids.map((id, index) => {
             return (
               <Event
-                key={id + "homeSugg"}
+                key={id + "homeSugg" + index}
                 id={id}
                 cardHeight={eventCardHeight}
                 filters={filters}

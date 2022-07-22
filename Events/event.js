@@ -89,7 +89,6 @@ export default class Event extends React.Component {
     }
 
     hideSelf() {
-        console.log("Hiding self");
         this.state.visible = false;
         this.setState(this.state);
     }
