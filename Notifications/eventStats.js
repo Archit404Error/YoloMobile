@@ -62,7 +62,7 @@ export default ({ navigation, route }) => {
                     <TouchableOpacity onPress={() => {
                         setModalVisible(false);
                     }}>
-                        <Ionicons name="close" size={30} color="orange" style={styles.editIcon} style={{ marginTop: 70 }} />
+                        <Ionicons name="close" size={30} color="orange" style={[styles.editIcon, { marginTop: 70 }]} />
                     </TouchableOpacity>
                     <TextInput
                         style={styles.titleInput}
