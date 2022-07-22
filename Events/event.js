@@ -125,7 +125,7 @@ export default class Event extends React.Component {
                         {
                             this.state.tags.map((tag, index) => {
                                 return (
-                                    <TouchableOpacity key={index}>
+                                    <TouchableOpacity key={index + tag + this.state.id}>
                                         <Text style={styles.tag}>{tag}</Text>
                                     </TouchableOpacity>
                                 );

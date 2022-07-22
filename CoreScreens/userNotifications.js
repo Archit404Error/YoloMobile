@@ -38,13 +38,13 @@ export default ({ navigation }) => {
                     notifObjs.slice(0).reverse().map((notifObject, index) => {
                         if (notifObject.type === "friend")
                             return <FriendRequest
-                                key={notifObject._id}
+                                key={notifObject._id + "friendReq"}
                                 id={notifObject._id}
                                 friendId={notifObject.sender}
                             />
                         else if (notifObject.type === "invite")
                             return <EventInvite
-                                key={notifObject._id}
+                                key={notifObject._id + "eventInvite"}
                                 id={notifObject._id}
                                 eventId={notifObject.event}
                                 senderId={notifObject.sender}
@@ -53,7 +53,7 @@ export default ({ navigation }) => {
                                 navigation={navigation}
                             />
                         else if (notifObject.type === "newfriend")
-                            return <NewFriend key={notifObject._id} id={notifObject._id} friendId={notifObject.friend} navigation={navigation} />
+                            return <NewFriend key={notifObject._id + "newFriend"} id={notifObject._id} friendId={notifObject.friend} navigation={navigation} />
                     })
                 }
             </ScrollView>

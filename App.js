@@ -68,44 +68,8 @@ function HomeStack() {
                 component={DetailsScreen}
             />
             <Stack.Screen
-                name="Updates"
-                component={UpdateStack}
-            />
-        </Stack.Navigator>
-    )
-}
-
-function UpdateStack() {
-    return (
-        <TopTab.Navigator
-            screenOptions={{
-                tabBarLabelStyle: { fontSize: 10 },
-            }}
-        >
-            <TopTab.Screen
                 name="Notifications"
                 component={UserNotifScreen}
-            />
-            <TopTab.Screen
-                name="Event Updates"
-                component={EventStatStack}
-            />
-        </TopTab.Navigator>
-    )
-}
-
-function EventStatStack() {
-    return (
-        <Stack.Navigator
-            screenOptions={{ headerShown: false }}
-        >
-            <Stack.Screen
-                name="Created Events"
-                component={EventNotifScreen}
-            />
-            <Stack.Screen
-                name="Event Stats"
-                component={EventStatScreen}
             />
         </Stack.Navigator>
     )
@@ -139,10 +103,14 @@ function FriendStack() {
     )
 }
 
-function AddStack() {
+function AddTab() {
     return (
-        <Stack.Navigator>
-            <Stack.Screen
+        <TopTab.Navigator
+            screenOptions={{
+                tabBarLabelStyle: { fontSize: 10 },
+            }}
+        >
+            <TopTab.Screen
                 name="Create Event"
                 component={CreateScreen}
                 options={{
@@ -151,6 +119,21 @@ function AddStack() {
                     },
                 }}
             />
+            <TopTab.Screen
+                name="Manage Events"
+                component={EventNotifScreen}
+            />
+        </TopTab.Navigator>
+    )
+}
+
+function AddStack() {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen
+                name="Create & Manage"
+                component={AddTab}
+            />
             <Stack.Screen
                 name="Preview Event"
                 component={PreviewScreen}
@@ -158,6 +141,10 @@ function AddStack() {
             <Stack.Screen
                 name="Submit Event"
                 component={SubmitScreen}
+            />
+            <Stack.Screen
+                name="Event Stats"
+                component={EventStatScreen}
             />
         </Stack.Navigator>
     )
@@ -255,7 +242,7 @@ function MainTab({ navigation, setLoggedIn }) {
         >
             <Tab.Screen name="Events" component={HomeStack} options={{ headerShown: false, tabBarShowLabel: false }} />
             <Tab.Screen name="Friends" component={FriendStack} options={{ headerShown: false, tabBarShowLabel: false }} />
-            <Tab.Screen name="Create" options={{ headerShown: false, tabBarShowLabel: false }} component={AddStack} />
+            <Tab.Screen name="Create" component={AddStack} options={{ headerShown: false, tabBarShowLabel: false }} />
             <Tab.Screen name="Chats" component={ChatStack} options={{ headerShown: false, tabBarShowLabel: false }} />
             <Tab.Screen name="Profile" component={ProfileStack} options={{
                 tabBarShowLabel: false,

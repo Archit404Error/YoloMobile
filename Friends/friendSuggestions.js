@@ -144,7 +144,7 @@ export default class extends React.Component {
                             {
                                 this.state.stories.map((storyObj, index) =>
                                     <Story
-                                        key={index}
+                                        key={index + storyObj.id}
                                         id={storyObj.id}
                                         preview={storyObj.preview}
                                         images={storyObj.storyImages}
@@ -258,7 +258,7 @@ export default class extends React.Component {
                         <ScrollView horizontal>
                             {
                                 ctx.friendSuggs.map((id, index) =>
-                                    <FriendCard id={id} key={index} navigation={this.props.navigation} />
+                                    <FriendCard id={id} key={index + id} navigation={this.props.navigation} />
                                 )
                             }
                         </ScrollView>

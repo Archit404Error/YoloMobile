@@ -18,7 +18,7 @@ export default forwardRef((props, ref) => (
             {
                 props.listData.map(friendId =>
                     <FriendInvitation
-                        key={friendId}
+                        key={friendId + "friendInvite"}
                         id={friendId}
                         eventId={props.id}
                         eventName={props.title}

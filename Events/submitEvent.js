@@ -33,11 +33,8 @@ export default class extends React.Component {
                     onPress={() => this.sendModal.open()}
                 />
                 <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate("Events", {
-                        screen: "Updates",
-                        params: {
-                            screen: "Event Updates",
-                        }
+                    onPress={() => this.props.navigation.navigate("Create", {
+                        screen: "Notifications"
                     })}
                     style={[styles.subText, { alignSelf: 'center' }]}
                 >

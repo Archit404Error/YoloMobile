@@ -73,7 +73,7 @@ export default class extends React.Component {
                             .sort((fst, snd) => snd.lastUpdate - fst.lastUpdate)
                             .map((data, index) => {
                                 return <ChatPreview
-                                    key={data._id}
+                                    key={data._id + "chatPreview"}
                                     navigation={this.props.navigation}
                                     id={data._id}
                                     read={(() => {

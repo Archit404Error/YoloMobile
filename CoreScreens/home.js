@@ -26,7 +26,7 @@ export default ({ navigation }) => {
     headerRight: () => (
       <View style={{ flexDirection: "row" }}>
         <FilterEvents setFilters={setFilters} />
-        <TouchableOpacity onPress={() => navigation.navigate("Updates")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Notifications")}>
           <Ionicons name={"notifications-outline"} size={25} style={{ marginRight: 15 }} />
         </TouchableOpacity>
       </View>
@@ -90,7 +90,7 @@ export default ({ navigation }) => {
           ids.map(id => {
             return (
               <Event
-                key={id}
+                key={id + "homeSugg"}
                 id={id}
                 cardHeight={eventCardHeight}
                 filters={filters}

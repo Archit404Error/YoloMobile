@@ -69,7 +69,7 @@ export default ({ navigation }) => {
                                 {
                                     context.eventDetails.tags.split("|").map((tag, index) => {
                                         return (
-                                            <View key={index}>
+                                            <View key={index + "tag" + context.eventDetails.title}>
                                                 <Text style={styles.tag}>{tag}</Text>
                                             </View>
                                         )
