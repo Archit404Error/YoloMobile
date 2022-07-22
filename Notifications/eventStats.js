@@ -56,12 +56,13 @@ export default ({ navigation, route }) => {
                 animationType={"slide"}
                 transparent={false}
                 visible={modalVisible}
+                style={{ padding: 10 }}
             >
                 <ScrollView>
                     <TouchableOpacity onPress={() => {
                         setModalVisible(false);
                     }}>
-                        <Ionicons name="close" size={30} color="orange" style={styles.editIcon} />
+                        <Ionicons name="close" size={30} color="orange" style={styles.editIcon} style={{ marginTop: 70 }} />
                     </TouchableOpacity>
                     <TextInput
                         style={styles.titleInput}
