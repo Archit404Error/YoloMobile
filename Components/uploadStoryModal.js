@@ -17,7 +17,7 @@ export default forwardRef((props, ref) => (
             {
                 props.listData.map(eventId =>
                     <CondensedEvent
-                        key={eventId}
+                        key={eventId + "uploadStoryChoice"}
                         id={eventId}
                         customPressFunc={() => props.upload(eventId)}
                     />

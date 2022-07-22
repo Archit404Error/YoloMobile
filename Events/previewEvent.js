@@ -1,36 +1,31 @@
 import React, { useState } from 'react';
 import { SafeAreaView, ScrollView, View, Text, Image, Button, Modal, ActivityIndicator, Alert } from 'react-native';
 import Context from '../Context/context';
-import { styles, screenHeight } from '../styles';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-import uuid from 'uuid';
+import { styles } from '../styles';
 
-/**
- * Takes a URL, downloads the image, and uploads it to Firebase Storage
- * @param uri - The URI of the image you want to upload.
- * @returns A promise that resolves to a URL.
- */
 export const uploadImageAsync = async (uri) => {
-    const blob = await new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.onload = function () {
-            console.log(xhr.response.size)
-            resolve(xhr.response);
-        };
-        xhr.onerror = function (e) {
-            reject(new TypeError('Network request failed'));
-        };
-        xhr.responseType = 'blob';
-        xhr.open('GET', uri, true);
-        xhr.send(null);
-    });
+    let fileType = uri.split(".").pop();
+    let formData = new FormData();
+    formData.append("photo", {
+        uri,
+        name: `photo.${fileType}`,
+        type: `image/${fileType}`
+    })
 
-    const fireRef = ref(getStorage(), uuid.v4());
-    const snapshot = await uploadBytes(fireRef, blob);
+    const res = await fetch('http://yolo-backend.herokuapp.com/upload', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'multipart/form-data',
+        },
+        body: formData,
+    })
 
-    blob.close();
+    const json = await res.json();
+    if (json.status === "success")
+        return json.data;
 
-    return await getDownloadURL(fireRef);
+    throw "Could not upload image";
 }
 
 /**
@@ -74,7 +69,7 @@ export default ({ navigation }) => {
                                 {
                                     context.eventDetails.tags.split("|").map((tag, index) => {
                                         return (
-                                            <View key={index}>
+                                            <View key={index + "tag" + context.eventDetails.title}>
                                                 <Text style={styles.tag}>{tag}</Text>
                                             </View>
                                         )

@@ -11,6 +11,7 @@ import { acceptedFlow, rejectionFlow, undoAcceptedFlow, undoRejectionFlow } from
 import { styles, windowWidth } from "../styles";
 import { ReportModal } from "../Components/reportModal";
 import { scheduleEvent } from "../Notifications/calendarNotif";
+import InviteModal from "../Components/sendInviteModal";
 
 export default class extends React.Component {
     static contextType = Context
@@ -32,6 +33,7 @@ export default class extends React.Component {
     constructor(props) {
         super(props);
         this.setReportVisible = this.setReportVisible.bind(this)
+        this.handleAccept = this.handleAccept.bind(this)
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -111,9 +113,25 @@ export default class extends React.Component {
         return this.context.acceptedEvents.some(event => event._id === this.state.id)
     }
 
+    handleAccept() {
+        acceptedFlow(this.context.id, this.state.pulledData, this.state.title, this.context)
+        scheduleEvent(this.state.startDate, this.state.endDate, this.state.title)
+        if (this.state.hideParent)
+            this.state.hideParent()
+        this.setState(this.state)
+    }
+
     render() {
         return (
             <SafeAreaView style={styles.alignBottomContainer}>
+                <InviteModal
+                    ref={ref => this.sendModal = ref}
+                    id={this.state.id}
+                    title={this.state.title}
+                    message={"Invite your friends!"}
+                    listData={this.context.friends}
+                    closeFunc={this.handleAccept}
+                />
                 <ReportModal
                     eventId={this.state.id}
                     userId={this.context.id}
@@ -148,7 +166,7 @@ export default class extends React.Component {
                     <Text style={styles.title}>Attendees</Text>
                     {
                         this.state.people.map((id) => {
-                            return <Friend isUser={false} key={id} id={id} navigation={this.props.navigation} />
+                            return <Friend isUser={false} key={id + "details"} id={id} navigation={this.props.navigation} />
                         })
                     }
                     <View style={{ height: 50 }}></View>
@@ -193,11 +211,7 @@ export default class extends React.Component {
                                 style={styles.rsvpYesBlock}
                                 onPress={() => {
                                     if (!this.isAccepted()) {
-                                        acceptedFlow(this.context.id, this.state.pulledData, this.state.title, this.context)
-                                        scheduleEvent(this.state.startDate, this.state.endDate, this.state.title)
-                                        if (this.state.hideParent)
-                                            this.state.hideParent()
-                                        this.setState(this.state)
+                                        this.sendModal.open()
                                     } else {
                                         Alert.alert("Undo event accept?",
                                             "You will be able to RSVP to this event again after undoing your decision, if you wish to do so. You will also be removed from this event\'s chat", [

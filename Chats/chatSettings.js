@@ -11,7 +11,7 @@ export default ({ navigation, route }) => {
                 <Text style={styles.boldSectionHeader}>Members</Text>
                 {
                     members.map(member =>
-                        <Friend key={member._id} id={member._id} isUser={true} navigation={navigation} />)
+                        <Friend key={member._id + "chatSetting"} id={member._id} isUser={true} navigation={navigation} />)
                 }
             </ScrollView>
         </SafeAreaView>

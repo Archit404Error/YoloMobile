@@ -19,7 +19,7 @@ export default class extends React.Component {
                     {
 
                         this.props.route.params.events.map(event =>
-                            <CondensedEvent key={event._id} id={event._id} navigation={this.props.navigation} />
+                            <CondensedEvent key={event._id + "condensed"} id={event._id} navigation={this.props.navigation} />
                         )
                     }
                 </ScrollView>

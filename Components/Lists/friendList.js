@@ -15,7 +15,7 @@ export default class extends React.Component {
                     <Text style={styles.listHead}> Friends </Text>
                     {
                         this.props.route.params.friends.map(key =>
-                            <Friend key={key} id={key} isUser={true} navigation={this.props.navigation} />
+                            <Friend key={key + "friendList"} id={key} isUser={true} navigation={this.props.navigation} />
                         )
                     }
                 </ScrollView>

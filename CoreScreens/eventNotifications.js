@@ -31,14 +31,14 @@ export default ({ navigation }) => {
                     userEvents.length == 0 &&
                     <EmptyScreen
                         header="No events right now!"
-                        desc="You'll get events notifs once you;ve created an event!"
+                        desc="You'll get events notifs once you've created an event!"
                     />
                 }
                 {
-                    userEvents.map((eventData, index) => {
+                    userEvents.map(eventData => {
                         return (
                             <EventPreview
-                                key={index}
+                                key={eventData._id + "eventNotifs"}
                                 eventData={eventData}
                                 navigation={navigation}
                             />

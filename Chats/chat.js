@@ -99,7 +99,7 @@ export default class extends React.Component {
                                 const sender = messageObj.sender;
                                 const isOwn = sender == this.state.name;
                                 return (
-                                    <View key={index} style={{
+                                    <View key={index + "chatMsg"} style={{
                                         flexDirection: isOwn ? 'row-reverse' : 'row',
                                         paddingLeft: 5,
                                         paddingRight: 5

@@ -7,7 +7,7 @@ import { styles } from "../styles";
 export default forwardRef((props, ref) => (
     <RBSheet
         ref={ref}
-        height={300}
+        height={600}
         openDuration={250}
         closeOnDragDown={true}
         dragFromTopOnly={true}
@@ -18,7 +18,7 @@ export default forwardRef((props, ref) => (
             {
                 props.listData.map(friendId =>
                     <FriendInvitation
-                        key={friendId}
+                        key={friendId + "friendInvite"}
                         id={friendId}
                         eventId={props.id}
                         eventName={props.title}

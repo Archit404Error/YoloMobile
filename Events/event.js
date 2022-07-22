@@ -89,7 +89,6 @@ export default class Event extends React.Component {
     }
 
     hideSelf() {
-        console.log("Hiding self");
         this.state.visible = false;
         this.setState(this.state);
     }
@@ -125,7 +124,7 @@ export default class Event extends React.Component {
                         {
                             this.state.tags.map((tag, index) => {
                                 return (
-                                    <TouchableOpacity key={index}>
+                                    <TouchableOpacity key={index + tag + this.state.id}>
                                         <Text style={styles.tag}>{tag}</Text>
                                     </TouchableOpacity>
                                 );

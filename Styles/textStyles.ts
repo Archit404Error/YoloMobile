@@ -80,6 +80,13 @@ export class TextStyles extends YoloStylesheet {
                 marginTop: 10,
                 alignSelf: 'center'
             },
+            profSubTitle: {
+                fontFamily: "OpenSans_500Medium",
+                fontSize: 20,
+                color: "gray",
+                marginTop: 10,
+                alignSelf: 'center'
+            },
             listHead: {
                 marginTop: -20,
                 color: "orange",

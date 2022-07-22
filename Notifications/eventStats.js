@@ -207,7 +207,7 @@ export default ({ navigation, route }) => {
                     {
                         data.attendees.slice(data.attendees.length > 5 ? -5 : 0)
                             .map((userId, index) =>
-                                <Friend key={index} id={userId} isUser={false} navigation={navigation} />
+                                <Friend key={index + userId} id={userId} isUser={false} navigation={navigation} />
                             )
                     }
                 </View>
@@ -217,7 +217,7 @@ export default ({ navigation, route }) => {
                     {
                         data.viewers.slice(data.viewers.length > 5 ? -5 : 0)
                             .map((userId, index) =>
-                                <Friend key={index} id={userId} isUser={false} navigation={navigation} />
+                                <Friend key={index + userId} id={userId} isUser={false} navigation={navigation} />
                             )
                     }
                 </View>

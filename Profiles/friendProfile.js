@@ -9,6 +9,7 @@ import { HeaderBackButton } from "@react-navigation/elements";
 export default (props) => {
     const [id, setId] = useState(-1);
     const [name, setName] = useState('Loading...')
+    const [username, setUsername] = useState('Loading...')
     const [profPic, setProfPic] = useState('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png')
     const [friends, setFriends] = useState([])
     const [events, setEvents] = useState([])
@@ -21,6 +22,7 @@ export default (props) => {
             .then(resJson => {
                 setId(props.route.params.id)
                 setName(resJson.name)
+                setUsername(resJson.username)
                 setFriends(resJson.friends)
                 setEvents(resJson.acceptedEvents)
                 setProfPic(resJson.profilePic)
@@ -74,6 +76,7 @@ export default (props) => {
         <DisplayProfile
             id={id}
             name={name}
+            username={username}
             friends={friends}
             events={events}
             profilePic={profPic}
