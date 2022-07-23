@@ -21,6 +21,15 @@ export class ProfileStyles extends YoloStylesheet {
                 height: this.windowWidth / 5,
                 alignSelf: 'center'
             },
+            flexSmallProfImg: {
+                marginTop: 10,
+                marginLeft: 10,
+                marginBottom: 10,
+                flex: 1,
+                borderWidth: 1,
+                borderColor: "orange",
+                borderRadius: 50
+            },
             smallProfImg: {
                 marginTop: 10,
                 marginLeft: 10,
