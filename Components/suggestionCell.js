@@ -11,6 +11,14 @@ export const SuggestionCell = ({ data, navigation }) => {
         return <TouchableOpacity onPress={() => {
             navigation.navigate("Details", {
                 id: data._id,
+                title: data.title,
+                description: data.description,
+                image: data.image,
+                location: data.location,
+                startDate: new Date(data.startDate),
+                endDate: new Date(data.endDate),
+                attendees: data.attendees,
+                pulledData: data,
             })
         }}>
             <ItemPreview picture={data.image} title={data.title} description={data.location} />

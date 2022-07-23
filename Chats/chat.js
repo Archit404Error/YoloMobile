@@ -105,7 +105,7 @@ export default class extends React.Component {
                                         paddingRight: 5
                                     }}>
                                         <View style={{ flex: 1, marginTop: 22.5 }}>
-                                            {this.state.lastSender != sender &&
+                                            {(index == 0 || this.state.lastSender != sender) &&
                                                 <Image
                                                     source={{ uri: this.getMemberImage(sender) }}
                                                     style={{ width: 35, height: 35, borderRadius: 35 }}
@@ -115,7 +115,7 @@ export default class extends React.Component {
                                         <View style={styles.chatMessageContainer}>
                                             {
                                                 (() => {
-                                                    if (this.state.lastSender != sender) {
+                                                    if (index == 0 || this.state.lastSender != sender) {
                                                         this.state.lastSender = sender;
                                                         if (index == this.state.messages.length)
                                                             this.state.lastSender = ""

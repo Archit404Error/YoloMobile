@@ -129,10 +129,11 @@ function AddTab() {
 
 function AddStack() {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ headerBackTitleVisible: false }}>
             <Stack.Screen
                 name="Create & Manage"
                 component={AddTab}
+                options={{ headerLeft: () => (<></>) }}
             />
             <Stack.Screen
                 name="Preview Event"
