@@ -21,6 +21,7 @@ export default ({ navigation }) => {
     const [tags, setTags] = useState("");
     const [other, setOther] = useState("");
     const [isPrivate, setPrivacy] = useState(false);
+    const [adminOnly, setAdminOnly] = useState(false);
 
     const titleRef = useRef();
     const descriptionRef = useRef();
@@ -133,13 +134,29 @@ export default ({ navigation }) => {
                                     <Switch
                                         value={!isPrivate}
                                         onChange={() => setPrivacy(!isPrivate)}
-                                        trackColor={{ true: "#2d6ff4" }}
+                                        trackColor={{ true: "#ec632f" }}
                                         style={{ marginLeft: 20 }}
                                     />
                                 </View>
                                 {isPrivate &&
                                     <Text style={{ color: 'gray', fontSize: 10 }}>
                                         Making this event private means it will only be visible to people to whom you send the event link
+                                    </Text>
+                                }
+                            </View>
+                            <View style={{ flexDirection: 'column', flex: 1, backgroundColor: 'white', padding: 10 }}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={{ alignSelf: 'center', fontSize: 15 }}>Admin Only Chat Messages</Text>
+                                    <Switch
+                                        value={adminOnly}
+                                        onChange={() => setAdminOnly(!adminOnly)}
+                                        trackColor={{ true: "#ec632f" }}
+                                        style={{ marginLeft: 20 }}
+                                    />
+                                </View>
+                                {adminOnly &&
+                                    <Text style={{ color: 'gray', fontSize: 10 }}>
+                                        Use this feature if you want to use the chat primarily as a way to send updates to attendees. Only the admin will be able to send chat messages (attendees will only be able to read chat messages).
                                     </Text>
                                 }
                             </View>
@@ -155,13 +172,15 @@ export default ({ navigation }) => {
                                         )
                                     if (valid) {
                                         context.createEventDetails(
-                                            title, description,
+                                            title,
+                                            description,
                                             location,
                                             startDate,
                                             endDate,
                                             tags,
                                             other,
-                                            isPrivate
+                                            isPrivate,
+                                            adminOnly
                                         );
                                         navigation.navigate("Preview Event")
                                     } else {

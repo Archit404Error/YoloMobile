@@ -17,6 +17,7 @@ export default class extends React.Component {
         name: "",
         handler: -1,
         lastSender: "",
+        adminOnly: false
     }
 
     constructor(props) {
@@ -43,6 +44,9 @@ export default class extends React.Component {
             membObj.username === user
         )
 
+        if (!membData)
+            return "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+
         return membData.profilePic
     }
 
@@ -59,6 +63,7 @@ export default class extends React.Component {
         this.state.title = this.props.route.params.title;
         this.state.messages = this.props.route.params.messages;
         this.state.memberDetails = this.props.route.params.members;
+        this.state.adminOnly = this.props.route.params.adminOnly;
         this.state.name = this.context.username;
         this.setState(this.state);
         this.props.navigation.setOptions({
@@ -144,6 +149,7 @@ export default class extends React.Component {
                         chatId={this.state.id}
                         chatName={this.state.title}
                         sender={this.context.username}
+                        adminOnly={this.state.adminOnly}
                     />
                 </KeyboardAvoidingView>
             </>

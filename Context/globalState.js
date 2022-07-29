@@ -30,6 +30,7 @@ export default class extends React.Component {
             tags: '',
             other: '',
             public: true,
+            adminOnly: false,
         },
         chatIds: [],
         chatData: [],
@@ -173,7 +174,7 @@ export default class extends React.Component {
     /**
      * Stores event details of an event the user is attempting to create so we can easily send to server
      */
-    setEventDetails = (title, description, location, startDate, endDate, tags, other, isPublic) => {
+    setEventDetails = (title, description, location, startDate, endDate, tags, other, isPublic, adminOnly) => {
         let details = this.state.eventCreationDetails
         details.title = title;
         details.description = description;
@@ -183,6 +184,7 @@ export default class extends React.Component {
         details.tags = tags;
         details.other = other;
         details.public = isPublic;
+        details.adminOnly = adminOnly;
         // need to re-assign because of how JS vars work
         this.state.eventCreationDetails = details;
         this.setState(this.state);

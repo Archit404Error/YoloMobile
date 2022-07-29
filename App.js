@@ -108,6 +108,7 @@ function AddTab() {
         <TopTab.Navigator
             screenOptions={{
                 tabBarLabelStyle: { fontSize: 10 },
+                tabBarIndicatorStyle: { backgroundColor: '#ec632f' },
             }}
         >
             <TopTab.Screen

@@ -41,13 +41,16 @@ function showSend(message, chatId, chatName, sender, messageFunc, socket) {
     return <></>
 }
 
-export default ({ chatId, chatName, sender }) => {
+export default ({ chatId, chatName, sender, adminOnly }) => {
     const [message, setMessage] = useState("");
     const context = useContext(Context);
+    const canSend = adminOnly ? sender === context.fullName : true;
     return (
         <View style={{ flexDirection: 'row' }}>
             <TextInput
                 style={styles.chatInput}
+                editable={canSend}
+                selectTextOnFocus={canSend}
                 placeholder={"Send Message..."}
                 returnKeyType={"send"}
                 enablesReturnKeyAutomatically

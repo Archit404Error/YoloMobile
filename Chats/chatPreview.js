@@ -17,6 +17,7 @@ export default class extends React.Component {
         },
         members: [],
         image: 'Loading...',
+        adminOnly: false,
         read: true
     }
 
@@ -29,6 +30,10 @@ export default class extends React.Component {
             .then(response => response.json())
             .then(res => {
                 this.state.allMessages = res.messages;
+
+                if (res.adminOnly)
+                    this.state.adminOnly = adminOnly;
+
                 if (res.messages.length > 0)
                     this.state.recentMsg = res.messages[res.messages.length - 1];
 
@@ -93,6 +98,7 @@ export default class extends React.Component {
                         messages: this.state.allMessages,
                         members: this.state.members,
                         image: this.state.image,
+                        adminOnly: this.state.adminOnly
                     })
                 }
                 }>

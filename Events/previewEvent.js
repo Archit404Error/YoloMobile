@@ -31,12 +31,26 @@ export const uploadImageAsync = async (uri) => {
 /**
  * Takes in an event object and a user id and sends a POST request to the backend to
  * create a new event
- * @param eventDetails - The event details that were entered by the user (pulled from context).
- * @param creatorId - The id of the user who created the event.
+ * @param ctx the user's context
  * @returns the created event's id.
  */
-const submitEventAsync = async (eventDetails, creatorId) => {
-    eventDetails["creator"] = creatorId;
+const submitEventAsync = async (ctx) => {
+    const eventDetails = ctx.eventDetails
+    const creator = {
+        "_id": ctx.id,
+        "username": ctx.username,
+        "password": ctx.password,
+        "name": ctx.fullName,
+        "acceptedEvents": ctx.acceptedEvents,
+        "pendingEvents": ctx.pendingEvents,
+        "rejectedEvents": ctx.rejectedEvents,
+        "friends": ctx.friends,
+        "profilePic": ctx.profilePic,
+        "blockedBy": ctx.blockedBy,
+        "bockedUsers": ctx.blockedUsers
+    }
+
+    eventDetails.creator = creator;
     const res = await fetch("http://yolo-backend.herokuapp.com/create", {
         method: "POST",
         headers: {
@@ -84,7 +98,7 @@ export default ({ navigation }) => {
                                         setSubmitted(true)
                                         const resUrl = await uploadImageAsync(context.eventDetails.image)
                                         context.createEventImage(await resUrl)
-                                        const response = await submitEventAsync(context.eventDetails, context.id)
+                                        const response = await submitEventAsync(context)
                                         const result = await response.json()
                                         let id = {};
                                         setSubmitted(false)

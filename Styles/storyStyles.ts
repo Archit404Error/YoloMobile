@@ -1,5 +1,5 @@
-import {StyleSheet} from "react-native";
-import {YoloStylesheet} from "./yoloStylesheet";
+import { StyleSheet } from "react-native";
+import { YoloStylesheet } from "./yoloStylesheet";
 
 export class StoryStyles extends YoloStylesheet {
     getStyles() {
@@ -26,7 +26,7 @@ export class StoryStyles extends YoloStylesheet {
                 width: this.windowWidth / 6,
                 height: this.windowWidth / 6,
                 marginRight: 10,
-                borderColor: '#2d6ff4',
+                borderColor: '#ec632f',
                 borderWidth: 2,
             },
             postStoryContainer: {
