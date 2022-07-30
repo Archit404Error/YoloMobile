@@ -39,17 +39,6 @@ export default class extends React.Component {
             this.updateSelf();
     }
 
-    getMemberImage = (user) => {
-        const membData = this.state.memberDetails.find(membObj =>
-            membObj.username === user
-        )
-
-        if (!membData)
-            return "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
-
-        return membData.profilePic
-    }
-
     viewSettings = () => (
         <TouchableOpacity onPress={() => this.props.navigation.navigate("Chat Settings", {
             members: this.state.memberDetails,
@@ -104,7 +93,7 @@ export default class extends React.Component {
                                 const sender = messageObj.sender;
                                 const isOwn = sender == this.state.name;
                                 return (
-                                    <View key={index + "chatMsg"} style={{
+                                    <View key={messageObj._id + "chatMsg"} style={{
                                         flexDirection: isOwn ? 'row-reverse' : 'row',
                                         paddingLeft: 5,
                                         paddingRight: 5
@@ -112,7 +101,7 @@ export default class extends React.Component {
                                         <View style={{ flex: 1, marginTop: 22.5 }}>
                                             {(index == 0 || this.state.lastSender != sender) &&
                                                 <Image
-                                                    source={{ uri: this.getMemberImage(sender) }}
+                                                    source={{ uri: messageObj.senderPic }}
                                                     style={{ width: 35, height: 35, borderRadius: 35 }}
                                                 />
                                             }
@@ -149,6 +138,7 @@ export default class extends React.Component {
                         chatId={this.state.id}
                         chatName={this.state.title}
                         sender={this.context.username}
+                        senderPic={this.context.profilePic}
                         adminOnly={this.state.adminOnly}
                     />
                 </KeyboardAvoidingView>

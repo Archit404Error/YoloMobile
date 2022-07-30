@@ -39,12 +39,14 @@ export default class extends React.Component {
     componentDidMount() {
         this.getLatestChats();
         this.context.socket.on("eventsUpdated", () => this.getLatestChats())
+        this.context.socket.on("userCreatedEvent", () => this.getLatestChats())
         this.context.socket.on("messageSent", () => this.getLatestChats())
         this.context.socket.on("appOpened", () => this.getLatestChats())
     }
 
     componentWillUnmount() {
         this.context.socket.off("eventsUpdated", () => this.getLatestChats())
+        this.context.socket.off("userCreatedEvent", () => this.getLatestChats())
         this.context.socket.off("messageSent", () => this.getLatestChats())
         this.context.socket.off("appOpened", () => this.getLatestChats())
     }
