@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import socketio from "socket.io-client";
 import Context from "../Context/context";
 import { styles } from "../styles";
 
@@ -18,6 +17,7 @@ export default class extends React.Component {
         members: [],
         image: 'Loading...',
         adminOnly: false,
+        adminId: "-1",
         read: true
     }
 
@@ -30,6 +30,7 @@ export default class extends React.Component {
             .then(response => response.json())
             .then(res => {
                 this.state.allMessages = res.messages;
+                this.state.adminId = res.creator._id;
 
                 if (res.adminOnly)
                     this.state.adminOnly = adminOnly;
@@ -71,6 +72,8 @@ export default class extends React.Component {
                 this.state.members = res.members;
                 this.state.title = res.eventDetails.title;
                 this.state.image = res.eventDetails.image;
+                this.state.adminOnly = res.adminOnly;
+                this.state.adminId = res.creator._id;
                 this.setState(this.state);
             })
     }
@@ -98,7 +101,8 @@ export default class extends React.Component {
                         messages: this.state.allMessages,
                         members: this.state.members,
                         image: this.state.image,
-                        adminOnly: this.state.adminOnly
+                        adminOnly: this.state.adminOnly,
+                        adminId: this.state.adminId
                     })
                 }
                 }>

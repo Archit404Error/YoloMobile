@@ -42,17 +42,17 @@ function showSend(message, chatId, chatName, sender, senderPic, messageFunc, soc
     return <></>
 }
 
-export default ({ chatId, chatName, sender, senderPic, adminOnly }) => {
+export default ({ chatId, chatName, sender, senderPic, adminOnly, adminId }) => {
     const [message, setMessage] = useState("");
     const context = useContext(Context);
-    const canSend = adminOnly ? sender === context.fullName : true;
+    const canSend = adminOnly ? adminId === context.id : true;
     return (
         <View style={{ flexDirection: 'row' }}>
             <TextInput
                 style={styles.chatInput}
                 editable={canSend}
                 selectTextOnFocus={canSend}
-                placeholder={"Send Message..."}
+                placeholder={canSend ? "Send Message..." : "Only Admin may send messages"}
                 returnKeyType={"send"}
                 enablesReturnKeyAutomatically
                 onChangeText={text => setMessage(text)}

@@ -4,14 +4,15 @@ import Friend from "../Friends/friend"
 import { styles } from "../styles"
 
 export default ({ navigation, route }) => {
-    const [members, setMembers] = useState(route.params.members)
     return (
         <SafeAreaView>
-            <ScrollView style={{ backgroundColor: "white" }}>
+            <ScrollView style={{ backgroundColor: "white", minHeight: '100%' }}>
+                <Text style={styles.boldSectionHeader}>Admin</Text>
+                <Friend key={route.params.adminId + "chatSettingAdmin"} id={route.params.adminId} isUser navigation={navigation} />
                 <Text style={styles.boldSectionHeader}>Members</Text>
                 {
-                    members.map(member =>
-                        <Friend key={member._id + "chatSetting"} id={member._id} isUser={true} navigation={navigation} />)
+                    route.params.members.map(member =>
+                        <Friend key={member._id + "chatSetting"} id={member._id} isUser navigation={navigation} />)
                 }
             </ScrollView>
         </SafeAreaView>

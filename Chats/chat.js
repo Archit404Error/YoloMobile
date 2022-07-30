@@ -17,7 +17,8 @@ export default class extends React.Component {
         name: "",
         handler: -1,
         lastSender: "",
-        adminOnly: false
+        adminOnly: false,
+        adminId: "-1"
     }
 
     constructor(props) {
@@ -42,6 +43,7 @@ export default class extends React.Component {
     viewSettings = () => (
         <TouchableOpacity onPress={() => this.props.navigation.navigate("Chat Settings", {
             members: this.state.memberDetails,
+            adminId: this.state.adminId
         })}>
             <Ionicons name={"settings-outline"} size={25} style={{ marginRight: 15 }} />
         </TouchableOpacity>
@@ -53,6 +55,7 @@ export default class extends React.Component {
         this.state.messages = this.props.route.params.messages;
         this.state.memberDetails = this.props.route.params.members;
         this.state.adminOnly = this.props.route.params.adminOnly;
+        this.state.adminId = this.props.route.params.adminId;
         this.state.name = this.context.username;
         this.setState(this.state);
         this.props.navigation.setOptions({
@@ -140,6 +143,7 @@ export default class extends React.Component {
                         sender={this.context.username}
                         senderPic={this.context.profilePic}
                         adminOnly={this.state.adminOnly}
+                        adminId={this.state.adminId}
                     />
                 </KeyboardAvoidingView>
             </>
