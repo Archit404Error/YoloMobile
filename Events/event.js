@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View, SafeAreaView, Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import Context from "../Context/context";
-import { styles } from "../styles";
+import { screenWidth, styles } from "../styles";
 import { scheduleEvent } from "../Notifications/calendarNotif";
 import { acceptedFlow, eventInteraction, rejectionFlow } from "../Helpers/eventHelperFuncs";
 import InviteModal from "../Components/sendInviteModal";
@@ -104,7 +104,7 @@ export default class Event extends React.Component {
             return <></>
 
         return (
-            <SafeAreaView>
+            <SafeAreaView style={{ flex: 1 }}>
                 <InviteModal
                     ref={ref => this.sendModal = ref}
                     id={this.state.id}
@@ -124,10 +124,10 @@ export default class Event extends React.Component {
                     >
                         <Image style={[styles.eventImg, { height: this.props.imgHeight - 30 }]} source={{ uri: this.state.image }} />
                     </TouchableWithoutFeedback>
-                    <Text numberOfLines={1} style={styles.title}>{this.state.title}</Text>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.addressText}>{this.state.location.length > 30 ? this.state.location.substring(0, 30) + "..." : this.state.location}</Text>
-                        <Text style={styles.addressText}>{Math.round(this.state.distance)} mi</Text>
+                    <Text numberOfLines={1} style={[styles.title, { marginTop: 27.5 }]}>{this.state.title}</Text>
+                    <View style={{ flexDirection: 'row', width: screenWidth }}>
+                        <Text numberOfLines={1} style={[styles.addressText, { flex: 4 }]}>{this.state.location}</Text>
+                        <Text style={[styles.addressText, { flex: 1 }]}>{Math.round(this.state.distance)} mi</Text>
                     </View>
                     <View style={{ flexDirection: 'row', marginLeft: 5 }}>
                         {
@@ -140,8 +140,8 @@ export default class Event extends React.Component {
                             })
                         }
                     </View>
-                    <TouchableOpacity onPress={() => this.displayDetails()}>
-                        <Text style={styles.subText}>{this.state.description.replace(/(\r\n|\n|\r)/gm, ' ').substring(0, 75) + "...(Read More)"}</Text>
+                    <TouchableOpacity style={{ height: 100 }} onPress={() => this.displayDetails()}>
+                        <Text adjustsFontSizeToFit style={[styles.subText, { position: "absolute", bottom: 22.5 }]}>{this.state.description.replace(/(\r\n|\n|\r)/gm, ' ').substring(0, 73) + "...(Read More)"}</Text>
                     </TouchableOpacity>
                     <View style={styles.rsvpContainer}>
                         <TouchableOpacity style={styles.rsvpNoContainer} onPress={() => {
