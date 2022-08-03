@@ -87,6 +87,13 @@ export class TextStyles extends YoloStylesheet {
                 marginTop: 10,
                 alignSelf: 'center'
             },
+            eventCreatorUsername: {
+                fontFamily: "OpenSans_500Medium",
+                fontSize: 17.5,
+                color: "black",
+                alignSelf: 'center',
+                marginLeft: 10
+            },
             listHead: {
                 marginTop: -20,
                 color: "orange",

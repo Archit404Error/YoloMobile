@@ -40,6 +40,16 @@ export class ProfileStyles extends YoloStylesheet {
                 borderColor: "orange",
                 borderRadius: 50
             },
+            smallestProfImg: {
+                marginTop: 10,
+                marginLeft: 10,
+                marginBottom: 10,
+                width: 30,
+                height: 30,
+                borderWidth: 1,
+                borderColor: "orange",
+                borderRadius: 50
+            },
         })
     }
 }

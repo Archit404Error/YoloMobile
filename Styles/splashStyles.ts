@@ -10,7 +10,7 @@ export const windowHeight = Dimensions.get('window').height;
 
 export const yoloColor = "#F2994A"
 export class SplashStyles extends YoloStylesheet {
-    
+
     getStyles() {
         return StyleSheet.create({
             splashScreenContainer: {
@@ -19,14 +19,12 @@ export class SplashStyles extends YoloStylesheet {
                 flex: 1
             },
             splashScreenHeroImage: {
-                height: screenHeight * 0.65,
                 width: windowWidth,
+                height: .65 * screenHeight,
                 opacity: 0.8
             },
             splashScreenBottomContainer: {
                 width: windowWidth,
-                flex: 1,
-                padding: 20,
             },
             yoloPill: {
                 width: 100,
@@ -43,7 +41,7 @@ export class SplashStyles extends YoloStylesheet {
                 height: 50,
                 borderRadius: 12.5,
                 alignItems: 'center',
-        
+
             }
         })
     }

@@ -99,7 +99,7 @@ export class EventStyles extends YoloStylesheet {
             },
             eventImg: {
                 width: '100%',
-                height: this.windowHeight / 1.75,
+                height: this.windowHeight / 2,
                 alignSelf: 'center'
             },
             detailsImg: {

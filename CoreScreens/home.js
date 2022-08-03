@@ -14,6 +14,7 @@ import FilterEvents from '../Events/filterEvents';
 export default ({ navigation }) => {
   const context = useContext(Context);
   const eventCardHeight = windowHeight - useBottomTabBarHeight() - useHeaderHeight()
+  const baseImgHeight = (windowHeight / 1.85)
 
   const [ids, setIds] = useState(context.pendingEvents);
   const [filters, setFilters] = useState([])
@@ -93,6 +94,7 @@ export default ({ navigation }) => {
                 key={id + "homeSugg" + index}
                 id={id}
                 cardHeight={eventCardHeight}
+                imgHeight={baseImgHeight}
                 filters={filters}
                 navigation={navigation}
               />

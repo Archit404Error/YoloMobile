@@ -24,7 +24,12 @@ export default class Event extends React.Component {
         distance: 0,
         visible: true,
         timesPressed: 0,
-        pulledData: {}
+        pulledData: {
+            creator: {
+                name: "Loading...",
+                profilePic: ""
+            }
+        }
     }
 
     constructor(props) {
@@ -110,10 +115,14 @@ export default class Event extends React.Component {
                 />
 
                 <View style={{ height: this.props.cardHeight, backgroundColor: 'white' }}>
+                    <View style={{ flexDirection: "row" }}>
+                        <Image source={{ uri: this.state.pulledData.creator.profilePic }} style={styles.smallProfImg} />
+                        <Text style={styles.eventCreatorUsername}>@{this.state.pulledData.creator.username}</Text>
+                    </View>
                     <TouchableWithoutFeedback
                         onLongPress={() => this.displayDetails()}
                     >
-                        <Image style={styles.eventImg} source={{ uri: this.state.image }} />
+                        <Image style={[styles.eventImg, { height: this.props.imgHeight - 30 }]} source={{ uri: this.state.image }} />
                     </TouchableWithoutFeedback>
                     <Text numberOfLines={1} style={styles.title}>{this.state.title}</Text>
                     <View style={{ flexDirection: 'row' }}>
