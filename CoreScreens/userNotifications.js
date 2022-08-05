@@ -41,6 +41,7 @@ export default ({ navigation }) => {
                                 key={notifObject._id + "friendReq"}
                                 id={notifObject._id}
                                 friendId={notifObject.sender}
+                                navigation={navigation}
                             />
                         else if (notifObject.type === "invite")
                             return <EventInvite
