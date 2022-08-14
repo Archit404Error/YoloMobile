@@ -36,6 +36,7 @@ export default (props) => {
         setEvents(props.events)
         setFriends(props.friends)
         setEditable(props.editable)
+        setProfPic(props.profilePic)
     }
 
     const friendedState = async () => {
@@ -68,7 +69,6 @@ export default (props) => {
         return () => context.socket.off("friendChange", updateFriendCount);
     }, [])
     useEffect(friendedState, [id])
-    useEffect(() => setProfPic(props.profilePic), [props.profilePic])
     useEffect(dataFromProps, [props])
 
     const pickImage = async () => {

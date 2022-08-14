@@ -15,6 +15,9 @@ export default forwardRef((props, ref) => (
     >
         <Text style={styles.boldSectionHeader}>{props.message}</Text>
         <ScrollView>
+            {props.listData.length == 0 &&
+                <Text style={styles.centeredSubText}>No friends to invite</Text>
+            }
             {
                 props.listData.map(friendId =>
                     <FriendInvitation

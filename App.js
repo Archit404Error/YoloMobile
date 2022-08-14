@@ -315,10 +315,10 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
-
     if (!firebase.apps.length) {
         firebase.initializeApp(firebaseInit.firebaseConfig)
     }
+
     let [fontsLoaded] = useFonts({
         OpenSans_300Light,
         OpenSans_400Regular,
@@ -333,9 +333,11 @@ export default function App() {
         OpenSans_700Bold_Italic,
         OpenSans_800ExtraBold_Italic,
     });
+
     if (!fontsLoaded) {
-        return (<AppLoading />)
+        return <AppLoading />
     }
+
     return (
         <GlobalState>
             <DetermineScreen />
