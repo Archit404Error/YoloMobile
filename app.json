@@ -22,7 +22,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.4architmehta.Yolo",
       "associatedDomains": [
-        "applinks:yolonow.net"
+        "applinks:yoloapp.us"
       ],
       "infoPlist": {
         "NSCameraUsageDescription": "Yolo uses the camera to let you post event images and stories.",
