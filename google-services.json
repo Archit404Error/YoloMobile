@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "124646004790",
+    "firebase_url": "https://eventapp-73ba7-default-rtdb.firebaseio.com",
+    "project_id": "eventapp-73ba7",
+    "storage_bucket": "eventapp-73ba7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124646004790:android:c0b37fcc7a943e40d22097",
+        "android_client_info": {
+          "package_name": "com.yolo.architmehta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "124646004790-u5uhotp0klssrqbfqpomko1nurkn2p32.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvh9fMs6krijwu5hmvNdO_eCy0YobULjw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "124646004790-u5uhotp0klssrqbfqpomko1nurkn2p32.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

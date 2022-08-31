@@ -3,12 +3,16 @@ import { View, TextInput, TouchableOpacity, Alert } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from "../styles";
 import Context from "../Context/context";
+import * as Analytics from "expo-firebase-analytics";
 
 async function sendMessage(message, chatId, chatName, sender, senderPic, socket) {
     if (message.trim() == "") {
         Alert.alert("You cannot send empty messages!")
         return;
     }
+
+    Analytics.logEvent('message_sent', { chat: chatName, sender: sender })
+
     const messageData = {
         sender: sender,
         senderPic: senderPic,

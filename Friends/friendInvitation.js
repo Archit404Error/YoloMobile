@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, Image, TouchableOpacity, Text } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 import { Feather } from '@expo/vector-icons';
+import * as Analytics from 'expo-firebase-analytics';
 import Context from '../Context/context';
 
 export default ({ id, eventId, eventName }) => {
@@ -20,6 +21,7 @@ export default ({ id, eventId, eventName }) => {
     }
 
     const sendInvite = () => {
+        Analytics.logEvent('invite_sent', { invitee: name, sender: context.username })
         fetch(`http://yolo-backend.herokuapp.com/inviteFriend`, {
             method: "POST",
             headers: {

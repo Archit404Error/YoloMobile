@@ -1,10 +1,12 @@
 import { showMessage } from "react-native-flash-message";
+import * as Analytics from 'expo-firebase-analytics';
 
 /**
  * Communicates a particular user action to the server, where it is recorded
  * @param {String} action must be 'accepted', 'viewed', or 'rejected' (add Enum when switch to TS)
  */
 export function eventInteraction(action, userId, eventId) {
+    Analytics.logEvent(`event_${action}`, { event: eventId, user: userId });
     fetch("http://yolo-backend.herokuapp.com/eventRSVP", {
         method: "POST",
         headers: {

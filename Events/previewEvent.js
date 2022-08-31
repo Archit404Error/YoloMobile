@@ -3,6 +3,8 @@ import { SafeAreaView, ScrollView, View, Text, Image, Button, Modal, ActivityInd
 import Context from '../Context/context';
 import { styles } from '../styles';
 
+import * as Analytics from 'expo-firebase-analytics';
+
 export const uploadImageAsync = async (uri) => {
     let fileType = uri.split(".").pop();
     let formData = new FormData();
@@ -96,6 +98,7 @@ export default ({ navigation }) => {
                                 onPress={
                                     async () => {
                                         setSubmitted(true)
+                                        Analytics.logEvent('event_created', { creator: context.username })
                                         const resUrl = await uploadImageAsync(context.eventDetails.image)
                                         context.createEventImage(await resUrl)
                                         const response = await submitEventAsync(context)
