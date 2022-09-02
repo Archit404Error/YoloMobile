@@ -3,11 +3,11 @@ import { View, Text, ActivityIndicator, KeyboardAvoidingView, TouchableOpacity, 
 import { Input, Button } from "react-native-elements";
 import { styles } from "../styles";
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import * as Location from 'expo-location';
 import { useFonts } from 'expo-font';
 import { locWarning } from '../Helpers/permissionHelperFuncs';
 import { DoneWrapper, doneWrapperId } from "../Components/inputWrappers";
+import * as Analytics from 'expo-firebase-analytics';
 
 import Context from '../Context/context';
 
@@ -88,6 +88,7 @@ export default ({ navigation, route }) => {
                     onChangeText={currName => setName(currName)}
                     inputContainerStyle={{ borderBottomColor: 'grey', marginLeft: 20, marginRight: 20 }}
                     inputStyle={{ color: 'grey', fontSize: 18 }}
+                    inputAccessoryViewID={doneWrapperId}
                 />
                 <Input
                     placeholder="Username"
@@ -97,6 +98,7 @@ export default ({ navigation, route }) => {
                     onChangeText={currUser => setUsername(currUser)}
                     inputContainerStyle={{ borderBottomColor: 'grey', marginLeft: 20, marginRight: 20 }}
                     inputStyle={{ color: 'grey', fontSize: 18 }}
+                    inputAccessoryViewID={doneWrapperId}
                 />
                 <Input
                     placeholder="Password"
@@ -107,13 +109,13 @@ export default ({ navigation, route }) => {
                     onChangeText={currPass => setPassword(currPass)}
                     inputContainerStyle={{ borderBottomColor: 'grey', marginLeft: 20, marginRight: 20 }}
                     inputStyle={{ color: 'grey', fontSize: 18 }}
+                    inputAccessoryViewID={doneWrapperId}
                 />
                 <Button
-                    title={<Text style={
-                        disabled ? styles.buttonDisabledTitle : styles.buttonTitle
-                    }>
-                        Register
-                    </Text>
+                    title={
+                        <Text style={disabled ? styles.buttonDisabledTitle : styles.buttonTitle}>
+                            Register
+                        </Text>
                     }
                     buttonStyle={styles.confirmButton}
                     disabledStyle={styles.confirmButtonDisabled}
@@ -143,7 +145,8 @@ export default ({ navigation, route }) => {
                             })
                             try {
                                 const resJson = await res.json()
-                                await context.setCredentials(await resJson);
+                                await context.setCredentials(resJson);
+                                Analytics.logEvent('register');
                                 setLoading(true);
                             } catch (err) {
                                 Alert.alert("That username already exists!")
@@ -165,7 +168,7 @@ export default ({ navigation, route }) => {
                     <Text style={styles.underlinedParaText}>By registering, you agree to our Terms Of Service</Text>
                 </TouchableOpacity>
             </View>
+            <DoneWrapper />
         </KeyboardAvoidingView >
-
     )
 }

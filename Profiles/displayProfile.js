@@ -80,6 +80,8 @@ export default (props) => {
         });
         if (!result.cancelled) {
             return result.uri;
+        } else {
+            return null;
         }
     }
 
@@ -99,12 +101,14 @@ export default (props) => {
     const uploadProfilePic = async () => {
         if ((await Camera.getCameraPermissionsAsync()).status !== "denied") {
             let uri = await pickImage();
-            setUploading(true);
-            let downloadURL = await uploadImageAsync(uri);
-            await refreshProfilePic(downloadURL, id);
-            setProfPic(downloadURL)
-            setUploading(false);
-            context.modifyState(["profile"], [downloadURL])
+            if (uri) {
+                setUploading(true);
+                let downloadURL = await uploadImageAsync(uri);
+                await refreshProfilePic(downloadURL, id);
+                setProfPic(downloadURL)
+                setUploading(false);
+                context.modifyState(["profile"], [downloadURL])
+            }
         }
         else handleImgRejection()
     }

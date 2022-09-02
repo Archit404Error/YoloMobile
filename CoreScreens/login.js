@@ -10,6 +10,7 @@ import { useFonts } from 'expo-font';
 import { showMessage } from 'react-native-flash-message';
 import { locWarning } from '../Helpers/permissionHelperFuncs';
 import { DoneWrapper, doneWrapperId } from '../Components/inputWrappers';
+
 export default ({ navigation }) => {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
@@ -84,6 +85,7 @@ export default ({ navigation }) => {
                         inputContainerStyle={{ borderBottomColor: 'grey', marginLeft: 20, marginRight: 20 }}
                         containerStyle={{ marginTop: 20 }}
                         inputStyle={{ color: 'grey', fontSize: 18 }}
+                        inputAccessoryViewID={doneWrapperId}
                     />
                     <Input
                         placeholder="Password"
@@ -94,7 +96,7 @@ export default ({ navigation }) => {
                         onChangeText={t => setPassword(t)}
                         inputContainerStyle={{ borderBottomColor: 'grey', marginLeft: 20, marginRight: 20 }}
                         inputStyle={{ color: 'grey', fontSize: 18 }}
-
+                        inputAccessoryViewID={doneWrapperId}
                     />
                     <Button
                         title={
@@ -148,6 +150,7 @@ export default ({ navigation }) => {
                     </Text>
                 </TouchableOpacity>
             </KeyboardAvoidingView>
+            <DoneWrapper />
         </>
     );
 }

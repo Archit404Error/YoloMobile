@@ -58,7 +58,7 @@ export default ({ navigation }) => {
                             <TextInput
                                 style={styles.titleInput}
                                 placeholder="Add event title"
-                                maxLength={25}
+                                maxLength={100}
                                 clearButtonMode="while-editing"
                                 onChangeText={setTitle}
                                 inputAccessoryViewID={doneWrapperId}
@@ -67,14 +67,14 @@ export default ({ navigation }) => {
                                 style={styles.descInput}
                                 multiline={true} numberOfLines={1}
                                 placeholder="Add event description"
-                                maxLength={150}
+                                maxLength={1000}
                                 onChangeText={setDescription}
                                 inputAccessoryViewID={doneWrapperId}
                             />
                             <TextInput
                                 style={styles.titleInput}
                                 placeholder="Add event location"
-                                maxLength={50}
+                                maxLength={100}
                                 clearButtonMode="while-editing"
                                 onChangeText={setLocation}
                                 inputAccessoryViewID={doneWrapperId}
@@ -98,7 +98,7 @@ export default ({ navigation }) => {
                             <TextInput
                                 style={styles.titleInput}
                                 placeholder="Other"
-                                maxLength={25}
+                                maxLength={50}
                                 clearButtonMode="while-editing"
                                 onChangeText={setOther}
                                 inputAccessoryViewID={doneWrapperId}
