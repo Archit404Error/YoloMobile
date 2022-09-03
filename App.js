@@ -275,7 +275,7 @@ function DetermineScreen() {
     const [config, setConfig] = useState({ screens: { Events: { screens: { Details: 'event/:id' } } } });
 
     const linkConfig = {
-        prefixes: [Linking.createURL('')],
+        prefixes: [Linking.createURL(''), 'https://yolocornell.com'],
         config,
     }
 
