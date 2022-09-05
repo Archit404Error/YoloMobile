@@ -41,6 +41,7 @@ export default ({ navigation, route }) => {
             }
         });
     };
+
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -67,10 +68,9 @@ export default ({ navigation, route }) => {
     return (
         <KeyboardAvoidingView behavior='padding' style={styles.loginScreenContainer}>
             <ImageBackground
-
                 source={{ uri: "https://sce.cornell.edu/img/content/825-inset-full-1.jpg" }}
-                style={styles.loginScreenHeroImg} >
-
+                style={styles.loginScreenHeroImg}
+            >
                 <View style={styles.yoloPillXL}>
                     <Text style={{
                         color: 'white',

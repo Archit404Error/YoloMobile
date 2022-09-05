@@ -4,14 +4,14 @@
 
 import React, { useState, useEffect, useContext } from "react";
 import { SafeAreaView, ScrollView, Text, Image, View, TouchableOpacity, Alert, Modal, ActivityIndicator } from "react-native";
-import { styles } from "../styles";
+import { styles, screenWidth, screenHeight } from "../styles";
 import CondensedEvent from "../Events/condensedEvent";
 import * as ImagePicker from 'expo-image-picker';
 import { uploadImageAsync } from "../Events/previewEvent";
 import { Camera } from "expo-camera";
 import { handleImgRejection } from "../Helpers/permissionHelperFuncs";
 import { Button } from "react-native-elements";
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { showMessage } from "react-native-flash-message";
 import Context from "../Context/context";
 import { fetchUserData } from "../Helpers/fetchHelperFuncs";
@@ -134,6 +134,19 @@ export default (props) => {
                 {editable ?
                     <TouchableOpacity onPress={uploadProfilePic}>
                         <Image style={styles.profImg} source={{ uri: profilePic }} />
+                        <View style={{
+                            backgroundColor: 'orange',
+                            borderRadius: 40,
+                            width: 40,
+                            height: 40,
+                            position: 'absolute',
+                            top: ((1 + Math.sqrt(2)) * screenWidth) / (6 * Math.sqrt(2)) - 20,
+                            left: ((1 + 3 * Math.sqrt(2)) * screenWidth) / (6 * Math.sqrt(2)) - 20,
+                            justifyContent: "center",
+                            alignItems: "center"
+                        }}>
+                            <MaterialIcons name="edit" size={24} color="white" />
+                        </View>
                     </TouchableOpacity>
                     : <Image style={styles.profImg} source={{ uri: profilePic }} />
                 }
