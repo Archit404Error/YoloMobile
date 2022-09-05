@@ -25,7 +25,8 @@ export default (props) => {
     const [profilePic, setProfPic] = useState(props.profilePic)
     const [editable, setEditable] = useState(props.editable)
     const [isFriend, setFriended] = useState(false)
-    const [isPending, setPending] = useState(false)
+    const [isPendingSent, setPendingSent] = useState(false)
+    const [isPendingRecv, setPendingRecv] = useState(false)
     const [uploadingProfPic, setUploading] = useState(false);
     const context = useContext(Context)
 
@@ -53,8 +54,9 @@ export default (props) => {
             })
         })
         let json = await res.json()
-        setFriended((await json).friend)
-        setPending((await json).pending)
+        setFriended(json.friend)
+        setPendingSent(json.pending)
+        setPendingRecv(json.pendingRecv)
     }
 
     const updateFriendCount = async () => {
@@ -69,6 +71,7 @@ export default (props) => {
         return () => context.socket.off("friendChange", updateFriendCount);
     }, [])
     useEffect(friendedState, [id])
+    useEffect(friendedState, [props.route])
     useEffect(dataFromProps, [props])
 
     const pickImage = async () => {
@@ -115,11 +118,11 @@ export default (props) => {
 
     /**
      * Helper method to determine the relationship between current user and viewed user
-     * @returns 0 if friends, 1 if user sent friend req, 2 if neither
+     * @returns 0 if friends, 1 if user sent friend req, 2 if no relation, 3 if user received friend req
      */
-    const friendStatus = () => isFriend ? 0 : (isPending ? 1 : 2)
+    const friendStatus = () => isFriend ? 0 : (isPendingSent ? 1 : (!isPendingRecv ? 2 : 3))
 
-    /** Chooses a given outcome from an arr of size 3 based on friend status */
+    /** Chooses a given outcome from an arr of size 4 based on friend status */
     const detOutcome = outcomeArr => outcomeArr[friendStatus()]
 
     return (
@@ -180,11 +183,12 @@ export default (props) => {
                             title={detOutcome([
                                 "Already Friends",
                                 "Requested",
-                                "Send Request"
+                                "Send Request",
+                                "Received Request"
                             ])}
                             icon={
                                 <Feather
-                                    name={detOutcome(["user-check", "user-check", "user-plus"])}
+                                    name={detOutcome(["user-check", "user-check", "user-plus", "user"])}
                                     size={25}
                                     color="white"
                                     style={{ marginRight: 10 }}
@@ -193,12 +197,12 @@ export default (props) => {
                             buttonStyle={styles.invertedConfirmButton}
                             onPress={() => {
                                 const friendReq = () => {
-                                    context.sendFriendReq(id, !isPending)
+                                    context.sendFriendReq(id, !isPendingSent)
                                     showMessage({
-                                        message: `Friend Request ${!isPending ? "sent" : "unsent"}`,
+                                        message: `Friend Request ${!isPendingSent ? "sent" : "unsent"}`,
                                         type: "info"
                                     })
-                                    setPending(!isPending)
+                                    setPendingSent(!isPendingSent)
                                 }
 
                                 const unfriend = () => {
@@ -226,7 +230,13 @@ export default (props) => {
                                     ])
                                 }
 
-                                detOutcome([unfriend, friendReq, friendReq])()
+                                const recvReq = () => {
+                                    Alert.alert("Request received", "Accept or reject the request in the notifications tab", [
+                                        { text: "OK" }
+                                    ])
+                                }
+
+                                detOutcome([unfriend, friendReq, friendReq, recvReq])()
                             }}
                         />
                 }
