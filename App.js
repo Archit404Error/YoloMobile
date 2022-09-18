@@ -11,6 +11,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { Ionicons } from '@expo/vector-icons';
 import AppLoading from 'expo-app-loading';
 import { Settings } from './Profiles/settings';
+import 'react-native-gesture-handler';
 
 import HomeScreen from './CoreScreens/home';
 import DetailsScreen from './Events/detailsContainer';
