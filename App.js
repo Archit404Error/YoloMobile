@@ -177,7 +177,7 @@ function ProfileStack() {
     )
 }
 
-function ChatStack({ navigation }) {
+function ChatStack() {
     return (
         <Stack.Navigator
             screenOptions={{
@@ -273,10 +273,10 @@ function Authentication() {
 function DetermineScreen() {
     const context = useContext(Context)
     const [loggedIn, setLoggedIn] = useState(false);
-    const [config, setConfig] = useState({ screens: { Events: { screens: { Details: 'event/:id' } } } });
+    const [config, setConfig] = useState({ screens: { Events: { initialRouteName: 'Explore', screens: { Details: 'event/:id' } } } });
 
     const linkConfig = {
-        prefixes: [Linking.createURL(''), 'https://yolocornell.com'],
+        prefixes: [Linking.createURL(''), Linking.createURL('/'), 'https://yolocornell.com'],
         config,
     }
 
@@ -287,13 +287,13 @@ function DetermineScreen() {
             let loginStatus = await context.fetchCreds()
             setLoggedIn(await loginStatus)
             if (!await loginStatus && context.id !== -1)
-                setConfig({ screens: { App: { screens: { Events: { screens: { Details: 'event/:id' } } } } } })
+                setConfig({ screens: { App: { screens: { Events: { initialRouteName: 'Explore', screens: { Details: 'event/:id' } } } } } })
         })()
     }, [context.id])
 
     useEffect(() => {
         if (!loggedIn)
-            setConfig({ screens: { Events: { screens: { Details: 'event/:id' } } } })
+            setConfig({ screens: { Events: { initialRouteName: 'Explore', screens: { Details: 'event/:id' } } } })
     }, [loggedIn])
 
     return (
@@ -316,6 +316,14 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
+    const notifRes = Notifications.useLastNotificationResponse();
+
+    useEffect(() => {
+        if (notifRes) {
+            Linking.openURL(notifRes.notification.request.content.data.url)
+        }
+    }, [notifRes])
+
     if (!firebase.apps.length) {
         firebase.initializeApp(firebaseInit.firebaseConfig)
     }

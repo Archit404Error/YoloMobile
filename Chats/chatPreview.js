@@ -33,7 +33,7 @@ export default class extends React.Component {
                 this.state.adminId = res.creator._id;
 
                 if (res.adminOnly)
-                    this.state.adminOnly = adminOnly;
+                    this.state.adminOnly = res.adminOnly;
 
                 if (res.messages.length > 0)
                     this.state.recentMsg = res.messages[res.messages.length - 1];
