@@ -1,4 +1,3 @@
-import 'react-native-gesture-handler';
 import React, { useEffect, useState, useContext } from 'react';
 import firebase from "firebase/compat/app";
 import * as Linking from 'expo-linking';
