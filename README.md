@@ -4,9 +4,17 @@ Yolo is the world's first event-based social media app, and is currently live on
 ## Screenshots
 <table>
     <tr>
-        <img src="assets/screenshots/one.png" alt="one" height="400" />
-        <img src="assets/screenshots/two.png" alt="two" height="400" />
-        <img src="assets/screenshots/three.png" alt="three" height="400" />
-        <img src="assets/screenshots/four.png" alt="four" height="400" />
+        <td valign="top">
+            <img src="assets/screenshots/one.png" alt="one" height="400" />
+        </td>
+        <td valign="top">
+            <img src="assets/screenshots/two.png" alt="two" height="400" />
+        </td>
+        <td valign="top"> 
+            <img src="assets/screenshots/three.png" alt="three" height="400" />
+        </td>
+        <td valign="top">
+            <img src="assets/screenshots/four.png" alt="four" height="400" />
+        </td>
     </tr>
 </table>
