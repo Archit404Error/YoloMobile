@@ -3,7 +3,7 @@
     "name": "Yolo",
     "slug": "Yolo",
     "scheme": "yolo",
-    "version": "1.0.18",
+    "version": "1.0.19",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
